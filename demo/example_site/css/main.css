@@ -1,0 +1,39 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    margin: 0;
+}
+
+body > div.main {
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+}
+
+nav > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav > div:not(:nth-child(2)) {
+    flex: 1 0 25%;
+}
+
+nav > div:nth-child(2) {
+    flex: 1 0 50%;
+}

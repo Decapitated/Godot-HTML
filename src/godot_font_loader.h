@@ -1,0 +1,32 @@
+#include <Ultralight/Ultralight.h>
+#include <AppCore/Platform.h>
+#include <JavaScriptCore/JavaScript.h>
+
+#include <godot_cpp/classes/file_access.hpp>
+
+#include "MimeTypes.h"
+
+using namespace ultralight;
+
+class GodotFontLoader : public FontLoader
+{
+public:
+    GodotFontLoader() {}
+    ~GodotFontLoader() override {}
+
+    ultralight::String fallback_font() const override
+    {
+
+    }
+
+    ultralight::String 	fallback_font_for_characters(const String &characters, int weight, bool italic) const override
+    {
+        
+    }
+
+    RefPtr<FontFile> Load(const String &family, int weight, bool italic) override
+    {
+        
+    } 
+
+};

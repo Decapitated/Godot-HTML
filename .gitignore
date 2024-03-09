@@ -1,0 +1,6 @@
+.vscode
+%localappdata%
+ultralight
+System Volume Information
+src/*.obj
+demo/gdexample/resources/
