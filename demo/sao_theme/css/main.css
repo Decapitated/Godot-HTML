@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body > .content > .page {
+    background-color: white;
+    border-radius: 5rem;
+    min-width: calc(666px * 2);
+    min-height: 666px;
+}
+

@@ -134,6 +134,7 @@ void HtmlRect::CreateView()
     ///
     ViewConfig view_config;
     view_config.is_accelerated = false;
+    view_config.is_transparent = true;
 
     ///
     /// Create an HTML view, 500 by 500 pixels large.

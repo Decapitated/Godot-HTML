@@ -14,7 +14,6 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	ClassDB::register_class<GDExample>();
     ClassDB::register_class<HtmlRect>();
 }
 
@@ -32,7 +31,6 @@ extern "C" {
         init_obj.register_initializer(initialize_example_module);
         init_obj.register_terminator(uninitialize_example_module);
         init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
-
         return init_obj.init();
     }
 }

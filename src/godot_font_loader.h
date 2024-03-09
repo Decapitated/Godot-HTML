@@ -4,8 +4,6 @@
 
 #include <godot_cpp/classes/file_access.hpp>
 
-#include "MimeTypes.h"
-
 using namespace ultralight;
 
 class GodotFontLoader : public FontLoader

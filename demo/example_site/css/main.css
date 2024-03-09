@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-    background-color: grey;
+    background-color: rgba(255, 0, 0, 0.364);
     display: flex;
     flex-direction: column;
 }
