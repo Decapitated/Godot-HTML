@@ -2,7 +2,7 @@
 A GDExtension, using Ultralight, to render HTML.
 
 ## TO-DO
-- Mouse/Keyboard Input
+- Keyboard Input
 - JS Interop
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
