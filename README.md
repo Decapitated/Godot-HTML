@@ -23,6 +23,10 @@ main_folder/
   +--plugin_folder/
     |
     +--bin/               # plugin build folder / Other libraries
+      +--Ultralight.dll
+      +--UltralightCore.dll
+      +--WebCore.dll
+      +--AppCore.dll
     |
     +--resources/         # Ultralight resources folder (Copied from SDK folder)
 |
