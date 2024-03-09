@@ -1,20 +1,29 @@
-# Prerequisites
+# Godot HTML 
+A GDExtension, using Ultralight, to render HTML.
+
+## TO-DO
+- Mouse/Keyboard Input
+- JS Interop
+- Live code updates (Allow for html to update in the editor when file changed)
+- ?? More will arrise I assume ??
+
+## Prerequisites
 - Setup [compiling](https://docs.godotengine.org/en/stable/contributing/development/compiling/index.html#toc-devel-compiling) for Godot
 - Download [Ultralight](https://ultralig.ht/download/)
 
-# Building
-## Build Godot C++ bindings
+## Building
+### Build Godot C++ bindings
 ```
 cd godot-cpp
 scons platform=<platform>
 ```
-## Build plugin
+### Build plugin
 From the main folder.
 ```
 scons platform=<platform>
 ```
 
-# Project Structure
+## Project Structure
 ```
 main_folder/
 |
