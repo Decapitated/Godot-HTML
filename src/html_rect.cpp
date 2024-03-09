@@ -1,9 +1,19 @@
 #include "html_rect.h"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>
+
+#include <godot_cpp/classes/input_event_mouse.hpp>
+#include <godot_cpp/classes/input_event_mouse.hpp>
+#include <godot_cpp/classes/input_event_mouse_motion.hpp>
+#include <godot_cpp/classes/input_event_mouse_button.hpp>
+#include <godot_cpp/classes/input_event_key.hpp>
+
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
 // using namespace ultralight;
@@ -25,6 +35,7 @@ HtmlRect::~HtmlRect() {
     if(file_system != nullptr)
     {
 	    delete file_system;
+        file_system = nullptr;
     }
 }
 
@@ -35,7 +46,96 @@ void HtmlRect::_process(double delta)
         Setup();
         is_setup = true;
     }
-    else UpdateLogic();
+    else
+    {
+        UpdateLogic();
+        for (; !events.empty(); events.pop())
+        {
+            switch(events.front())
+            {
+                case Event::mouse:
+                    view->FireMouseEvent(mouse_events.front());
+                    mouse_events.pop();
+                    break;
+                case Event::key:
+                    view->FireKeyEvent(key_events.front());
+                    key_events.pop();
+                    break;
+                case Event::scroll:
+                    view->FireScrollEvent(scroll_events.front());
+                    scroll_events.pop();
+                    break;
+            }
+        }
+    }
+}
+
+void HtmlRect::_gui_input(const Ref<InputEvent> &event)
+{
+    if(auto e = dynamic_cast<InputEventMouseButton*>(*event))
+    {
+        MouseButton index = e->get_button_index();
+        // Check if scroll.
+        if(index == MouseButton::MOUSE_BUTTON_WHEEL_UP || index == MouseButton::MOUSE_BUTTON_WHEEL_DOWN)
+        {
+            ScrollEvent evt;
+            evt.type = ScrollEvent::kType_ScrollByPixel;
+            int delta = index == MouseButton::MOUSE_BUTTON_WHEEL_UP ? -1 : 1;
+            evt.delta_x = delta * 10;
+            evt.delta_y = delta * 10;
+            scroll_events.push(evt);
+            events.push(Event::scroll);
+        }
+        else if(index < 4)
+        {
+            auto pos = e->get_position();
+            MouseEvent evt;
+            evt.x = (int)pos.x;
+            evt.y = (int)pos.y;
+            evt.type = e->is_pressed() ? MouseEvent::kType_MouseDown : MouseEvent::kType_MouseUp;
+            switch(index)
+            {
+                case MouseButton::MOUSE_BUTTON_LEFT:
+                    evt.button = MouseEvent::Button::kButton_Left;
+                    break;
+                case MouseButton::MOUSE_BUTTON_MIDDLE:
+                    evt.button = MouseEvent::Button::kButton_Middle;
+                    break;
+                case MouseButton::MOUSE_BUTTON_RIGHT:
+                    evt.button = MouseEvent::Button::kButton_Right;
+                    break;
+            };
+            mouse_events.push(evt);
+            events.push(Event::mouse);
+        }
+    }
+    else if(auto e = dynamic_cast<InputEventMouseMotion*>(*event))
+    {
+        auto pos = e->get_position();
+        MouseEvent evt;
+        evt.type = MouseEvent::kType_MouseMoved;
+        evt.x = (int)pos.x;
+        evt.y = (int)pos.y;
+        evt.button = MouseEvent::kButton_None;
+        mouse_events.push(evt);
+        events.push(Event::mouse);
+    }
+    else if(auto e = dynamic_cast<InputEventKey*>(*event))
+    {
+        UtilityFunctions::print("Key");
+        // UtilityFunctions::print(e->as_text_physical_keycode());
+        // KeyEvent evt;
+        // evt.type = KeyEvent::kType_RawKeyDown;
+        // evt.virtual_key_code = KeyCodes::GK_RIGHT;
+        // evt.native_key_code = 0;
+        // evt.modifiers = 0;
+
+        // // You'll need to generate a key identifier from the virtual key code
+        // // when synthesizing events. This function is provided in KeyEvent.h
+        // GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
+
+        // view->FireKeyEvent(evt);
+    }
 }
 
 void HtmlRect::Setup()
@@ -128,17 +228,11 @@ void HtmlRect::CreateRenderer()
 void HtmlRect::CreateView()
 {
     Vector2 size = get_size();
-    ///
-    /// Configure our View, make sure it uses the CPU renderer by
-    /// disabling acceleration.
-    ///
+
     ViewConfig view_config;
     view_config.is_accelerated = false;
     view_config.is_transparent = true;
 
-    ///
-    /// Create an HTML view, 500 by 500 pixels large.
-    ///
     view = renderer->CreateView((int)size.x, (int)size.y, view_config, nullptr);
     
     if(!LoadIndex()) view->LoadHTML("<h1>Placeholder Text</h1>");
