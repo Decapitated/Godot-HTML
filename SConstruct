@@ -18,14 +18,14 @@ sources = Glob("src/*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "demo/gdexample/bin/libgdexample.{}.{}.framework/libgdexample.{}.{}".format(
+        "demo/gdhtml/bin/libgdhtml.{}.{}.framework/libgdhtml.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "demo/gdexample/bin/libgdexample{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "demo/gdhtml/bin/libgdhtml{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
