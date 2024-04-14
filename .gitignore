@@ -4,10 +4,10 @@ ultralight
 System Volume Information
 src/*.obj
 demo/ultralight.log
-demo/gdexample/resources/
-demo/gdexample/bin/*.dll
-demo/gdexample/bin/*.*.*.*.dll
-demo/gdexample/bin/*.*.*.*.exp
-demo/gdexample/bin/*.*.*.*.lib
+demo/gdhtml/resources/
+demo/gdhtml/bin/*.dll
+demo/gdhtml/bin/*.*.*.*.dll
+demo/gdhtml/bin/*.*.*.*.exp
+demo/gdhtml/bin/*.*.*.*.lib
 ~*
 godot-cpp
