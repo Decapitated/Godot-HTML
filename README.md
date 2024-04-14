@@ -1,5 +1,11 @@
-# Godot HTML 
+# Godot HTML
 A GDExtension, using Ultralight, to render HTML.
+
+⚠️WINDOWS ONLY⚠️<br>This is very early stages. Feel free to contribute.
+
+## Versions
+Godot v4.2<br>
+Ultralight v1.3
 
 ## TO-DO
 - Keyboard Input
@@ -12,6 +18,11 @@ A GDExtension, using Ultralight, to render HTML.
 - Download [Ultralight](https://ultralig.ht/download/)
 
 ## Building
+### Clone godot-cpp
+```
+git clone -b godot-4.2-stable https://github.com/godotengine/godot-cpp.git
+```
+
 ### Build Godot C++ bindings
 ```
 cd godot-cpp
