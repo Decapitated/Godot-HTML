@@ -10,4 +10,3 @@ demo/gdhtml/bin/*.*.*.*.dll
 demo/gdhtml/bin/*.*.*.*.exp
 demo/gdhtml/bin/*.*.*.*.lib
 ~*
-godot-cpp
