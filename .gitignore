@@ -9,4 +9,5 @@ demo/gdhtml/bin/*.dll
 demo/gdhtml/bin/*.*.*.*.dll
 demo/gdhtml/bin/*.*.*.*.exp
 demo/gdhtml/bin/*.*.*.*.lib
+.sconsign.dblite
 ~*
