@@ -17,24 +17,8 @@ Ultralight v1.3
 - Setup [compiling](https://docs.godotengine.org/en/stable/contributing/development/compiling/index.html#toc-devel-compiling) for Godot
 - Download [Ultralight](https://ultralig.ht/download/)
 
-## Building
-### Clone godot-cpp
-```
-git clone -b godot-4.2-stable https://github.com/godotengine/godot-cpp.git
-```
-
-### Build Godot C++ bindings
-```
-cd godot-cpp
-scons platform=<platform>
-```
-### Build plugin
-From the main folder.
-```
-scons platform=<platform>
-```
-
 ## Project Structure
+Your project should look like this before building the plugin.
 ```
 main_folder/
 |
@@ -55,4 +39,23 @@ main_folder/
 +--src/                   # source code of the extension we are building
 |
 +--ultralight/            # Ultralight SDK
+```
+
+## Building
+### Clone godot-cpp
+```
+git submodule update --init --remote
+```
+
+### Build Godot C++ bindings
+```
+cd godot-cpp
+scons platform=<platform>
+```
+
+### Build plugin
+
+From the main folder.
+```
+scons platform=<platform>
 ```
