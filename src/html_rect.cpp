@@ -195,7 +195,7 @@ void HtmlRect::SizeChanged()
 void HtmlRect::InitPlatform()
 {
     ultralight::Config config;
-    config.resource_path_prefix = "gdexample/resources/";
+    config.resource_path_prefix = "gdhtml/resources/";
     Platform::instance().set_config(config);
 
     ///
