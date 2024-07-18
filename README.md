@@ -1,16 +1,14 @@
-<div style="display: flex; flex-direction: column; align-items: center;">
-  <span>⚠️WINDOWS ONLY⚠️</span>
-  <span>This is very early stages. Feel free to contribute.</span>
-</div>
+```
+⚠️WINDOWS ONLY⚠️
+This is very early stages. Feel free to contribute.
+```
 
 # Godot HTML
 
 A GDExtension, using Ultralight, to render HTML.
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; column-gap: 1rem;">
-  <img src="docs/images/EditorView.png">
-  <img src="docs/images/RunView.png">
-</div>
+<img src="docs/images/EditorView.png">
+<img src="docs/images/RunView.png">
 
 ## Versions
 Godot v4.2<br>
