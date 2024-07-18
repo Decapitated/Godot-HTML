@@ -14,6 +14,10 @@ A GDExtension, using Ultralight, to render HTML.
 Godot v4.2<br>
 Ultralight v1.3
 
+## CAN-DO
+- Render HTML & CSS, with JS capabilities.
+- Mouse Input
+
 ## TO-DO
 - Keyboard Input
 - JS Interop
