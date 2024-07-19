@@ -1,4 +1,4 @@
-#include "html_rect.h"
+#include "html_rect.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
@@ -15,10 +15,8 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
-using namespace godot;
-// using namespace ultralight;
 
-RefPtr<Renderer> HtmlRect::renderer = RefPtr<Renderer>();
+using namespace godot;
 
 void HtmlRect::_bind_methods() {
     ClassDB::bind_method(D_METHOD("render_frame"), &HtmlRect::RenderFrame);
@@ -29,43 +27,36 @@ void HtmlRect::_bind_methods() {
 	ClassDB::add_property("HtmlRect", PropertyInfo(Variant::STRING, "index_path"), "set_index", "get_index");
 }
 
-HtmlRect::HtmlRect() {}
+HtmlRect::HtmlRect() {
+    image = Ref<Image>();
 
-HtmlRect::~HtmlRect() {
-    if(file_system != nullptr)
-    {
-	    delete file_system;
-        file_system = nullptr;
-    }
+    CreateView();
+
+    RenderingServer::get_singleton()->connect("frame_post_draw", Callable(this, "render_frame"));
+    connect("resized", Callable(this, "size_changed"));
 }
+
+HtmlRect::~HtmlRect() { }
 
 void HtmlRect::_process(double delta)
 {
-    if(!is_setup)
+    UpdateLogic();
+    for (; !events.empty(); events.pop())
     {
-        Setup();
-        is_setup = true;
-    }
-    else
-    {
-        UpdateLogic();
-        for (; !events.empty(); events.pop())
+        switch(events.front())
         {
-            switch(events.front())
-            {
-                case Event::mouse:
-                    view->FireMouseEvent(mouse_events.front());
-                    mouse_events.pop();
-                    break;
-                case Event::key:
-                    view->FireKeyEvent(key_events.front());
-                    key_events.pop();
-                    break;
-                case Event::scroll:
-                    view->FireScrollEvent(scroll_events.front());
-                    scroll_events.pop();
-                    break;
-            }
+            case Event::mouse:
+                view->FireMouseEvent(mouse_events.front());
+                mouse_events.pop();
+                break;
+            case Event::key:
+                view->FireKeyEvent(key_events.front());
+                key_events.pop();
+                break;
+            case Event::scroll:
+                view->FireScrollEvent(scroll_events.front());
+                scroll_events.pop();
+                break;
         }
     }
 }
@@ -138,25 +129,13 @@ void HtmlRect::_gui_input(const Ref<InputEvent> &event)
     }
 }
 
-void HtmlRect::Setup()
-{
-    image = Ref<Image>();
-
-    InitPlatform();
-    if(!renderer) CreateRenderer();
-    CreateView();
-
-    RenderingServer::get_singleton()->connect("frame_post_draw", Callable(this, "render_frame"));
-    connect("resized", Callable(this, "size_changed"));
-}
-
 void HtmlRect::UpdateLogic()
 {
     ///
     /// Give the library a chance to handle any pending tasks and timers.
     ///
     ///
-    renderer->Update();
+    GodotHTML::UManager::GetRenderer()->Update();
 }
 
 void HtmlRect::RenderFrame()
@@ -164,7 +143,7 @@ void HtmlRect::RenderFrame()
     ///
     /// Render all active Views (this updates the Surface for each View).
     ///
-    renderer->Render();
+    GodotHTML::UManager::GetRenderer()->Render();
     ///
     /// Get the Surface as a BitmapSurface (the default implementation).
     ///
@@ -192,39 +171,6 @@ void HtmlRect::SizeChanged()
     image = Ref<Image>();
 }
 
-void HtmlRect::InitPlatform()
-{
-    ultralight::Config config;
-    config.resource_path_prefix = "gdhtml/resources/";
-    Platform::instance().set_config(config);
-
-    ///
-    /// Use the OS's native font loader
-    ///
-    Platform::instance().set_font_loader(GetPlatformFontLoader());
-
-    file_system = new GodotFileSystem();
-    Platform::instance().set_file_system(file_system);
-
-    ///
-    /// Use the default logger (writes to a log file)
-    ///
-    Platform::instance().set_logger(GetDefaultLogger("ultralight.log"));
-}
-
-void HtmlRect::CreateRenderer()
-{
-    ///
-    /// Create our Renderer (call this only once per application).
-    /// 
-    /// The Renderer singleton maintains the lifetime of the library
-    /// and is required before creating any Views.
-    ///
-    /// You should set up the Platform handlers before this.
-    ///
-    renderer = Renderer::Create();
-}
-
 void HtmlRect::CreateView()
 {
     Vector2 size = get_size();
@@ -233,15 +179,16 @@ void HtmlRect::CreateView()
     view_config.is_accelerated = false;
     view_config.is_transparent = true;
 
-    view = renderer->CreateView((int)size.x, (int)size.y, view_config, nullptr);
+    view = GodotHTML::UManager::GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
     
     if(!LoadIndex()) view->LoadHTML("<h1>Placeholder Text</h1>");
 }
 
 bool HtmlRect::LoadIndex()
 {
-    if(index_path.is_empty())
+    if(index_path.is_empty()){
         return false;
+    }
     view->LoadURL(("file:///"+index_path).utf8().get_data());
     return true;
 }
@@ -268,6 +215,7 @@ void HtmlRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
 
 void HtmlRect::set_index(const String p_index) {
 	index_path = p_index;
+    LoadIndex();
 }
 
 godot::String HtmlRect::get_index() const {

@@ -1,3 +1,6 @@
+#ifndef GFILESYSTEM_H
+#define GFILESYSTEM_H
+
 #include <Ultralight/Ultralight.h>
 #include <AppCore/Platform.h>
 #include <JavaScriptCore/JavaScript.h>
@@ -41,3 +44,5 @@ public:
     }
 
 };
+
+#endif

@@ -44,15 +44,18 @@ main_folder/
       +--AppCore.dll
     |
     +--resources/         # Ultralight resources folder (Copied from SDK folder)
+    |
+    +--inspector/         # Ultralight inspector folder (Copied from SDK folder)
 |
 +--godot-cpp/             # C++ bindings
 |
-+--src/                   # source code of the extension we are building
++--src/                   # Source code of the extension we are building
 |
 +--ultralight/            # Ultralight SDK
 ```
 
 ## Building
+
 ### Clone godot-cpp
 ```
 git submodule update --init --remote

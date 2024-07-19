@@ -5,6 +5,7 @@ System Volume Information
 src/*.obj
 demo/ultralight.log
 demo/gdhtml/resources/
+demo/gdhtml/inspector/
 demo/gdhtml/bin/*.dll
 demo/gdhtml/bin/*.*.*.*.dll
 demo/gdhtml/bin/*.*.*.*.exp
