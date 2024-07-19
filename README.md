@@ -25,7 +25,7 @@ Ultralight v1.3
 - ?? More will arrise I assume ??
 
 ## Prerequisites
-- Setup [compiling](https://docs.godotengine.org/en/stable/contributing/development/compiling/index.html#toc-devel-compiling) for Godot
+- Setup [compiling](https://docs.godotengine.org/en/stable/contributing/development/compiling/compiling_for_windows.html) for Godot
 - Download [Ultralight](https://ultralig.ht/download/)
 
 ## Project Structure
