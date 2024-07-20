@@ -2,9 +2,9 @@
 
 #include "ultralight_manager.hpp"
 
-#include "gdexample.hpp"
 #include "view_rect.hpp"
 #include "html_rect.hpp"
+#include "inspector_rect.hpp"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -28,8 +28,9 @@ void initialize_html_module(ModuleInitializationLevel p_level) {
 
     manager = new GodotHTML::UManager();
 
-    ClassDB::register_class<ViewRect>();
+    ClassDB::register_abstract_class<ViewRect>();
     ClassDB::register_class<HtmlRect>();
+    ClassDB::register_class<InspectorRect>();
 }
 
 void uninitialize_html_module(ModuleInitializationLevel p_level) {

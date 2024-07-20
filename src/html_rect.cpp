@@ -9,7 +9,6 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
-
 using namespace godot;
 
 void HtmlRect::_bind_methods()

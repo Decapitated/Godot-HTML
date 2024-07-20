@@ -41,15 +41,15 @@ namespace godot {
         protected:
             static void _bind_methods();
 
-            void SetView(RefPtr<View> p_view);
-            RefPtr<View> GetView();
-
         public:
             ViewRect();
             ~ViewRect();
+
+            void SetView(RefPtr<View> p_view);
+            RefPtr<View> GetView();
+
             void _process(double delta) override;
             void _gui_input(const Ref<InputEvent> &event) override;
-
     };
 
 }

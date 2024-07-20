@@ -3,8 +3,6 @@
 
 #include "view_rect.hpp"
 
-using namespace ultralight;
-
 namespace godot {
 
     class HtmlRect : public ViewRect {
