@@ -13,15 +13,17 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 28.0
 grow_horizontal = 2
 grow_vertical = 2
+split_offset = 1536
 
 [node name="HtmlRect" type="HtmlRect" parent="HSplitContainer"]
 index_path = "example_site/index.html"
 layout_mode = 2
 focus_mode = 1
+expand_mode = 1
 
 [node name="InspectorRect" type="InspectorRect" parent="HSplitContainer" node_paths=PackedStringArray("html_rect")]
 html_rect = NodePath("../HtmlRect")
 layout_mode = 2
+expand_mode = 1
