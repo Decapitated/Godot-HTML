@@ -52,6 +52,7 @@ InspectorRect::~InspectorRect() { }
 
 void InspectorRect::_process(double delta)
 {
+    ViewRect::_process(delta);
     if(!GetView())
     {
         if(html_rect != nullptr)
