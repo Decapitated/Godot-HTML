@@ -3,6 +3,7 @@
 #include "ultralight_manager.hpp"
 
 #include "gdexample.hpp"
+#include "view_rect.hpp"
 #include "html_rect.hpp"
 
 #include <gdextension_interface.h>
@@ -19,22 +20,24 @@ FILE* f;
 GodotHTML::UManager* manager;
 
 void initialize_html_module(ModuleInitializationLevel p_level) {
-    std::cout << "(" << p_level << ") Initializing Godot HTML." << std::endl;
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
 
+    std::cout << "Initializing Godot HTML." << std::endl;
+
     manager = new GodotHTML::UManager();
 
+    ClassDB::register_class<ViewRect>();
     ClassDB::register_class<HtmlRect>();
 }
 
 void uninitialize_html_module(ModuleInitializationLevel p_level) {
-    std::cout << "(" << p_level << ") Uninitializing Godot HTML." << std::endl;
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
 
+    std::cout << "Uninitializing Godot HTML." << std::endl;
     delete manager;
 }
 

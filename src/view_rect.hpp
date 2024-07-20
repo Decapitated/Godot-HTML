@@ -22,14 +22,13 @@ namespace godot {
         GDCLASS(ViewRect, TextureRect);
 
         private:
-            RefPtr<View> view; // Ultralight view
-
             enum Event { mouse, key, scroll };
             std::queue<Event> events;
             std::queue<MouseEvent> mouse_events;
             std::queue<KeyEvent> key_events;
             std::queue<ScrollEvent> scroll_events;
 
+            RefPtr<View> view; // Ultralight view
             Ref<ImageTexture> image_texture;
             Ref<Image> image;
 
@@ -37,8 +36,13 @@ namespace godot {
             void RenderFrame();
             void SizeChanged();
 
+            void CopyBitmapToTexture(RefPtr<Bitmap> bitmap);
+
         protected:
             static void _bind_methods();
+
+            void SetView(RefPtr<View> p_view);
+            RefPtr<View> GetView();
 
         public:
             ViewRect();
