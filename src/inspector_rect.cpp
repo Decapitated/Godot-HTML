@@ -18,13 +18,11 @@ class InspectorListener : public ViewListener
     public:
         InspectorListener(InspectorRect *p_inspector)
         {
-            std::cout << "InspectorListener::InspectorListener" << std::endl;
             inspector = p_inspector;
         }
 
         RefPtr<View> OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url) override
         {
-            std::cout << "InspectorListener::OnCreateInspectorView" << std::endl;
             Vector2 size = inspector->get_size();
 
             ViewConfig view_config;
@@ -56,7 +54,6 @@ void InspectorRect::_process(double delta)
 {
     if(!GetView())
     {
-        UtilityFunctions::print("InspectorRect::_process GetView() = true");
         if(html_rect != nullptr)
         {
             init(html_rect->GetView());

@@ -44,8 +44,8 @@ main_folder/
       +--AppCore.dll
     |
     +--resources/         # Ultralight resources folder (Copied from SDK folder)
-    |
-    +--inspector/         # Ultralight inspector folder (Copied from SDK folder)
+  |
+  +--inspector/           # Ultralight inspector folder (Copied from SDK folder)
 |
 +--godot-cpp/             # C++ bindings
 |
