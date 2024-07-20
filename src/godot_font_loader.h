@@ -1,3 +1,6 @@
+#ifndef GFONTLOADER_H
+#define GFONTLOADER_H
+
 #include <Ultralight/Ultralight.h>
 #include <AppCore/Platform.h>
 #include <JavaScriptCore/JavaScript.h>
@@ -28,3 +31,5 @@ public:
     } 
 
 };
+
+#endif
