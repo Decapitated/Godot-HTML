@@ -16,6 +16,7 @@ Ultralight v1.3
 
 ## CAN-DO
 - Render HTML & CSS, with JS capabilities.
+- HTML Inspector
 - Mouse Input
 
 ## TO-DO
