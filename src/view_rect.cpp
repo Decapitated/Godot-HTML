@@ -49,6 +49,7 @@ void ViewRect::_bind_methods()
 
 void ViewRect::_process(double delta)
 {
+    if(!view) return;
     UpdateLogic();
     for (; !events.empty(); events.pop())
     {
@@ -149,6 +150,7 @@ void ViewRect::UpdateLogic()
 
 void ViewRect::RenderFrame()
 {
+    if(!view) return;
     ///
     /// Render all active Views (this updates the Surface for each View).
     ///
@@ -175,6 +177,7 @@ void ViewRect::RenderFrame()
 
 void ViewRect::SizeChanged()
 {
+    if(!view) return;
     Vector2 size = get_size();
     view->Resize((int)size.x, (int)size.y);
     image = Ref<Image>();

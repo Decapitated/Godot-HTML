@@ -14,7 +14,7 @@ using namespace godot;
 void HtmlRect::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("get_index"), &HtmlRect::get_index);
-	ClassDB::bind_method(D_METHOD("set_index", "p_amplitude"), &HtmlRect::set_index);
+	ClassDB::bind_method(D_METHOD("set_index", "p_index"), &HtmlRect::set_index);
 	ClassDB::add_property("HtmlRect", PropertyInfo(Variant::STRING, "index_path"), "set_index", "get_index");
 }
 
