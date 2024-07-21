@@ -23,6 +23,10 @@ void initialize_html_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+    // #region Initialize console.
+        AllocConsole();
+        freopen_s(&f, "CONOUT$", "w", stdout);
+    // #endregion
 
     std::cout << "Initializing Godot HTML." << std::endl;
 
@@ -40,17 +44,16 @@ void uninitialize_html_module(ModuleInitializationLevel p_level) {
 
     std::cout << "Uninitializing Godot HTML." << std::endl;
     delete manager;
+
+    // #region Cleanup console.
+        if(f) fclose(f);
+        FreeConsole();
+    // #endregion
 }
 
 extern "C" {
     // Initialization.
     GDExtensionBool GDE_EXPORT html_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, const GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization) {
-        // #region Initialize console.
-            AllocConsole();
-            freopen_s(&f, "CONOUT$", "w", stdout);
-        // #endregion
-
-
         godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 
         init_obj.register_initializer(initialize_html_module);
