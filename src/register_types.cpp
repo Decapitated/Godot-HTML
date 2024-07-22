@@ -33,7 +33,6 @@ void initialize_html_module(ModuleInitializationLevel p_level) {
 
     manager = new GodotHTML::UltralightManager();
 
-
     ClassDB::register_abstract_class<ViewRect>();
     ClassDB::register_class<HtmlRect>();
     ClassDB::register_class<InspectorRect>();
@@ -45,6 +44,8 @@ void uninitialize_html_module(ModuleInitializationLevel p_level) {
 	}
 
     std::cout << "Uninitializing Godot HTML." << std::endl;
+
+    delete manager;
 
     // #region Cleanup console.
         if(f) fclose(f);
