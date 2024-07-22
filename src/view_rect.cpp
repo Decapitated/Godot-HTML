@@ -50,7 +50,11 @@ void ViewRect::_bind_methods()
 void ViewRect::_process(double delta)
 {
     if(!view) return;
-    UpdateLogic();
+    ///
+    /// Give the library a chance to handle any pending tasks and timers.
+    ///
+    ///
+    GodotHTML::UltralightManager::GetSingleton()->UpdateLogic();
     for (; !events.empty(); events.pop())
     {
         switch(events.front())
@@ -139,22 +143,13 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
     }
 }
 
-void ViewRect::UpdateLogic()
-{
-    ///
-    /// Give the library a chance to handle any pending tasks and timers.
-    ///
-    ///
-    GodotHTML::UManager::GetRenderer()->Update();
-}
-
 void ViewRect::RenderFrame()
 {
     if(!view) return;
     ///
     /// Render all active Views (this updates the Surface for each View).
     ///
-    GodotHTML::UManager::GetRenderer()->Render();
+    GodotHTML::UltralightManager::GetSingleton()->RenderFrame();
     ///
     /// Get the Surface as a BitmapSurface (the default implementation).
     ///

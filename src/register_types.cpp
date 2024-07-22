@@ -10,14 +10,15 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
+#include "ultralight_manager.hpp"
+
 #include "windows.h"
 
 using namespace godot;
 
 // Debug console.
 FILE* f;
-
-GodotHTML::UManager* manager;
+GodotHTML::UltralightManager* manager;
 
 void initialize_html_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -30,7 +31,8 @@ void initialize_html_module(ModuleInitializationLevel p_level) {
 
     std::cout << "Initializing Godot HTML." << std::endl;
 
-    manager = new GodotHTML::UManager();
+    manager = new GodotHTML::UltralightManager();
+
 
     ClassDB::register_abstract_class<ViewRect>();
     ClassDB::register_class<HtmlRect>();
@@ -43,7 +45,6 @@ void uninitialize_html_module(ModuleInitializationLevel p_level) {
 	}
 
     std::cout << "Uninitializing Godot HTML." << std::endl;
-    delete manager;
 
     // #region Cleanup console.
         if(f) fclose(f);

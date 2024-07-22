@@ -33,7 +33,7 @@ void HtmlRect::CreateView()
     view_config.is_accelerated = false;
     view_config.is_transparent = true;
 
-    RefPtr<View> view = GodotHTML::UManager::GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
+    RefPtr<View> view = GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
     
     if(view)
     { 

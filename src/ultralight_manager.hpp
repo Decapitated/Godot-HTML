@@ -8,20 +8,25 @@
 #include "godot_file_system.h"
 
 namespace GodotHTML {
-    class UManager {
+    class UltralightManager {
         private:
-            static RefPtr<Renderer> renderer; // Ultralight renderer
+            static UltralightManager* singleton;
 
+            RefPtr<Renderer> renderer; // Ultralight renderer
             GodotFileSystem* file_system = nullptr;
+
+            int32_t frame_count = 0;
 
             void InitPlatform();
             void CreateRenderer();
 
         public:
-            UManager();
-            ~UManager();
+            UltralightManager();
+            ~UltralightManager();
 
-            static RefPtr<Renderer> GetRenderer();
+            static UltralightManager* GetSingleton();
+
+            RefPtr<Renderer> GetRenderer();
 
             void UpdateLogic();
             void RenderFrame();

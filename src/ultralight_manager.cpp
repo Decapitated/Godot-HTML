@@ -1,15 +1,21 @@
 #include "ultralight_manager.hpp"
 
-using namespace GodotHTML;
+#include <godot_cpp/classes/engine.hpp>
 
-RefPtr<Renderer> UManager::renderer;
+using namespace godot;
 
-UManager::UManager() {
+namespace GodotHTML
+{
+
+UltralightManager* GodotHTML::UltralightManager::singleton = nullptr;
+
+UltralightManager::UltralightManager() {
     InitPlatform();
     CreateRenderer();
+    singleton = this;
 };
 
-UManager::~UManager() {
+UltralightManager::~UltralightManager() {
     if(file_system != nullptr)
     {
         delete file_system;
@@ -17,7 +23,12 @@ UManager::~UManager() {
     }
 }
 
-void UManager::InitPlatform()
+UltralightManager *GodotHTML::UltralightManager::GetSingleton()
+{
+    return singleton;
+}
+
+void UltralightManager::InitPlatform()
 {
     ultralight::Config config;
     config.resource_path_prefix = "gdhtml/resources/";
@@ -37,7 +48,7 @@ void UManager::InitPlatform()
     Platform::instance().set_logger(GetDefaultLogger("ultralight.log"));
 }
 
-void UManager::CreateRenderer()
+void UltralightManager::CreateRenderer()
 {
     ///
     /// Create our Renderer (call this only once per application).
@@ -50,14 +61,16 @@ void UManager::CreateRenderer()
     renderer = Renderer::Create();
 }
 
-RefPtr<Renderer> UManager::GetRenderer() {
+RefPtr<Renderer> UltralightManager::GetRenderer() {
     return renderer;
 };
 
-void UManager::UpdateLogic() {
+void UltralightManager::UpdateLogic() {
     renderer->Update();
 };
 
-void UManager::RenderFrame() {
+void UltralightManager::RenderFrame() {
     renderer->Render();
 };
+
+}
