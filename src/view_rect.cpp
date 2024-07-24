@@ -161,7 +161,8 @@ void ViewRect::RenderFrame()
         ///
         /// Psuedo-code to upload Surface's bitmap to GPU texture.
         ///
-        CopyBitmapToTexture(surface->bitmap());
+        auto tmpBitmap = Bitmap::Create(*surface->bitmap());
+        CopyBitmapToTexture(tmpBitmap);
         
         ///
         /// Clear the dirty bounds.
