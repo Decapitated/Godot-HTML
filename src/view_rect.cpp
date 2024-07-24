@@ -180,7 +180,6 @@ void ViewRect::SizeChanged()
 
 void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
 {
-    bitmap->SwapRedBlueChannels();
     auto pixels = bitmap->LockPixelsSafe();
     PackedByteArray arr = PackedByteArray();
     arr.resize(pixels.size());
