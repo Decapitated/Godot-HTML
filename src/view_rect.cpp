@@ -161,7 +161,8 @@ void ViewRect::RenderFrame()
         ///
         /// Psuedo-code to upload Surface's bitmap to GPU texture.
         ///
-        CopyBitmapToTexture(surface->bitmap());
+        auto tmpBitmap = Bitmap::Create(*surface->bitmap());
+        CopyBitmapToTexture(tmpBitmap);
         
         ///
         /// Clear the dirty bounds.
@@ -180,6 +181,7 @@ void ViewRect::SizeChanged()
 
 void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
 {
+    bitmap->SwapRedBlueChannels();
     auto pixels = bitmap->LockPixelsSafe();
     PackedByteArray arr = PackedByteArray();
     arr.resize(pixels.size());
