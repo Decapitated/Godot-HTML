@@ -33,10 +33,6 @@ index_path = "example_site/index.html"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 1
-mouse_filter = 0
-mouse_force_pass_scroll_events = false
-expand_mode = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/VBoxContainer"]
 layout_mode = 2
@@ -74,6 +70,3 @@ text = "Click Me!"
 [node name="InspectorRect" type="InspectorRect" parent="HSplitContainer" node_paths=PackedStringArray("html_rect")]
 html_rect = NodePath("../VBoxContainer/HtmlRect")
 layout_mode = 2
-mouse_filter = 0
-mouse_force_pass_scroll_events = false
-expand_mode = 1

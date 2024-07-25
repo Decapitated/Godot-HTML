@@ -19,6 +19,13 @@ using namespace godot;
 
 ViewRect::ViewRect()
 {
+    // #region Set default values.
+    set_expand_mode(TextureRect::ExpandMode::EXPAND_IGNORE_SIZE);
+    set_mouse_filter(MouseFilter::MOUSE_FILTER_STOP);
+    set_focus_mode(FocusMode::FOCUS_CLICK);
+    set_force_pass_scroll_events(false);
+    // #endregion
+
     image = Ref<Image>();
 
     RenderingServer::get_singleton()->connect("frame_post_draw", Callable(this, "render_frame"));
