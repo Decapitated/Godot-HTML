@@ -186,6 +186,8 @@ namespace godot {
             std::queue<ScrollEvent> scroll_events;
 
             RefPtr<View> view; // Ultralight view
+            RefPtr<View> inspector_view; // Ultralight Inspector view
+
             Ref<ImageTexture> image_texture;
             Ref<Image> image;
 
@@ -207,6 +209,9 @@ namespace godot {
 
             void SetView(RefPtr<View> p_view);
             RefPtr<View> GetView();
+
+            void SetInspectorView(RefPtr<View> p_view);
+            RefPtr<View> GetInspectorView();
 
             void _process(double delta) override;
             void _gui_input(const Ref<InputEvent> &event) override;

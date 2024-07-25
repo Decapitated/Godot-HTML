@@ -22,8 +22,6 @@ namespace godot {
             void _process(double delta) override;
             // void _gui_input(const Ref<InputEvent> &event) override;
 
-            void init(RefPtr<View> p_view);
-
             void set_html_rect(HtmlRect* p_html_rect);
             HtmlRect* get_html_rect();
     };

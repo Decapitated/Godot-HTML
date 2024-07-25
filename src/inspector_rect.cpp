@@ -11,34 +11,6 @@
 
 using namespace godot;
 
-class InspectorListener : public ViewListener
-{
-    private:
-        InspectorRect *inspector;
-    public:
-        InspectorListener(InspectorRect *p_inspector)
-        {
-            inspector = p_inspector;
-        }
-
-        RefPtr<View> OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url) override
-        {
-            Vector2 size = inspector->get_size();
-
-            ViewConfig view_config;
-            view_config.is_accelerated = false;
-            view_config.is_transparent = true;
-
-            RefPtr<View> view = GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
-            if(view)
-            {
-                inspector->SetView(view);
-                return view;
-            }
-            return nullptr;
-        }
-};
-
 void InspectorRect::_bind_methods()
 {
 	ClassDB::bind_method(D_METHOD("get_html_rect"), &InspectorRect::get_html_rect);
@@ -53,22 +25,23 @@ InspectorRect::~InspectorRect() { }
 void InspectorRect::_process(double delta)
 {
     ViewRect::_process(delta);
-    if(!GetView())
+    if(html_rect != nullptr)
     {
-        if(html_rect != nullptr)
+        auto html_rect_view = html_rect->GetView();
+        if(html_rect_view)
         {
-            init(html_rect->GetView());
+            auto view = GetView();
+            auto html_rect_inspector_view = html_rect->GetInspectorView();
+            if(!html_rect_inspector_view)
+            {
+                if(view) SetView(nullptr);
+                html_rect_view->CreateLocalInspectorView();
+            }
+            else if(view != html_rect_inspector_view)
+            {
+                SetView(html_rect_inspector_view);
+            }
         }
-    }
-}
-
-void InspectorRect::init(RefPtr<View> p_view)
-{
-    if(p_view)
-    {
-        InspectorListener* listener = new InspectorListener(this);
-        p_view->set_view_listener(listener);
-        p_view->CreateLocalInspectorView();
     }
 }
 

@@ -12,6 +12,34 @@
 
 using namespace godot;
 
+class ViewRectListener : public ViewListener
+{
+    private:
+        ViewRect *view_rect;
+    public:
+        ViewRectListener(ViewRect *p_view_rect)
+        {
+            view_rect = p_view_rect;
+        }
+
+        RefPtr<View> OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url) override
+        {
+            Vector2 size = view_rect->get_size();
+
+            ViewConfig view_config;
+            view_config.is_accelerated = false;
+            view_config.is_transparent = true;
+
+            RefPtr<View> view = GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
+            if(view)
+            {
+                view_rect->SetInspectorView(view);
+                return view;
+            }
+            return nullptr;
+        }
+};
+
 ViewRect::ViewRect()
 {
     // #region Set default values.
@@ -33,14 +61,33 @@ ViewRect::~ViewRect()
     disconnect("resized", Callable(this, "size_changed"));
 }
 
-void godot::ViewRect::SetView(RefPtr<View> p_view)
+void ViewRect::SetView(RefPtr<View> p_view)
 {
-    if(p_view) view = p_view;
+    if(p_view)
+    {
+        if(view)
+        {
+            delete view->view_listener();
+            view->set_view_listener(nullptr);
+        }
+        view = p_view;
+        view->set_view_listener(new ViewRectListener(this));
+    }
 }
 
-RefPtr<View> godot::ViewRect::GetView()
+RefPtr<View> ViewRect::GetView()
 {
     return view;
+}
+
+void ViewRect::SetInspectorView(RefPtr<View> p_view)
+{
+    if(p_view) inspector_view = p_view;
+}
+
+RefPtr<View> ViewRect::GetInspectorView()
+{
+    return inspector_view;
 }
 
 void ViewRect::_bind_methods()
@@ -131,7 +178,7 @@ void ViewRect::HandleMouseButton(InputEventMouseButton *event)
     }
 }
 
-void godot::ViewRect::HandleMouseMotion(InputEventMouseMotion *event)
+void ViewRect::HandleMouseMotion(InputEventMouseMotion *event)
 {
     auto pos = event->get_position();
     MouseEvent evt;
@@ -144,7 +191,7 @@ void godot::ViewRect::HandleMouseMotion(InputEventMouseMotion *event)
 }
 
 const int GODOT_KEY_OFFSET = 4194300;
-void godot::ViewRect::HandleKey(InputEventKey *event)
+void ViewRect::HandleKey(InputEventKey *event)
 {
     if(!event->is_pressed()) return;
 
