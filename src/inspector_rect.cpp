@@ -39,6 +39,8 @@ void InspectorRect::_process(double delta)
             }
             else if(view != html_rect_inspector_view)
             {
+                auto size = get_size();
+                html_rect_inspector_view->Resize((int)size.x, (int)size.y);
                 SetView(html_rect_inspector_view);
             }
         }
