@@ -12,7 +12,7 @@ A GDExtension, using Ultralight, to render HTML.
 
 ## Versions
 Godot v4.2<br>
-Ultralight v1.3
+Ultralight v1.4.0 Beta
 
 ## CAN-DO
 - Render HTML & CSS, with JS capabilities.
