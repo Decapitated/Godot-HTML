@@ -6,12 +6,7 @@
 #include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>
 
-#include <godot_cpp/classes/input_event_mouse.hpp>
-#include <godot_cpp/classes/input_event_mouse.hpp>
-#include <godot_cpp/classes/input_event_mouse_motion.hpp>
-#include <godot_cpp/classes/input_event_mouse_button.hpp>
-#include <godot_cpp/classes/input_event_key.hpp>
-
+#include <godot_cpp/classes/os.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
@@ -86,68 +81,106 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
 {
     if(auto e = dynamic_cast<InputEventMouseButton*>(*event))
     {
-        MouseButton index = e->get_button_index();
-        // Check if scroll.
-        if(index == MouseButton::MOUSE_BUTTON_WHEEL_UP || index == MouseButton::MOUSE_BUTTON_WHEEL_DOWN)
-        {
-            ScrollEvent evt;
-            evt.type = ScrollEvent::kType_ScrollByPixel;
-            int delta = index == MouseButton::MOUSE_BUTTON_WHEEL_UP ? 1 : -1;
-            evt.delta_x = delta * 10;
-            evt.delta_y = delta * 10;
-            scroll_events.push(evt);
-            events.push(Event::scroll);
-        }
-        else if(index < 4)
-        {
-            auto pos = e->get_position();
-            MouseEvent evt;
-            evt.x = (int)pos.x;
-            evt.y = (int)pos.y;
-            evt.type = e->is_pressed() ? MouseEvent::kType_MouseDown : MouseEvent::kType_MouseUp;
-            switch(index)
-            {
-                case MouseButton::MOUSE_BUTTON_LEFT:
-                    evt.button = MouseEvent::Button::kButton_Left;
-                    break;
-                case MouseButton::MOUSE_BUTTON_MIDDLE:
-                    evt.button = MouseEvent::Button::kButton_Middle;
-                    break;
-                case MouseButton::MOUSE_BUTTON_RIGHT:
-                    evt.button = MouseEvent::Button::kButton_Right;
-                    break;
-            };
-            mouse_events.push(evt);
-            events.push(Event::mouse);
-        }
+        HandleMouseButton(e);
     }
     else if(auto e = dynamic_cast<InputEventMouseMotion*>(*event))
     {
-        auto pos = e->get_position();
-        MouseEvent evt;
-        evt.type = MouseEvent::kType_MouseMoved;
-        evt.x = (int)pos.x;
-        evt.y = (int)pos.y;
-        evt.button = MouseEvent::kButton_None;
-        mouse_events.push(evt);
-        events.push(Event::mouse);
+        HandleMouseMotion(e);
     }
     else if(auto e = dynamic_cast<InputEventKey*>(*event))
     {
-        UtilityFunctions::print("Key");
-        // UtilityFunctions::print(e->as_text_physical_keycode());
-        // KeyEvent evt;
-        // evt.type = KeyEvent::kType_RawKeyDown;
-        // evt.virtual_key_code = KeyCodes::GK_RIGHT;
-        // evt.native_key_code = 0;
-        // evt.modifiers = 0;
-
-        // // You'll need to generate a key identifier from the virtual key code
-        // // when synthesizing events. This function is provided in KeyEvent.h
-        // GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
-
-        // view->FireKeyEvent(evt);
+        HandleKey(e);
     }
+}
+
+void ViewRect::HandleMouseButton(InputEventMouseButton *event)
+{
+    MouseButton index = event->get_button_index();
+    // Check if scroll.
+    if(index == MouseButton::MOUSE_BUTTON_WHEEL_UP || index == MouseButton::MOUSE_BUTTON_WHEEL_DOWN)
+    {
+        ScrollEvent evt;
+        evt.type = ScrollEvent::kType_ScrollByPixel;
+        int delta = index == MouseButton::MOUSE_BUTTON_WHEEL_UP ? 1 : -1;
+        evt.delta_x = delta * 10;
+        evt.delta_y = delta * 10;
+        scroll_events.push(evt);
+        events.push(Event::scroll);
+    }
+    else if(index < 4)
+    {
+        auto pos = event->get_position();
+        MouseEvent evt;
+        evt.x = (int)pos.x;
+        evt.y = (int)pos.y;
+        evt.type = event->is_pressed() ? MouseEvent::kType_MouseDown : MouseEvent::kType_MouseUp;
+        switch(index)
+        {
+            case MouseButton::MOUSE_BUTTON_LEFT:
+                evt.button = MouseEvent::Button::kButton_Left;
+                break;
+            case MouseButton::MOUSE_BUTTON_MIDDLE:
+                evt.button = MouseEvent::Button::kButton_Middle;
+                break;
+            case MouseButton::MOUSE_BUTTON_RIGHT:
+                evt.button = MouseEvent::Button::kButton_Right;
+                break;
+        };
+        mouse_events.push(evt);
+        events.push(Event::mouse);
+    }
+}
+
+void godot::ViewRect::HandleMouseMotion(InputEventMouseMotion *event)
+{
+    auto pos = event->get_position();
+    MouseEvent evt;
+    evt.type = MouseEvent::kType_MouseMoved;
+    evt.x = (int)pos.x;
+    evt.y = (int)pos.y;
+    evt.button = MouseEvent::kButton_None;
+    mouse_events.push(evt);
+    events.push(Event::mouse);
+}
+
+const int GODOT_KEY_OFFSET = 4194300;
+void godot::ViewRect::HandleKey(InputEventKey *event)
+{
+    if(!event->is_pressed()) return;
+
+    auto os = OS::get_singleton();
+
+    int keycode = event->get_keycode();
+    
+    KeyEvent evt;
+    if(os->is_keycode_unicode(keycode))
+    {
+        auto character = String::chr(event->get_unicode());
+        evt.type = KeyEvent::kType_Char;
+        evt.text = character.utf8().get_data();
+    }
+    else
+    {
+        auto modifiers = event->get_modifiers_mask();
+        if(modifiers != 0) return;
+        
+        evt.type = KeyEvent::kType_RawKeyDown;
+        evt.native_key_code = 0;
+        evt.modifiers = 0;
+
+        auto it = WindowsKeyMap.find(keycode);
+        if(it != WindowsKeyMap.end()) {
+            evt.virtual_key_code = it->second;
+        }
+
+        // You'll need to generate a key identifier from the virtual key code
+        // when synthesizing events. This function is provided in KeyEvent.h
+        GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
+    }
+
+    key_events.push(evt);
+    events.push(Event::key);
+    
 }
 
 void ViewRect::RenderFrame()

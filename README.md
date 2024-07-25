@@ -17,10 +17,9 @@ Ultralight v1.4.0 Beta
 ## CAN-DO
 - Render HTML & CSS, with JS capabilities.
 - HTML Inspector
-- Mouse Input
+- Mouse Input & Keyboard Input
 
 ## TO-DO
-- Keyboard Input
 - JS Interop
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
