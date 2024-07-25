@@ -71,6 +71,7 @@ void UltralightManager::UpdateLogic() {
 
 void UltralightManager::RenderFrame() {
     renderer->Render();
+    renderer->RefreshDisplay(0);
 };
 
 }
