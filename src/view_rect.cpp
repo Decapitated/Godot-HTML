@@ -92,7 +92,7 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
         {
             ScrollEvent evt;
             evt.type = ScrollEvent::kType_ScrollByPixel;
-            int delta = index == MouseButton::MOUSE_BUTTON_WHEEL_UP ? -1 : 1;
+            int delta = index == MouseButton::MOUSE_BUTTON_WHEEL_UP ? 1 : -1;
             evt.delta_x = delta * 10;
             evt.delta_y = delta * 10;
             scroll_events.push(evt);
