@@ -1,5 +1,5 @@
 ```
-⚠️WINDOWS ONLY⚠️
+⚠️ WINDOWS ONLY (Currently) ⚠️
 This is very early stages. Feel free to contribute.
 ```
 
