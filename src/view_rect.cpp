@@ -38,6 +38,14 @@ class ViewRectListener : public ViewListener
             }
             return nullptr;
         }
+
+        void OnChangeCursor(ultralight::View* caller, Cursor cursor) override
+        {
+            auto it = view_rect->CursorMap.find(cursor);
+            if(it != view_rect->CursorMap.end()) {
+                view_rect->set_default_cursor_shape(it->second);
+            }
+        }
 };
 
 ViewRect::ViewRect()
@@ -215,8 +223,8 @@ void ViewRect::HandleKey(InputEventKey *event)
         evt.native_key_code = 0;
         evt.modifiers = 0;
 
-        auto it = WindowsKeyMap.find(keycode);
-        if(it != WindowsKeyMap.end()) {
+        auto it = KeyMap.find(keycode);
+        if(it != KeyMap.end()) {
             evt.virtual_key_code = it->second;
         }
 
