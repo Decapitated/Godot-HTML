@@ -17,7 +17,7 @@ Ultralight v1.4.0 Beta
 ## CAN-DO
 - Render HTML & CSS, with JS capabilities.
 - HTML Inspector
-- Mouse Input & Keyboard Input
+- Mouse & Keyboard Input
 
 ## TO-DO
 - Only call render once per frame.
