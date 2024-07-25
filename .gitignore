@@ -1,9 +1,10 @@
 .vscode
 %localappdata%
-ultralight
+ultralight*/
 System Volume Information
 src/*.obj
 demo/ultralight.log
+demo/default
 demo/gdhtml/resources/
 demo/inspector/
 demo/gdhtml/bin/*.dll
