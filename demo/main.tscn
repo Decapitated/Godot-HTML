@@ -1,12 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://w07fainkplgm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3uoig"]
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_size = 15
-shadow_offset = Vector2(0, 10)
+[gd_scene format=3 uid="uid://w07fainkplgm"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -25,48 +17,12 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 1536
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer"]
-layout_mode = 2
-
-[node name="HtmlRect" type="HtmlRect" parent="HSplitContainer/VBoxContainer"]
-index_path = "example_site/index.html"
+[node name="HtmlRect" type="HtmlRect" parent="HSplitContainer"]
+index_path = "example-site/dist/index.html"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="HSplitContainer/VBoxContainer/CenterContainer"]
-custom_minimum_size = Vector2(500, 250)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_3uoig")
-
-[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VBoxContainer/CenterContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/VBoxContainer/CenterContainer/Panel/MarginContainer"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Oh lawd! Jessie made another one!"
-fit_content = true
-
-[node name="Button" type="Button" parent="HSplitContainer/VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Click Me!"
-
 [node name="InspectorRect" type="InspectorRect" parent="HSplitContainer" node_paths=PackedStringArray("html_rect")]
-html_rect = NodePath("../VBoxContainer/HtmlRect")
+html_rect = NodePath("../HtmlRect")
 layout_mode = 2
