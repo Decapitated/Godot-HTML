@@ -270,7 +270,6 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
 
 RefPtr<View> ViewRect::OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url)
 {
-    UtilityFunctions::print("OnCreateInspectorView");
     Vector2 size = get_size();
 
     ViewConfig view_config;
