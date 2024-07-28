@@ -21,6 +21,7 @@ UltralightManager::~UltralightManager() {
         delete file_system;
         file_system = nullptr;
     }
+    singleton = nullptr;
 }
 
 UltralightManager *GodotHTML::UltralightManager::GetSingleton()
