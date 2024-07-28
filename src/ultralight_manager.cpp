@@ -64,15 +64,15 @@ void UltralightManager::CreateRenderer()
 
 RefPtr<Renderer> UltralightManager::GetRenderer() {
     return renderer;
-};
+}
 
 void UltralightManager::UpdateLogic() {
     renderer->Update();
-};
+}
 
 void UltralightManager::RenderFrame() {
     renderer->Render();
     renderer->RefreshDisplay(0);
-};
+}
 
 }
