@@ -12,42 +12,6 @@
 
 using namespace godot;
 
-class ViewRectListener : public ViewListener
-{
-    private:
-        ViewRect *view_rect;
-    public:
-        ViewRectListener(ViewRect *p_view_rect)
-        {
-            view_rect = p_view_rect;
-        }
-
-        RefPtr<View> OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url) override
-        {
-            Vector2 size = view_rect->get_size();
-
-            ViewConfig view_config;
-            view_config.is_accelerated = false;
-            view_config.is_transparent = true;
-
-            RefPtr<View> view = GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
-            if(view)
-            {
-                view_rect->SetInspectorView(view);
-                return view;
-            }
-            return nullptr;
-        }
-
-        void OnChangeCursor(ultralight::View* caller, Cursor cursor) override
-        {
-            auto it = view_rect->CursorMap.find(cursor);
-            if(it != view_rect->CursorMap.end()) {
-                view_rect->set_default_cursor_shape(it->second);
-            }
-        }
-};
-
 ViewRect::ViewRect()
 {
     // #region Set default values.
@@ -75,22 +39,18 @@ void ViewRect::SetView(RefPtr<View> p_view)
     {
         if(view)
         {
-            delete view->view_listener();
             view->set_view_listener(nullptr);
+            view->set_load_listener(nullptr);
         }
         view = p_view;
-        view->set_view_listener(new ViewRectListener(this));
+        view->set_view_listener(this);
+        view->set_load_listener(this);
     }
 }
 
 RefPtr<View> ViewRect::GetView()
 {
     return view;
-}
-
-void ViewRect::SetInspectorView(RefPtr<View> p_view)
-{
-    if(p_view) inspector_view = p_view;
 }
 
 RefPtr<View> ViewRect::GetInspectorView()
@@ -293,3 +253,33 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
         image_texture->update(image);
     }
 }
+
+//#region ViewListener Callbacks
+
+RefPtr<View> ViewRect::OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url)
+{
+    UtilityFunctions::print("OnCreateInspectorView");
+    Vector2 size = get_size();
+
+    ViewConfig view_config;
+    view_config.is_accelerated = false;
+    view_config.is_transparent = true;
+
+    RefPtr<View> temp_view = GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
+    if(temp_view)
+    {
+        inspector_view = temp_view;
+        return inspector_view;
+    }
+    return nullptr;
+}
+
+void ViewRect::OnChangeCursor(ultralight::View* caller, Cursor cursor)
+{
+    auto it = CursorMap.find(cursor);
+    if(it != CursorMap.end()) {
+        set_default_cursor_shape(it->second);
+    }
+}
+
+//#endregion
