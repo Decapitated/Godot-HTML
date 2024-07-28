@@ -12,6 +12,8 @@
 
 using namespace godot;
 
+//#region ViewRect Public methods.
+
 ViewRect::ViewRect()
 {
     // #region Set default values.
@@ -57,6 +59,10 @@ RefPtr<View> ViewRect::GetInspectorView()
 {
     return inspector_view;
 }
+
+//#endregion
+
+//#region Godot methods.
 
 void ViewRect::_bind_methods()
 {
@@ -107,6 +113,10 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
         HandleKey(e);
     }
 }
+
+//#endregion
+
+//#region ViewRect Private methods.
 
 void ViewRect::HandleMouseButton(InputEventMouseButton *event)
 {
@@ -253,6 +263,8 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
         image_texture->update(image);
     }
 }
+
+//#endregion
 
 //#region ViewListener Callbacks
 
