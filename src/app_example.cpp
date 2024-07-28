@@ -30,6 +30,6 @@ void AppExample::SetupJS(JSContextRef context)
 
 JSValueRef AppExample::ExampleCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef *exception)
 {
-    UtilityFunctions::print("ExampleCallback");
+    UtilityFunctions::print("ExampleCallback called from JS!");
     return JSValueMakeNull(ctx);
 }
