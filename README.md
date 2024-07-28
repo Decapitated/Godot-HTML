@@ -10,9 +10,21 @@ A GDExtension, using Ultralight, to render HTML.
 <img src="docs/images/EditorView.png">
 <img src="docs/images/InspectorView.png">
 
+
 ## Versions
 Godot v4.2<br>
 Ultralight v1.4.0 Beta
+
+## Table of contents
+- [What can this plugin do?](#can-do)
+- [What's left to do?](#to-do)
+- [Prerequisites](#prerequisites)
+- [Project Structure](#project-structure)
+- [Building](#building)
+  - [Clone godot-cpp](#clone-godot-cpp)
+  - [Build Godot C++ bindings](#build-godot-cpp-bindings)
+  - [Build plugin](#build-plugin)
+- [JS Interop](#js-interop)
 
 ## CAN-DO
 - Render HTML & CSS, with JS capabilities.
