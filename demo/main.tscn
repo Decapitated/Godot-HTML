@@ -17,12 +17,10 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 1536
 
-[node name="HtmlRect" type="HtmlRect" parent="HSplitContainer"]
+[node name="AppExample" type="AppExample" parent="HSplitContainer"]
 index_path = "example-site/dist/index.html"
-custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="InspectorRect" type="InspectorRect" parent="HSplitContainer" node_paths=PackedStringArray("html_rect")]
-html_rect = NodePath("../HtmlRect")
+html_rect = NodePath("../AppExample")
 layout_mode = 2

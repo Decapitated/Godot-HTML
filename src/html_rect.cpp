@@ -61,3 +61,14 @@ godot::String HtmlRect::get_index() const
 {
 	return index_path;
 }
+
+void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url)
+{
+    // Acquire the JS execution context for the current page.
+    auto scoped_context = caller->LockJSContext();
+    
+    // Typecast to the underlying JSContextRef.
+    JSContextRef context = (*scoped_context);
+    
+    SetupJS(context);
+}
