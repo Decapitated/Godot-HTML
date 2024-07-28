@@ -12,8 +12,8 @@ A GDExtension, using Ultralight, to render HTML.
 
 
 ## Versions
-Godot v4.2<br>
-Ultralight v1.4.0 Beta
+- Godot 4.2
+- Ultralight 1.4.0 Beta
 
 ## Table of contents
 - [What can this plugin do?](#can-do)
