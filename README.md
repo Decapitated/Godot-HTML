@@ -34,6 +34,9 @@ A GDExtension, using Ultralight, to render HTML.
 
 ## TO-DO
 - Only call render once per frame.
+- Add better support for GDScript.
+  - Allow better interaction between JS and C++.
+  - Users should be able to easily connect GDScript to JS, instead of having to extend the plugin.
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
 
