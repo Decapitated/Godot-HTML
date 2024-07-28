@@ -18,10 +18,10 @@ Ultralight v1.4.0 Beta
 - Render HTML & CSS, with JS capabilities.
 - HTML Inspector
 - Mouse & Keyboard Input
+- JS Interop
 
 ## TO-DO
 - Only call render once per frame.
-- JS Interop
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
 
@@ -74,3 +74,10 @@ From the main folder.
 ```
 scons platform=<platform>
 ```
+
+## JS Interop
+Using JS Interop requires an understanding of Ultralight.
+
+Check out the [Ultralight Docs](https://docs.ultralig.ht/docs/about-javascript-interop) for more details.
+
+Checkout `AppExample` for a basic implementation of calling a C++ function from JS.

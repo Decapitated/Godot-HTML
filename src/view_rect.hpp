@@ -22,7 +22,7 @@ using namespace ultralight;
 
 namespace godot {
 
-    class ViewRect : public TextureRect {
+    class ViewRect : public TextureRect, public ViewListener, public LoadListener {
         GDCLASS(ViewRect, TextureRect);
 
         private:
@@ -47,6 +47,10 @@ namespace godot {
 
             void CopyBitmapToTexture(RefPtr<Bitmap> bitmap);
 
+            // ViewListener overrides.
+            RefPtr<View> OnCreateInspectorView(ultralight::View *caller, bool is_local, const ultralight::String &inspected_url) override;
+            void OnChangeCursor(ultralight::View *caller, Cursor cursor) override;
+
         protected:
             static void _bind_methods();
 
@@ -57,7 +61,6 @@ namespace godot {
             void SetView(RefPtr<View> p_view);
             RefPtr<View> GetView();
 
-            void SetInspectorView(RefPtr<View> p_view);
             RefPtr<View> GetInspectorView();
 
             void _process(double delta) override;

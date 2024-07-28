@@ -5,6 +5,7 @@
 #include "view_rect.hpp"
 #include "html_rect.hpp"
 #include "inspector_rect.hpp"
+#include "app_example.hpp"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -36,6 +37,7 @@ void initialize_html_module(ModuleInitializationLevel p_level) {
     ClassDB::register_abstract_class<ViewRect>();
     ClassDB::register_class<HtmlRect>();
     ClassDB::register_class<InspectorRect>();
+    ClassDB::register_class<AppExample>();
 }
 
 void uninitialize_html_module(ModuleInitializationLevel p_level) {
