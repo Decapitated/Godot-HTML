@@ -18,14 +18,14 @@ sources = Glob("src/*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "demo/gdhtml/bin/libgdhtml.{}.{}.framework/libgdhtml.{}.{}".format(
+        "demo/addons/gdhtml/bin/libgdhtml.{}.{}.framework/libgdhtml.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "demo/gdhtml/bin/libgdhtml{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "demo/addons/gdhtml/bin/libgdhtml{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
