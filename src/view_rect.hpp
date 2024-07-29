@@ -1,7 +1,7 @@
 #ifndef VIEWRECT_H
 #define VIEWRECT_H
 
-#include "ultralight_manager.hpp"
+#include "ultralight_singleton.hpp"
 
 #include <queue>
 

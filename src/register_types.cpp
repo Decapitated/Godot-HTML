@@ -1,6 +1,6 @@
 #include "register_types.hpp"
 
-#include "ultralight_manager.hpp"
+#include "ultralight_singleton.hpp"
 
 #include "view_rect.hpp"
 #include "html_rect.hpp"
@@ -8,36 +8,28 @@
 #include "app_example.hpp"
 
 #include <gdextension_interface.h>
-#include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
-
-#include "ultralight_manager.hpp"
-
-#include "windows.h"
+#include <godot_cpp/core/defs.hpp>
+#include <godot_cpp/classes/engine.hpp>
 
 using namespace godot;
 
-// Debug console.
-FILE* f;
-GodotHTML::UltralightManager* manager;
+UltralightSingleton* ultralight_singleton = nullptr;
 
 void initialize_html_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-    // #region Initialize console.
-        AllocConsole();
-        freopen_s(&f, "CONOUT$", "w", stdout);
-    // #endregion
 
-    std::cout << "Initializing Godot HTML." << std::endl;
+    GDREGISTER_CLASS(UltralightSingleton);
+    ultralight_singleton = memnew(UltralightSingleton); // memnew is super important.
+    Engine::get_singleton()->register_singleton("UltralightSingleton", ultralight_singleton);
 
-    manager = new GodotHTML::UltralightManager();
+    GDREGISTER_ABSTRACT_CLASS(ViewRect);
+    GDREGISTER_CLASS(HtmlRect);
+    GDREGISTER_CLASS(InspectorRect);
+    GDREGISTER_CLASS(AppExample);
 
-    ClassDB::register_abstract_class<ViewRect>();
-    ClassDB::register_class<HtmlRect>();
-    ClassDB::register_class<InspectorRect>();
-    ClassDB::register_class<AppExample>();
 }
 
 void uninitialize_html_module(ModuleInitializationLevel p_level) {
@@ -45,14 +37,8 @@ void uninitialize_html_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-    std::cout << "Uninitializing Godot HTML." << std::endl;
-
-    delete manager;
-
-    // #region Cleanup console.
-        if(f) fclose(f);
-        FreeConsole();
-    // #endregion
+    Engine::get_singleton()->unregister_singleton("UltralightSingleton");
+    delete ultralight_singleton;
 }
 
 extern "C" {

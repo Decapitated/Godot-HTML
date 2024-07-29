@@ -1,5 +1,7 @@
 #include "view_rect.hpp"
 
+#include "ultralight_singleton.hpp"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
@@ -212,10 +214,6 @@ void ViewRect::RenderFrame()
 {
     if(!view) return;
     ///
-    /// Render all active Views (this updates the Surface for each View).
-    ///
-    GodotHTML::UltralightManager::GetSingleton()->RenderFrame();
-    ///
     /// Get the Surface as a BitmapSurface (the default implementation).
     ///
     BitmapSurface* surface = (BitmapSurface*)(view->surface());
@@ -276,7 +274,7 @@ RefPtr<View> ViewRect::OnCreateInspectorView(ultralight::View* caller, bool is_l
     view_config.is_accelerated = false;
     view_config.is_transparent = true;
 
-    RefPtr<View> temp_view = GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
+    RefPtr<View> temp_view = UltralightSingleton::get_singleton()->CreateView((int)size.x, (int)size.y, view_config, nullptr);
     if(temp_view)
     {
         inspector_view = temp_view;
