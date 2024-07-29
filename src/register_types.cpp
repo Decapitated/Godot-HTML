@@ -14,7 +14,7 @@
 
 using namespace godot;
 
-UltralightSingleton* ultralight_singleton = nullptr;
+static UltralightSingleton* ultralight_singleton = nullptr;
 
 void initialize_html_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
