@@ -18,6 +18,7 @@ A GDExtension, using Ultralight, to render HTML.
 ## Table of contents
 - [What can this plugin do?](#can-do)
 - [What's left to do?](#to-do)
+- [Limitations](#ultralight-limitations)
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Building](#building)
