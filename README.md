@@ -33,7 +33,12 @@ A GDExtension, using Ultralight, to render HTML.
 - JS Interop
 
 ## TO-DO
-- Only call render once per frame.
+- Find fix for not importing SVG/any imported Resource inside HTML folder.
+  - Only relevant when exporting the demo project.
+  - `FileAccess` can't access imported Resources.
+    - It can access non-resources via `res://folder/file.html`. These files will be placed in the `.pck`, preventing them from being easily changed.
+    - Non-resources are included in the `.pck` via the Godot `Export Configuration`.
+- Find fix for videos and `.webp` not loading.
 - Add better support for GDScript.
   - Allow better interaction between JS and C++.
   - Users should be able to easily connect GDScript to JS, instead of having to extend the plugin.
