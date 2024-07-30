@@ -7,9 +7,9 @@ This is very early stages. Feel free to contribute.
 
 A GDExtension, using Ultralight, to render HTML.
 
+<img src="docs/images/WebView.png">
 <img src="docs/images/EditorView.png">
 <img src="docs/images/InspectorView.png">
-
 
 ## Versions
 - Godot 4.2
