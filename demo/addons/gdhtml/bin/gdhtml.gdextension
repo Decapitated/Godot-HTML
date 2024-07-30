@@ -5,6 +5,13 @@ compatibility_minimum = "4.2"
 
 [dependencies]
 
+windows.debug.x86_64 = {
+    "res://addons/gdhtml/bin/Ultralight.dll" : "",
+    "res://addons/gdhtml/bin/UltralightCore.dll" : "",
+    "res://addons/gdhtml/bin/WebCore.dll" : "",
+    "res://addons/gdhtml/bin/AppCore.dll" : "",
+}
+
 windows.release.x86_64 = {
     "res://addons/gdhtml/bin/Ultralight.dll" : "",
     "res://addons/gdhtml/bin/UltralightCore.dll" : "",
