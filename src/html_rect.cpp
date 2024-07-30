@@ -46,7 +46,15 @@ void HtmlRect::CreateView()
 bool HtmlRect::LoadIndex(RefPtr<View> view)
 {
     if(index_path.is_empty()) return false;
-    view->LoadURL(("file:///"+index_path).utf8().get_data());
+    auto path_parts = index_path.split("://");
+    if(path_parts.size() == 1) 
+    {
+        view->LoadURL(("file:///"+index_path).utf8().get_data());
+    }
+    else
+    {
+        view->LoadURL(index_path.utf8().get_data());
+    }
     return true;
 }
 
