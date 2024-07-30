@@ -18,7 +18,7 @@ grow_vertical = 2
 split_offset = 1536
 
 [node name="AppExample" type="AppExample" parent="HSplitContainer"]
-index_path = "example-site/dist/index.html"
+index_path = "example-site/index.html"
 layout_mode = 2
 
 [node name="InspectorRect" type="InspectorRect" parent="HSplitContainer" node_paths=PackedStringArray("html_rect")]

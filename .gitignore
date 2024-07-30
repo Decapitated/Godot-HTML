@@ -12,6 +12,7 @@ demo/addons/gdhtml/bin/*.*.*.*.dll
 demo/addons/gdhtml/bin/*.*.*.*.exp
 demo/addons/gdhtml/bin/*.*.*.*.lib
 demo/example-site/**/**.*.import
-demo_build/
+demo/build/
+demo/example-site/
 .sconsign.dblite
 ~*
