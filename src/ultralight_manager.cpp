@@ -32,7 +32,7 @@ UltralightManager *GodotHTML::UltralightManager::GetSingleton()
 void UltralightManager::InitPlatform()
 {
     ultralight::Config config;
-    config.resource_path_prefix = "gdhtml/resources/";
+    config.resource_path_prefix = "addons/gdhtml/resources/";
     Platform::instance().set_config(config);
 
     ///

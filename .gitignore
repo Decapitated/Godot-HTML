@@ -6,11 +6,12 @@ src/*.obj
 demo/ultralight.log
 demo/default
 demo/inspector/
-demo/gdhtml/resources/
-demo/gdhtml/bin/*.dll
-demo/gdhtml/bin/*.*.*.*.dll
-demo/gdhtml/bin/*.*.*.*.exp
-demo/gdhtml/bin/*.*.*.*.lib
+demo/addons/gdhtml/resources/
+demo/addons/gdhtml/bin/*.dll
+demo/addons/gdhtml/bin/*.*.*.*.dll
+demo/addons/gdhtml/bin/*.*.*.*.exp
+demo/addons/gdhtml/bin/*.*.*.*.lib
 demo/example-site/**/**.*.import
+demo_build/
 .sconsign.dblite
 ~*
