@@ -38,13 +38,19 @@ A GDExtension, using Ultralight, to render HTML.
   - `FileAccess` can't access imported Resources.
     - It can access non-resources via `res://folder/file.html`. These files will be placed in the `.pck`, preventing them from being easily changed.
     - Non-resources are included in the `.pck` via the Godot `Export Configuration`.
-- Find fix for videos and `.webp` not loading.
 - Add better support for GDScript.
   - Allow better interaction between JS and C++.
   - Users should be able to easily connect GDScript to JS, instead of having to extend the plugin.
 - Make sure remote websites can't access C++ code via JS interop.
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
+
+## Ultralight Limitations
+Ultralight works for most web features. Check out the [missing features](https://github.com/ultralight-ux/Ultralight/issues/178).
+
+Some of the notable limitations are:
+- `.webp`
+- HTML5 Video/Audio
 
 ## Prerequisites
 - Setup [compiling](https://docs.godotengine.org/en/stable/contributing/development/compiling/compiling_for_windows.html) for Godot
