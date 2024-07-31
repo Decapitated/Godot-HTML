@@ -35,6 +35,7 @@ A GDExtension, using Ultralight, to render HTML.
 
 ## TO-DO
 - Find fix for not importing SVG/any imported Resource inside HTML folder.
+  - [Godot Proposal Discussion](https://github.com/godotengine/godot-proposals/discussions/10330)
   - Only relevant when exporting the demo project.
   - `FileAccess` can't access imported Resources.
     - It can access non-resources via `res://folder/file.html`. These files will be placed in the `.pck`, preventing them from being easily changed.
@@ -61,28 +62,19 @@ Some of the notable limitations are:
 Your project should look like this before building the plugin.
 ```
 main_folder/
-|
-+--demo/                  # game example/demo to test the extension
-  |
-  +--addons/              # addons
-    |
++--demo/                    # game example/demo to test the extension
+  +--addons/                # addons
     +--plugin_folder/
-      |
       +--bin/               # plugin build folder / Other libraries
         +--Ultralight.dll
         +--UltralightCore.dll
         +--WebCore.dll
         +--AppCore.dll
-      |
       +--resources/         # Ultralight resources folder (Copied from SDK folder)
-  |
-  +--inspector/           # Ultralight inspector folder (Copied from SDK folder)
-|
-+--godot-cpp/             # C++ bindings
-|
-+--src/                   # Source code of the extension we are building
-|
-+--ultralight/            # Ultralight SDK
+  +--inspector/             # Ultralight inspector folder (Copied from SDK folder)
++--godot-cpp/               # C++ bindings
++--src/                     # Source code of the extension we are building
++--ultralight/              # Ultralight SDK
 ```
 
 ## Building
