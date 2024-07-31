@@ -34,12 +34,6 @@ A GDExtension, using Ultralight, to render HTML.
 - JS Interop
 
 ## TO-DO
-- Find fix for not importing SVG/any imported Resource inside HTML folder.
-  - [Godot Proposal Discussion](https://github.com/godotengine/godot-proposals/discussions/10330)
-  - Only relevant when exporting the demo project.
-  - `FileAccess` can't access imported Resources.
-    - It can access non-resources via `res://folder/file.html`. These files will be placed in the `.pck`, preventing them from being easily changed.
-    - Non-resources are included in the `.pck` via the Godot `Export Configuration`.
 - Add better support for GDScript.
   - Allow better interaction between JS and C++.
   - Users should be able to easily connect GDScript to JS, instead of having to extend the plugin.
@@ -103,3 +97,16 @@ Using JS Interop requires an understanding of Ultralight.
 Check out the [Ultralight Docs](https://docs.ultralig.ht/docs/about-javascript-interop) for more details.
 
 Checkout `AppExample` for a basic implementation of calling a C++ function from JS.
+
+## Exporting Godot Project
+Once you're ready to export your game/project make sure to:
+<table>
+  <tr>
+    <td>Include html files in export via `Export Configuration`.</td>
+    <td><img src="docs/images/ExportConfiguration.png"></td>
+  </tr>
+  <tr>
+    <td>For auto imported resources, select `Keep File (No Import)`.</td>
+    <td><img src="docs/images/NoResourceImport.png"></td>
+  </tr>
+<table>
