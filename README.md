@@ -1,11 +1,11 @@
 ```
-⚠️ WINDOWS ONLY (Currently) ⚠️
-This is very early stages. Feel free to contribute.
-If someone on x64 Linux/Mac could test it, please let me know.
+⚠️ ONLY TESTED ON WINDOWS ⚠️
+This project doesn't include anything that is platform specific.
+So there should be no issues.
+If someone on x64 Linux/Mac could test, please let me know.
 ```
 
 # Godot HTML
-
 A GDExtension, using Ultralight, to render HTML.
 
 <img src="docs/images/WebView.png">
