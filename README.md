@@ -64,15 +64,17 @@ main_folder/
 |
 +--demo/                  # game example/demo to test the extension
   |
-  +--plugin_folder/
+  +--addons/              # addons
     |
-    +--bin/               # plugin build folder / Other libraries
-      +--Ultralight.dll
-      +--UltralightCore.dll
-      +--WebCore.dll
-      +--AppCore.dll
-    |
-    +--resources/         # Ultralight resources folder (Copied from SDK folder)
+    +--plugin_folder/
+      |
+      +--bin/               # plugin build folder / Other libraries
+        +--Ultralight.dll
+        +--UltralightCore.dll
+        +--WebCore.dll
+        +--AppCore.dll
+      |
+      +--resources/         # Ultralight resources folder (Copied from SDK folder)
   |
   +--inspector/           # Ultralight inspector folder (Copied from SDK folder)
 |
