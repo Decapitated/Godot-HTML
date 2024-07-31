@@ -5,6 +5,20 @@ compatibility_minimum = "4.2"
 
 [dependencies]
 
+macos.debug = {
+    "res://addons/gdhtml/bin/libUltralight.dylib" : "",
+    "res://addons/gdhtml/bin/libUltralightCore.dylib" : "",
+    "res://addons/gdhtml/bin/libWebCore.dylib" : "",
+    "res://addons/gdhtml/bin/libAppCore.dylib" : "",
+}
+
+macos.release = {
+    "res://addons/gdhtml/bin/libUltralight.dylib" : "",
+    "res://addons/gdhtml/bin/libUltralightCore.dylib" : "",
+    "res://addons/gdhtml/bin/libWebCore.dylib" : "",
+    "res://addons/gdhtml/bin/libAppCore.dylib" : "",
+}
+
 windows.debug.x86_64 = {
     "res://addons/gdhtml/bin/Ultralight.dll" : "",
     "res://addons/gdhtml/bin/UltralightCore.dll" : "",
@@ -19,21 +33,25 @@ windows.release.x86_64 = {
     "res://addons/gdhtml/bin/AppCore.dll" : "",
 }
 
+linux.debug.x86_64 = {
+    "res://addons/gdhtml/bin/libUltralight.so" : "",
+    "res://addons/gdhtml/bin/libUltralightCore.so" : "",
+    "res://addons/gdhtml/bin/libWebCore.so" : "",
+    "res://addons/gdhtml/bin/libAppCore.so" : "",
+}
+
+linux.release.x86_64 = {
+    "res://addons/gdhtml/bin/libUltralight.so" : "",
+    "res://addons/gdhtml/bin/libUltralightCore.so" : "",
+    "res://addons/gdhtml/bin/libWebCore.so" : "",
+    "res://addons/gdhtml/bin/libAppCore.so" : "",
+}
+
 [libraries]
 
 macos.debug = "res://addons/gdhtml/bin/libgdhtml.macos.template_debug.framework"
 macos.release = "res://addons/gdhtml/bin/libgdhtml.macos.template_release.framework"
-windows.debug.x86_32 = "res://addons/gdhtml/bin/libgdhtml.windows.template_debug.x86_32.dll"
-windows.release.x86_32 = "res://addons/gdhtml/bin/libgdhtml.windows.template_release.x86_32.dll"
 windows.debug.x86_64 = "res://addons/gdhtml/bin/libgdhtml.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://addons/gdhtml/bin/libgdhtml.windows.template_release.x86_64.dll"
 linux.debug.x86_64 = "res://addons/gdhtml/bin/libgdhtml.linux.template_debug.x86_64.so"
 linux.release.x86_64 = "res://addons/gdhtml/bin/libgdhtml.linux.template_release.x86_64.so"
-linux.debug.arm64 = "res://addons/gdhtml/bin/libgdhtml.linux.template_debug.arm64.so"
-linux.release.arm64 = "res://addons/gdhtml/bin/libgdhtml.linux.template_release.arm64.so"
-linux.debug.rv64 = "res://addons/gdhtml/bin/libgdhtml.linux.template_debug.rv64.so"
-linux.release.rv64 = "res://addons/gdhtml/bin/libgdhtml.linux.template_release.rv64.so"
-android.debug.x86_64 = "res://addons/gdhtml/bin/libgdhtml.android.template_debug.x86_64.so"
-android.release.x86_64 = "res://addons/gdhtml/bin/libgdhtml.android.template_release.x86_64.so"
-android.debug.arm64 = "res://addons/gdhtml/bin/libgdhtml.android.template_debug.arm64.so"
-android.release.arm64 = "res://addons/gdhtml/bin/libgdhtml.android.template_release.arm64.so"

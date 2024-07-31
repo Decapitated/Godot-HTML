@@ -1,6 +1,7 @@
 ```
 ⚠️ WINDOWS ONLY (Currently) ⚠️
 This is very early stages. Feel free to contribute.
+If someone on x64 Linux/Mac could test it, please let me know.
 ```
 
 # Godot HTML
