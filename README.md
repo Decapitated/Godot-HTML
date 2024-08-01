@@ -59,7 +59,7 @@ Your project should look like this before building the plugin.
 main_folder/
 +--demo/                    # game example/demo to test the extension
   +--addons/                # addons
-    +--plugin_folder/
+    +--gdhtml/              # plugin folder
       +--bin/               # plugin build folder / Other libraries
         +--Ultralight.dll
         +--UltralightCore.dll
