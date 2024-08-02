@@ -51,5 +51,5 @@ void UltralightSingleton::RenderFrame()
 
 RefPtr<View> godot::UltralightSingleton::CreateView(uint32_t width, uint32_t height, const ViewConfig &config, RefPtr<Session> session)
 {
-    return GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView(width, height, config, nullptr);
+    return GodotHTML::UltralightManager::GetSingleton()->GetRenderer()->CreateView(std::max(width, (uint32_t)1), std::max(height, (uint32_t)1), config, nullptr);
 }

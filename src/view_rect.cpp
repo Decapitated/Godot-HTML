@@ -252,6 +252,7 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
     if(image.is_null())
     {
         image = Image::create_from_data(bitmap->width(), bitmap->height(), false, Image::FORMAT_RGBA8, arr);
+        if(!image.is_valid() || image->is_empty()) return;
         image_texture = ImageTexture::create_from_image(image);
         set_texture(image_texture);
     }
