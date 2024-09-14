@@ -14,7 +14,7 @@
 
 using namespace godot;
 
-//#region ViewRect Public methods.
+#pragma region ViewRect Public methods.
 
 ViewRect::ViewRect()
 {
@@ -62,9 +62,9 @@ RefPtr<View> ViewRect::GetInspectorView()
     return inspector_view;
 }
 
-//#endregion
+#pragma endregion
 
-//#region Godot methods.
+#pragma region Godot methods.
 
 void ViewRect::_bind_methods()
 {
@@ -116,9 +116,9 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
     }
 }
 
-//#endregion
+#pragma endregion
 
-//#region ViewRect Private methods.
+#pragma region ViewRect Private methods.
 
 void ViewRect::HandleMouseButton(InputEventMouseButton *event)
 {
@@ -179,31 +179,38 @@ void ViewRect::HandleKey(InputEventKey *event)
 
     int keycode = event->get_keycode();
     
-    KeyEvent evt;
+    // If Unicode, push character to key_events.
     if(os->is_keycode_unicode(keycode))
     {
+        KeyEvent evt;
         auto character = String::chr(event->get_unicode());
         evt.type = KeyEvent::kType_Char;
         evt.text = character.utf8().get_data();
+        key_events.push(evt);
+        events.push(Event::key);
     }
-    else
-    {
-        auto modifiers = event->get_modifiers_mask();
-        if(modifiers != 0) return;
-        
-        evt.type = KeyEvent::kType_RawKeyDown;
-        evt.native_key_code = 0;
-        evt.modifiers = 0;
 
-        auto it = KeyMap.find(keycode);
-        if(it != KeyMap.end()) {
-            evt.virtual_key_code = it->second;
+    // Always submit raw key events.
+    KeyEvent evt;
+    evt.type = KeyEvent::kType_RawKeyDown;
+    auto event_it = KeyMap.find(keycode);
+    if(event_it != KeyMap.end()) {
+        // evt.native_key_code = event_it->second;
+        evt.virtual_key_code = event_it->second;
+    }
+    // Convert godot modifiers to ultralight modifiers.
+    auto modifiers = event->get_modifiers_mask();
+    uint8_t ultralightModifier = 0;
+    for (const auto& [godotMask, ultralightMask] : ModifierMap) {
+        if (modifiers & godotMask) {
+            ultralightModifier |= ultralightMask;
         }
-
-        // You'll need to generate a key identifier from the virtual key code
-        // when synthesizing events. This function is provided in KeyEvent.h
-        GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
     }
+    evt.modifiers = ultralightModifier;
+
+    // You'll need to generate a key identifier from the virtual key code
+    // when synthesizing events. This function is provided in KeyEvent.h
+    GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
 
     key_events.push(evt);
     events.push(Event::key);
@@ -263,9 +270,9 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
     }
 }
 
-//#endregion
+#pragma endregion
 
-//#region ViewListener Callbacks
+#pragma region ViewListener Callbacks
 
 RefPtr<View> ViewRect::OnCreateInspectorView(ultralight::View* caller, bool is_local, const ultralight::String& inspected_url)
 {
@@ -292,4 +299,4 @@ void ViewRect::OnChangeCursor(ultralight::View* caller, Cursor cursor)
     }
 }
 
-//#endregion
+#pragma endregion

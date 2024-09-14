@@ -21,6 +21,11 @@ UltralightManager::~UltralightManager() {
         delete file_system;
         file_system = nullptr;
     }
+    if(clipboard != nullptr)
+    {
+        delete clipboard;
+        clipboard = nullptr;
+    }
     singleton = nullptr;
 }
 
@@ -42,6 +47,9 @@ void UltralightManager::InitPlatform()
 
     file_system = new GodotFileSystem();
     Platform::instance().set_file_system(file_system);
+
+    clipboard = new GodotClipboard();
+    Platform::instance().set_clipboard(clipboard);
 
     ///
     /// Use the default logger (writes to a log file)

@@ -239,6 +239,14 @@ namespace godot {
                 {Key::KEY_BRACERIGHT, KeyCodes::GK_OEM_6},
                 {Key::KEY_ASCIITILDE, KeyCodes::GK_OEM_3},
             };
+    
+            const std::unordered_map<uint64_t, uint8_t> ModifierMap = {
+                {KEY_MASK_ALT, KeyEvent::kMod_AltKey},
+                {KEY_MASK_CTRL, KeyEvent::kMod_CtrlKey},
+                {KEY_MASK_META, KeyEvent::kMod_MetaKey},
+                {KEY_MASK_SHIFT, KeyEvent::kMod_ShiftKey},
+                {KEY_MASK_CMD_OR_CTRL, KeyEvent::kMod_CtrlKey}  // Mapping CMD_OR_CTRL to Ctrl for simplicity
+            };
     };
 
 }
