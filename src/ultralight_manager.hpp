@@ -5,7 +5,7 @@
 #include <AppCore/Platform.h>
 #include <JavaScriptCore/JavaScript.h>
 
-#include "godot_file_system.h"
+#include "godot_file_system.hpp"
 
 namespace GodotHTML {
     class UltralightManager {
