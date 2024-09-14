@@ -19,7 +19,6 @@ namespace GodotHTML {
             GodotFileSystem* file_system = nullptr;
             GodotClipboard* clipboard = nullptr;
 
-
             int32_t frame_count = 0;
 
             void InitPlatform();
