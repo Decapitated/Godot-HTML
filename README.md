@@ -13,7 +13,7 @@ A GDExtension, using Ultralight, to render HTML.
 <img src="docs/images/InspectorView.png">
 
 ## Versions
-- Godot 4.2
+- Godot 4.2+
 - Ultralight 1.4.0 Beta
 
 ## Table of contents
