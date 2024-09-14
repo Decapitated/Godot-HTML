@@ -116,6 +116,18 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
     }
 }
 
+void ViewRect::_notification(int what)
+{
+    if(what == NOTIFICATION_EDITOR_PRE_SAVE)
+    {
+        set_texture(nullptr);
+    }
+    else if(what == NOTIFICATION_EDITOR_POST_SAVE)
+    {
+        set_texture(image_texture);
+    }
+}
+
 #pragma endregion
 
 #pragma region ViewRect Private methods.
