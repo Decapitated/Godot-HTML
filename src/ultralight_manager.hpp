@@ -6,6 +6,9 @@
 #include <JavaScriptCore/JavaScript.h>
 
 #include "godot_file_system.hpp"
+#include "godot_clipboard.hpp"
+
+using namespace ultralight;
 
 namespace GodotHTML {
     class UltralightManager {
@@ -14,6 +17,8 @@ namespace GodotHTML {
 
             RefPtr<Renderer> renderer; // Ultralight renderer
             GodotFileSystem* file_system = nullptr;
+            GodotClipboard* clipboard = nullptr;
+
 
             int32_t frame_count = 0;
 
