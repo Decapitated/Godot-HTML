@@ -1,5 +1,7 @@
 #include "html_rect.hpp"
 
+#include <functional>
+
 #include "godot/ultralight_singleton/ultralight_singleton.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
@@ -87,6 +89,14 @@ Dictionary HtmlRect::_on_dom_ready_call(const String &url)
     return _on_dom_ready(url);
 }
 
+JSValueRef CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
+{
+    UtilityFunctions::print("Callback");
+    Callable callable = (Variant)(GDExtensionVariantPtr)JSObjectGetPrivate(function);
+    UtilityFunctions::print(callable);
+    return JSValueMakeNull(ctx);
+}
+
 JSValueRef VariantToJSValue(JSContextRef context, Variant var)
 {
     UtilityFunctions::print(var.get_type());
@@ -104,6 +114,17 @@ JSValueRef VariantToJSValue(JSContextRef context, Variant var)
                 )
             );
             return JSValueMakeString(context, js_string.get());
+        }
+        case Variant::CALLABLE: {
+            Callable callable = var;
+            JSRetainPtr<JSStringRef> method_name = adopt(
+                JSStringCreateWithUTF8CString(
+                    ((godot::String)callable.get_method()).utf8().get_data()
+                )
+            );
+            JSObjectRef func = JSObjectMakeFunctionWithCallback(context, method_name.get(), CallableCallback);
+            JSObjectSetPrivate(func, callable._native_ptr());
+            return func;
         }
         default:
             return JSValueMakeNull(context);
