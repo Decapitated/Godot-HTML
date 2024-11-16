@@ -9,7 +9,7 @@
 #include <map>
 
 namespace godot {
-    typedef std::map<String, Variant*> GodotObj;
+    typedef std::map<String, std::shared_ptr<Variant>> GodotObj;
 
     class HtmlRect : public ViewRect {
         GDCLASS(HtmlRect, ViewRect);

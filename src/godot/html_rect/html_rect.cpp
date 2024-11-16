@@ -33,7 +33,7 @@ HtmlRect::HtmlRect()
     CreateView();
 }
 
-HtmlRect::~HtmlRect() { }
+HtmlRect::~HtmlRect() {}
 
 void HtmlRect::CreateView()
 {
@@ -142,7 +142,7 @@ void HtmlRect::StoreGlobalObject(JSContextRef context, GodotObj obj)
         auto value = iter->second;
 
         JSRetainPtr<JSStringRef> js_key = adopt(JSStringCreateWithUTF8CString(key.utf8().get_data()));
-        JSValueRef js_value = VariantToJSValue(context, value);
+        JSValueRef js_value = VariantToJSValue(context, value.get());
         JSObjectSetProperty(context, godot_obj, js_key.get(), js_value, 0, 0);
     }
     
@@ -219,7 +219,8 @@ GodotObj HtmlRect::ConvertDictionaryToMap(Dictionary dict)
     Array keys = dict.keys();
     for(int i = 0; i < keys.size(); i++)
     {
-        map[keys[i]] = new Variant(dict[keys[i]]);
+        std::shared_ptr<Variant> variant_ptr = std::make_shared<Variant>(dict[keys[i]]);
+        map[keys[i]] = variant_ptr;
     }
     return map;
 }
