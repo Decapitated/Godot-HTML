@@ -6,18 +6,23 @@
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/gdvirtual.gen.inc>
 
+#include <map>
+
 namespace godot {
+    typedef std::map<String, Variant*> GodotObj;
 
     class HtmlRect : public ViewRect {
         GDCLASS(HtmlRect, ViewRect);
 
         private:
+            GodotObj godot_obj;
+
             void CreateView();
 
         protected:
             static void _bind_methods();
             
-            Dictionary _on_dom_ready_call(const String &url);
+            Dictionary call_on_dom_ready(const String &url);
             GDVIRTUAL1R(Dictionary, _on_dom_ready, String);
             virtual Dictionary _on_dom_ready(const String &url) { return Dictionary(); };
 
@@ -35,6 +40,12 @@ namespace godot {
             String get_index() const;
 
             void OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url) override;
+
+            static JSValueRef CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
+            static void StoreGlobalObject(JSContextRef context, GodotObj obj);
+            static Variant JSValueToVariant(JSContextRef context, JSValueRef value);
+            static JSValueRef VariantToJSValue(JSContextRef context, Variant* variant);
+            static GodotObj ConvertDictionaryToMap(Dictionary dict);
     };
 
 }

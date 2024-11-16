@@ -15,6 +15,7 @@
 
 #include <JavaScriptCore/JavaScript.h>
 #include <JavaScriptCore/JSRetainPtr.h>
+#include <AppCore/JSHelpers.h>
 
 using namespace godot;
 
@@ -79,7 +80,7 @@ godot::String HtmlRect::get_index() const
 	return index_path;
 }
 
-Dictionary HtmlRect::_on_dom_ready_call(const String &url)
+Dictionary HtmlRect::call_on_dom_ready(const String &url)
 {
     Dictionary obj;
     if(GDVIRTUAL_CALL(_on_dom_ready, url, obj))
@@ -89,60 +90,58 @@ Dictionary HtmlRect::_on_dom_ready_call(const String &url)
     return _on_dom_ready(url);
 }
 
-JSValueRef CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
+void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url)
 {
-    UtilityFunctions::print("Callback");
-    Callable callable = (Variant)(GDExtensionVariantPtr)JSObjectGetPrivate(function);
-    UtilityFunctions::print(callable);
-    return JSValueMakeNull(ctx);
+    // Acquire the JS execution context for the current page.
+    auto scoped_context = caller->LockJSContext();
+    
+    // Typecast to the underlying JSContextRef.
+    JSContextRef context = (*scoped_context);
+    
+    String godot_url = godot::String(url.utf8().data());
+    Dictionary godot_obj_dict = call_on_dom_ready(godot_url);
+    godot_obj = ConvertDictionaryToMap(godot_obj_dict);
+
+    StoreGlobalObject(context, godot_obj);
 }
 
-JSValueRef VariantToJSValue(JSContextRef context, Variant var)
+#pragma region Static Functions
+
+JSValueRef HtmlRect::CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
-    UtilityFunctions::print(var.get_type());
-    switch(var.get_type())
+    Variant* private_data = (Variant*)JSObjectGetPrivate(function);
+    if(private_data == nullptr) UtilityFunctions::printerr("No function private data.");
+
+    Callable callable = *private_data;
+    int64_t callable_argument_count = callable.get_argument_count();
+
+    if(argumentCount != callable_argument_count)
     {
-        case Variant::BOOL:
-            return JSValueMakeBoolean(context, var);
-        case Variant::INT:
-        case Variant::FLOAT:
-            return JSValueMakeNumber(context, var);
-        case Variant::STRING: {
-            JSRetainPtr<JSStringRef> js_string = adopt(
-                JSStringCreateWithUTF8CString(
-                    ((godot::String)var).utf8().get_data()
-                )
-            );
-            return JSValueMakeString(context, js_string.get());
-        }
-        case Variant::CALLABLE: {
-            Callable callable = var;
-            JSRetainPtr<JSStringRef> method_name = adopt(
-                JSStringCreateWithUTF8CString(
-                    ((godot::String)callable.get_method()).utf8().get_data()
-                )
-            );
-            JSObjectRef func = JSObjectMakeFunctionWithCallback(context, method_name.get(), CallableCallback);
-            JSObjectSetPrivate(func, callable._native_ptr());
-            return func;
-        }
-        default:
-            return JSValueMakeNull(context);
+        UtilityFunctions::printerr("Argument count mismatch.");
+        JSRetainPtr<JSStringRef> errorMessage = adopt(JSStringCreateWithUTF8CString("Argument count mismatch."));
+        return JSValueMakeUndefined(ctx);
     }
+    // Convert the argument array to a Variant array.
+    Array call_args = Array();
+    for(int i = 0; i < argumentCount; i++)
+    {
+        call_args.append(JSValueToVariant(ctx, arguments[i]));
+    }
+    Variant return_value = callable.callv(call_args);
 
+    return VariantToJSValue(ctx, &return_value);
 }
 
-void StoreGlobalObject(JSContextRef context, Dictionary obj)
+void HtmlRect::StoreGlobalObject(JSContextRef context, GodotObj obj)
 {
     JSObjectRef godot_obj = JSObjectMake(context, NULL, NULL);
 
-    Array keys = obj.keys();
-    for(int i = 0; i < keys.size(); i++)
+    for(auto iter = obj.begin(); iter != obj.end(); iter++)
     {
-        Variant key = keys[i];
-        Variant value = obj[keys[i]];
+        auto key = iter->first;
+        auto value = iter->second;
 
-        JSRetainPtr<JSStringRef> js_key = adopt(JSStringCreateWithUTF8CString(key.stringify().utf8().get_data()));
+        JSRetainPtr<JSStringRef> js_key = adopt(JSStringCreateWithUTF8CString(key.utf8().get_data()));
         JSValueRef js_value = VariantToJSValue(context, value);
         JSObjectSetProperty(context, godot_obj, js_key.get(), js_value, 0, 0);
     }
@@ -158,16 +157,71 @@ void StoreGlobalObject(JSContextRef context, Dictionary obj)
 
 }
 
-void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url)
+Variant HtmlRect::JSValueToVariant(JSContextRef context, JSValueRef value)
 {
-    // Acquire the JS execution context for the current page.
-    auto scoped_context = caller->LockJSContext();
-    
-    // Typecast to the underlying JSContextRef.
-    JSContextRef context = (*scoped_context);
-    
-    String godot_url = godot::String(url.utf8().data());
-    Dictionary obj = _on_dom_ready_call(godot_url);
-
-    StoreGlobalObject(context, obj);
+    // JSValue js_value = value;
+    // js_value.set_context(context);
+    JSType value_type = JSValueGetType(context, value);
+    switch(value_type)
+    {
+        case kJSTypeBoolean:
+            return JSValueToBoolean(context, value);
+        case kJSTypeNumber:
+            return JSValueToNumber(context, value, NULL);
+        case kJSTypeString: {
+            JSStringRef js_string = JSValueToStringCopy(context, value, NULL);
+            ultralight::String string = JSString(js_string);
+            return godot::String(string.utf8().data());
+        }
+        default:
+            return Variant();
+    }
 }
+
+JSValueRef HtmlRect::VariantToJSValue(JSContextRef context, Variant* variant)
+{
+    switch(variant->get_type())
+    {
+        case Variant::BOOL:
+            return JSValueMakeBoolean(context, *variant);
+        case Variant::INT:
+        case Variant::FLOAT:
+            return JSValueMakeNumber(context, *variant);
+        case Variant::STRING: {
+            JSRetainPtr<JSStringRef> js_string = adopt(
+                JSStringCreateWithUTF8CString(
+                    ((godot::String)*variant).utf8().get_data()
+                )
+            );
+            return JSValueMakeString(context, js_string.get());
+        }
+        case Variant::CALLABLE: {
+            // Create class function definition for our callback.
+            JSClassDefinition classFunctionDefinition = kJSClassDefinitionEmpty;
+            classFunctionDefinition.callAsFunction = CallableCallback;
+            // Create a class reference from the class function definition.
+            JSRetainPtr<JSClassRef> classReference = adopt(JSClassCreate(&classFunctionDefinition));
+
+            //Create a function callback entry that references the class we created for the private data
+            JSObjectRef nativeFunc = JSObjectMake(context, classReference.get(), variant);
+
+            return nativeFunc;
+        }
+        default:
+            return JSValueMakeNull(context);
+    }
+
+}
+
+GodotObj HtmlRect::ConvertDictionaryToMap(Dictionary dict)
+{
+    GodotObj map;
+    Array keys = dict.keys();
+    for(int i = 0; i < keys.size(); i++)
+    {
+        map[keys[i]] = new Variant(dict[keys[i]]);
+    }
+    return map;
+}
+
+#pragma endregion
