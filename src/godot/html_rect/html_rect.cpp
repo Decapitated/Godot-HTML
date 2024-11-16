@@ -205,8 +205,18 @@ JSValueRef HtmlRect::VariantToJSValue(JSContextRef context, Variant* variant)
 
             return nativeFunc;
         }
-        default:
-            return JSValueMakeNull(context);
+        case Variant::DICTIONARY:
+        case Variant::ARRAY:
+        case Variant::OBJECT:
+            return JSValueMakeUndefined(context);
+        default: {
+            JSRetainPtr<JSStringRef> js_string = adopt(
+                JSStringCreateWithUTF8CString(
+                    variant->stringify().utf8().get_data()
+                )
+            );
+            return JSValueMakeString(context, js_string.get());
+        }
     }
 
 }

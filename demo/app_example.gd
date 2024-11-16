@@ -11,6 +11,9 @@ func _on_dom_ready(url):
         "string": "Hello World!",
         "null": null,
         "callable": test_callable,
+        "vector3": Vector3(1, 2, 3),
+        "plane": Plane(1, 2, 3, 4),
+        "quaternion": Quaternion(1, 2, 3, 4),
     }
 
 func test_callable():
