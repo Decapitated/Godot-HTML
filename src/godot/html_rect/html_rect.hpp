@@ -1,7 +1,7 @@
 #ifndef HTMLRECT_H
 #define HTMLRECT_H
 
-#include "view_rect.hpp"
+#include "godot/view_rect/view_rect.hpp"
 
 namespace godot {
 

@@ -1,9 +1,9 @@
 #ifndef INSPECTRECT_H
 #define INSPECTRECT_H
 
-#include "view_rect.hpp"
+#include "godot/view_rect/view_rect.hpp"
 
-#include "html_rect.hpp"
+#include "godot/html_rect/html_rect.hpp"
 
 namespace godot {
 

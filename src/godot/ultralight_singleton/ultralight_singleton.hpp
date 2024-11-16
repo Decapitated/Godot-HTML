@@ -5,7 +5,7 @@
 
 #include <godot_cpp/core/class_db.hpp>
 
-#include "ultralight_manager.hpp"
+#include "godot/ultralight_manager/ultralight_manager.hpp"
 
 namespace godot
 {

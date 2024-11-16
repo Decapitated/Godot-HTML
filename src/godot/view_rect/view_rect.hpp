@@ -1,13 +1,9 @@
 #ifndef VIEWRECT_H
 #define VIEWRECT_H
 
-#include "ultralight_singleton.hpp"
-
 #include <queue>
 
-#include <Ultralight/KeyEvent.h>
-#include <Ultralight/MouseEvent.h>
-#include <Ultralight/ScrollEvent.h>
+#include <Ultralight/Ultralight.h>
 
 #include <godot_cpp/classes/input_event_mouse_motion.hpp>
 #include <godot_cpp/classes/input_event_mouse_button.hpp>

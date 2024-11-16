@@ -1,5 +1,7 @@
 #include "html_rect.hpp"
 
+#include "godot/ultralight_singleton/ultralight_singleton.hpp"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
