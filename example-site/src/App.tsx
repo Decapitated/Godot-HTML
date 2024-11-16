@@ -4,8 +4,11 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 declare global {
-  interface Window { 
-    ExampleCallback: () => void
+  interface Window {
+    godot: {
+      callable: () => void
+      [key: string]: any
+    }
   }
 }
 
@@ -34,7 +37,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <button onClick={() => window.ExampleCallback()}>Call C++</button>
+      <button onClick={() => window.godot.callable()}>Call C++</button>
     </>
   )
 }
