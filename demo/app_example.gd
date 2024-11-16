@@ -14,6 +14,9 @@ func _on_dom_ready(url):
         "vector3": Vector3(1, 2, 3),
         "plane": Plane(1, 2, 3, 4),
         "quaternion": Quaternion(1, 2, 3, 4),
+        "dictionary": {
+            "test": "Hello World!",
+        }
     }
 
 func test_callable():

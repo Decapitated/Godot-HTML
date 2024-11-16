@@ -206,10 +206,10 @@ JSValueRef HtmlRect::VariantToJSValue(JSContextRef context, Variant* variant)
 
             return nativeFunc;
         }
+        // Leave these here to be implemented later.
         case Variant::DICTIONARY:
         case Variant::ARRAY:
         case Variant::OBJECT:
-            return JSValueMakeUndefined(context);
         default: {
             JSRetainPtr<JSStringRef> js_string = adopt(
                 JSStringCreateWithUTF8CString(
