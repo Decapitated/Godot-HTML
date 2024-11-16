@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://w07fainkplgm"]
+[gd_scene load_steps=2 format=3 uid="uid://w07fainkplgm"]
+
+[ext_resource type="Script" path="res://app_example.gd" id="1_d3utk"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -26,3 +28,4 @@ layout_mode = 2
 [node name="AppExample" type="AppExample" parent="HSplitContainer"]
 index_path = "example-site/index.html"
 layout_mode = 2
+script = ExtResource("1_d3utk")

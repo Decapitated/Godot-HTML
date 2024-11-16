@@ -3,10 +3,13 @@
 
 #include "godot/view_rect/view_rect.hpp"
 
+#include <godot_cpp/core/binder_common.hpp>
+#include <godot_cpp/core/gdvirtual.gen.inc>
+
 namespace godot {
 
     class HtmlRect : public ViewRect {
-        GDCLASS(HtmlRect, ViewRect)
+        GDCLASS(HtmlRect, ViewRect);
 
         private:
             void CreateView();
@@ -14,7 +17,9 @@ namespace godot {
         protected:
             static void _bind_methods();
             
-            virtual void SetupJS(JSContextRef context) {};
+            Dictionary _on_dom_ready_call(const String &url);
+            GDVIRTUAL1R(Dictionary, _on_dom_ready, String);
+            virtual Dictionary _on_dom_ready(const String &url) { return Dictionary(); };
 
         public:
             String index_path = "";

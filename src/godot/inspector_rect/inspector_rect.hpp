@@ -8,7 +8,7 @@
 namespace godot {
 
     class InspectorRect : public ViewRect {
-        GDCLASS(InspectorRect, ViewRect)
+        GDCLASS(InspectorRect, ViewRect);
 
         protected:
             static void _bind_methods();
