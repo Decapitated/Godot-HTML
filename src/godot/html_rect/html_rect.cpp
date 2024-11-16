@@ -119,6 +119,7 @@ JSValueRef HtmlRect::CallableCallback(JSContextRef ctx, JSObjectRef function, JS
     {
         UtilityFunctions::printerr("Argument count mismatch.");
         JSRetainPtr<JSStringRef> errorMessage = adopt(JSStringCreateWithUTF8CString("Argument count mismatch."));
+        *exception = JSValueMakeString(ctx, errorMessage.get());
         return JSValueMakeUndefined(ctx);
     }
     // Convert the argument array to a Variant array.
