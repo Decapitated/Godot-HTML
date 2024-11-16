@@ -159,8 +159,6 @@ void HtmlRect::StoreGlobalObject(JSContextRef context, GodotObj obj)
 
 Variant HtmlRect::JSValueToVariant(JSContextRef context, JSValueRef value)
 {
-    // JSValue js_value = value;
-    // js_value.set_context(context);
     JSType value_type = JSValueGetType(context, value);
     switch(value_type)
     {
