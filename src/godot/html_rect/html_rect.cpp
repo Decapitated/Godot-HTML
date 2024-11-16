@@ -13,7 +13,6 @@
 
 #include <JavaScriptCore/JavaScript.h>
 #include <JavaScriptCore/JSRetainPtr.h>
-#include <AppCore/JSHelpers.h>
 
 using namespace godot;
 
