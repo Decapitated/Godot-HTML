@@ -16,8 +16,12 @@ func _on_dom_ready(url):
         "quaternion": Quaternion(1, 2, 3, 4),
         "dictionary": {
             "test": "Hello World!",
+            "nested_callable": test_nested_callable
         }
     }
 
 func test_callable():
     print("test_callable")
+
+func test_nested_callable():
+    print("test_nested_callable")

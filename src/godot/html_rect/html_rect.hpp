@@ -2,22 +2,18 @@
 #define HTMLRECT_H
 
 #include "godot/view_rect/view_rect.hpp"
+#include "convert/convert.hpp"
 
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/gdvirtual.gen.inc>
 
-#include <map>
-
 namespace godot {
-    typedef std::map<String, std::shared_ptr<Variant>> GodotObj;
-
     class HtmlRect : public ViewRect {
         GDCLASS(HtmlRect, ViewRect);
 
         private:
-            GodotObj godot_obj;
-
             void CreateView();
+            void StoreGlobalObject(JSContextRef context, Dictionary obj);
 
         protected:
             static void _bind_methods();
@@ -40,10 +36,7 @@ namespace godot {
             String get_index() const;
 
             void OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url) override;
-
-            static JSValueRef CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
     };
-
 }
 
 #endif
