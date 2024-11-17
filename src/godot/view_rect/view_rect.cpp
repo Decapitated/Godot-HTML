@@ -4,12 +4,9 @@
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
-#include <godot_cpp/classes/scene_tree.hpp>
-#include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>
 
 #include <godot_cpp/classes/os.hpp>
-#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;

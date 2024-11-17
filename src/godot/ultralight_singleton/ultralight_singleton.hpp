@@ -1,11 +1,9 @@
 #ifndef ULTRALIGHT_SINGLETON_H
 #define ULTRALIGHT_SINGLETON_H
 
-#include <godot_cpp/classes/object.hpp>
-
-#include <godot_cpp/core/class_db.hpp>
-
 #include "godot/ultralight_manager/ultralight_manager.hpp"
+
+#include <godot_cpp/classes/object.hpp>
 
 namespace godot
 {

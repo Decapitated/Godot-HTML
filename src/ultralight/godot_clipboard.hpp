@@ -1,10 +1,6 @@
 #ifndef GCLIPBOARD_H
 #define GCLIPBOARD_H
 
-#include <Ultralight/Ultralight.h>
-#include <AppCore/Platform.h>
-#include <JavaScriptCore/JavaScript.h>
-
 #include <godot_cpp/classes/display_server.hpp>
 
 namespace ultralight
