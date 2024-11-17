@@ -42,10 +42,6 @@ namespace godot {
             void OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url) override;
 
             static JSValueRef CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
-            static void StoreGlobalObject(JSContextRef context, GodotObj obj);
-            static Variant JSValueToVariant(JSContextRef context, JSValueRef value);
-            static JSValueRef VariantToJSValue(JSContextRef context, Variant* variant);
-            static GodotObj ConvertDictionaryToMap(Dictionary dict);
     };
 
 }
