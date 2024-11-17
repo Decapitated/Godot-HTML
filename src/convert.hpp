@@ -34,6 +34,8 @@ public:
     {
         switch(variant->get_type())
         {
+            case Variant::NIL:
+                return JSValueMakeNull(context);
             case Variant::BOOL:
                 return JSValueMakeBoolean(context, *variant);
             case Variant::INT:
