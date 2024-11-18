@@ -99,7 +99,6 @@ JSValueRef JSThrowError(JSContextRef context, const char* message, JSValueRef* e
     return JSValueMakeUndefined(context);
 }
 
-
 JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
     // Get Callable variant from private data.
