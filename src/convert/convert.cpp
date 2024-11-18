@@ -106,12 +106,20 @@ JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSO
     Variant* private_data = (Variant*)JSObjectGetPrivate(function);
     if(private_data == nullptr)
     {
+        UtilityFunctions::printerr("No function private data.");
         return JSThrowError(ctx, "No function private data.", exception);
     }
+    // Check if callable is valid.
     Callable callable = *private_data;
+    if(!callable.is_valid())
+    {
+        UtilityFunctions::printerr("Invalid callable.");
+        return JSThrowError(ctx, "Invalid callable.", exception);
+    }
     // Ensure the number of arguments is correct.
     if(argumentCount != callable.get_argument_count())
     {
+        UtilityFunctions::printerr("Invalid number of arguments.");
         return JSThrowError(ctx, "Invalid number of arguments.", exception);
     }
     // Convert the argument array to a Variant array.
