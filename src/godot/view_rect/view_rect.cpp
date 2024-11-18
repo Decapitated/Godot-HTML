@@ -179,7 +179,6 @@ void ViewRect::HandleMouseMotion(InputEventMouseMotion *event)
     events.push(Event::mouse);
 }
 
-const int GODOT_KEY_OFFSET = 4194300;
 void ViewRect::HandleKey(InputEventKey *event)
 {
     if(!event->is_pressed()) return;
@@ -223,7 +222,6 @@ void ViewRect::HandleKey(InputEventKey *event)
 
     key_events.push(evt);
     events.push(Event::key);
-    
 }
 
 void ViewRect::RenderFrame()
