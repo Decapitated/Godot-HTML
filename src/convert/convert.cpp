@@ -1,5 +1,7 @@
 #include "convert.hpp"
 
+#include <godot_cpp/variant/utility_functions.hpp>
+
 #include <JavaScriptCore/JSRetainPtr.h>
 
 shared_ptr<VariantRefrences> Convert::variant_refrences = nullptr;
@@ -54,9 +56,9 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
             JSRetainPtr<JSClassRef> classReference = adopt(JSClassCreate(&classFunctionDefinition));
 
             shared_ptr<Variant> private_data = shared_ptr<Variant>(new Variant(variant));
-            variant_refrences->push_back(shared_ptr<Variant>(private_data));
+            variant_refrences->push_back(private_data);
 
-            //Create a function callback entry that references the class we created for the private data
+            // Create a function callback entry that references the class we created for the private data.
             JSObjectRef nativeFunc = JSObjectMake(context, classReference.get(), private_data.get());
 
             return nativeFunc;
