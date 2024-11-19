@@ -1,9 +1,7 @@
 @tool
 extends HtmlRect
 
-func _on_dom_ready(url):
-    print("DOM ready")
-    print("URL: ", url)
+func _on_dom_ready(_url):
     return {
         "bool": true,
         "int": 69,
