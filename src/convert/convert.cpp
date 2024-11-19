@@ -7,17 +7,36 @@
 
 Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
 {
+    SetJSContext(context);
+    JSValue js_value = JSValue(value);
     JSType value_type = JSValueGetType(context, value);
     switch(value_type)
     {
         case kJSTypeBoolean:
-            return JSValueToBoolean(context, value);
+            return js_value.ToBoolean();
         case kJSTypeNumber:
-            return JSValueToNumber(context, value, NULL);
+            return js_value.ToNumber();
         case kJSTypeString: {
-            JSStringRef js_string = JSValueToStringCopy(context, value, NULL);
-            ultralight::String string = JSString(js_string);
+            ultralight::String string = js_value.ToString();
             return godot::String(string.utf8().data());
+        }
+        case kJSTypeObject: {
+            if(js_value.IsObject())
+            {
+                JSObjectRef js_object = js_value.ToObject();
+                JSPropertyNameArrayRef property_names = JSObjectCopyPropertyNames(context, js_object);
+                int property_count = JSPropertyNameArrayGetCount(property_names);
+                Dictionary dict = Dictionary();
+                for(int i = 0; i < property_count; i++)
+                {
+                    JSStringRef property_name = JSPropertyNameArrayGetNameAtIndex(property_names, 0);
+                    JSValueRef property_value = JSObjectGetProperty(context, js_object, property_name, NULL);
+                    ultralight::String ul_key = JSString(property_name);
+                    godot::String key = godot::String(ul_key.utf8().data());
+                    dict[key] = ToVariant(context, property_value);
+                }
+                return dict;
+            }
         }
         default:
             return Variant();
