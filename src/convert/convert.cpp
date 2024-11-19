@@ -1,6 +1,7 @@
 #include "convert.hpp"
 
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/object.hpp>
 
 #include <JavaScriptCore/JSRetainPtr.h>
 
@@ -83,7 +84,54 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
             return js_array;
         }
         // Leave these here to be implemented later.
-        case Variant::OBJECT:
+        case Variant::OBJECT: {
+            Object* object = variant;
+            JSObjectRef js_obj = JSObjectMake(context, NULL, NULL);
+
+            auto properties = object->get_property_list();
+            auto num_properties = properties.size();
+            for(int i = 0; i < num_properties; i++)
+            {
+                Dictionary property_info = properties[i];
+
+                godot::String name = property_info["name"];
+                Variant::Type type = static_cast<Variant::Type>((int)property_info["type"]);
+                PropertyUsageFlags usage = static_cast<PropertyUsageFlags>((uint64_t)property_info["usage"]);
+            
+                if(type != Variant::NIL &&  !(usage & PROPERTY_USAGE_INTERNAL))
+                {
+                    Variant property = object->get(name);
+                    JSValueRef js_value;
+                    if(type == Variant::OBJECT && !property.booleanize())
+                    {
+                        js_value = JSValueMakeNull(context);
+                    } else {
+                        js_value = Convert::ToJSValue(context, property);
+                    }
+                    JSRetainPtr<JSStringRef> js_name = adopt(JSStringCreateWithUTF8CString(name.utf8().get_data()));
+                    JSObjectSetProperty(context, js_obj, js_name.get(), js_value, 0, 0);
+                }
+            }
+
+            auto methods = object->get_method_list();
+            auto num_methods = methods.size();
+            for(int i = 0; i < num_methods; i++)
+            {
+                Dictionary method_info = methods[i];
+                godot::String name = method_info["name"];
+                MethodFlags flags = static_cast<MethodFlags>((uint64_t)method_info["flags"]);
+                bool is_invalid = flags & METHOD_FLAG_EDITOR || flags & METHOD_FLAG_VIRTUAL || flags & METHOD_FLAG_OBJECT_CORE;
+                if(!is_invalid)
+                {
+                    Callable callable = object->get(name);
+                    JSRetainPtr<JSStringRef> js_name = adopt(JSStringCreateWithUTF8CString(name.utf8().get_data()));
+                    JSValueRef js_value = Convert::ToJSValue(context, callable);
+                    JSObjectSetProperty(context, js_obj, js_name.get(), js_value, 0, 0);
+                }
+            }
+
+            return js_obj;
+        }
         default: {
             JSRetainPtr<JSStringRef> js_string = adopt(
                 JSStringCreateWithUTF8CString(

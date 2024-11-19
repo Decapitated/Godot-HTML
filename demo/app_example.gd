@@ -18,7 +18,8 @@ func _on_dom_ready(url):
             "test": "Hello World!",
             "nested_callable": test_nested_callable
         },
-        "array": [1, 2, 3, 4, 5]
+        "array": [1, 2, 3, 4, 5],
+        "object": self
     }
 
 func test_callable():
