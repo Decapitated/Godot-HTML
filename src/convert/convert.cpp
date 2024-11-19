@@ -1,9 +1,43 @@
 #include "convert.hpp"
 
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/variant/callable_method_pointer.hpp>
 #include <godot_cpp/classes/object.hpp>
 
 #include <JavaScriptCore/JSRetainPtr.h>
+
+#pragma region Utilities
+
+#include<type_traits>
+#include<utility>
+#include<new>
+
+template<int, typename Callable, typename Ret, typename... Args>
+auto fnptr_(Callable&& c, Ret (*)(Args...))
+{
+    static std::decay_t<Callable> storage = std::forward<Callable>(c);
+    static bool used = false;
+    if(used)
+    {
+        using type = decltype(storage);
+        storage.~type();
+        new (&storage) type(std::forward<Callable>(c));
+    }
+    used = true;
+
+    return [](Args... args) -> Ret {
+        auto& c = *std::launder(&storage);
+        return Ret(c(std::forward<Args>(args)...));
+    };
+}
+
+template<typename Fn, int N = 0, typename Callable>
+Fn* fnptr(Callable&& c)
+{
+    return fnptr_<N>(std::forward<Callable>(c), (Fn*)nullptr);
+}
+
+#pragma endregion
 
 Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
 {
@@ -32,7 +66,20 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
                 }
                 return array;
             }
-            else if(js_value.IsFunction()) { }
+            // ALERT: This works. But I'm not sure if it's safe.
+            else if(js_value.IsFunction()) {
+                function<Variant(Array)> func = [js_value, context](Array args) -> Variant {
+                    JSFunction js_function = js_value.ToFunction();
+                    JSArgs js_args = JSArgs();
+                    for(int i = 0; i < args.size(); i++)
+                    {
+                        js_args.push_back(ToJSValue(context, args[i]));
+                    }
+                    return ToVariant(context, js_function(js_args));
+                };
+                auto fn = fnptr<Variant(Array)>(func);
+                return callable_mp_static(fn);
+            }
             else if(js_value.IsObject())
             {
                 JSObjectRef js_object = js_value.ToObject();

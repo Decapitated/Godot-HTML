@@ -10,8 +10,6 @@ using namespace ultralight;
 using namespace godot;
 using namespace std;
 
-typedef vector<shared_ptr<Variant>> VariantRefrences;
-
 class Convert {
 public:
     static Variant ToVariant(JSContextRef context, JSValueRef value);

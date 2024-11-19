@@ -20,9 +20,13 @@ func _on_dom_ready(_url):
         "object": self
     }
 
-func test_callable(temp ="" ):
+func test_callable(temp = ""):
     print("test_callable")
     print("temp: ", temp)
+    if temp is Callable:
+        var result = temp.call([1, 2, 3, test_nested_callable])
+        print("result: ", result)
 
 func test_nested_callable():
     print("test_nested_callable")
+    return 420
