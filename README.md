@@ -33,11 +33,9 @@ A GDExtension, using Ultralight, to render HTML.
 - HTML Inspector
 - Mouse & Keyboard Input
 - JS Interop
+- GDScript Support
 
 ## TO-DO
-- Add better support for GDScript.
-  - Allow better interaction between JS and C++.
-  - Users should be able to easily connect GDScript to JS, instead of having to extend the plugin.
 - Make sure remote websites can't access C++ code via JS interop.
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
