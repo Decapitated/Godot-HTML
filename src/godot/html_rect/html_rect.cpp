@@ -38,7 +38,7 @@ void HtmlRect::CreateView()
     if(view)
     { 
         SetView(view);
-        if(!LoadIndex(view)) view->LoadHTML("<h1>Placeholder Text</h1>");
+        LoadIndex(view);
     }
     
 }
@@ -57,26 +57,28 @@ void HtmlRect::StoreGlobalObject(JSContextRef context, Dictionary obj)
     JSObjectSetProperty(context, globalObj, propertyName.get(), godot_obj, 0, 0);
 }
 
-bool HtmlRect::LoadIndex(RefPtr<View> view)
+void HtmlRect::LoadIndex(RefPtr<View> view)
 {
-    if(index_path.is_empty()) return false;
-    auto path_parts = index_path.split("://");
-    if(path_parts.size() == 1) 
+    if(index_path.is_empty()) {
+        view->LoadHTML("<h1>Placeholder Text</h1>");
+    } else
     {
-        view->LoadURL(("file:///"+index_path).utf8().get_data());
+        auto path_parts = index_path.split("://");
+        if(path_parts.size() == 1) 
+        {
+            view->LoadURL(("file:///"+index_path).utf8().get_data());
+        }
+        else
+        {
+            view->LoadURL(index_path.utf8().get_data());
+        }
     }
-    else
-    {
-        view->LoadURL(index_path.utf8().get_data());
-    }
-    return true;
 }
 
 void HtmlRect::set_index(const String p_index)
 {
-    String currentPath = index_path;
 	index_path = p_index;
-    if(!LoadIndex(GetView())) index_path = currentPath;
+    LoadIndex(GetView());
 }
 
 godot::String HtmlRect::get_index() const
@@ -94,7 +96,8 @@ Dictionary HtmlRect::call_on_dom_ready(const String &url)
     return _on_dom_ready(url);
 }
 
-void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url)
+void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame,
+                          const ultralight::String &url)
 {
     // Acquire the JS execution context for the current page.
     auto scoped_context = caller->LockJSContext();

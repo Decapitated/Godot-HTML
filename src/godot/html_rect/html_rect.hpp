@@ -30,7 +30,7 @@ namespace godot {
             // void _process(double delta) override;
             // void _gui_input(const Ref<InputEvent> &event) override;
 
-            bool LoadIndex(RefPtr<View> view);
+            void LoadIndex(RefPtr<View> view);
 
             void set_index(const String p_index);
             String get_index() const;
