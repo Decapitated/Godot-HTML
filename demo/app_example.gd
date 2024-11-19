@@ -22,8 +22,9 @@ func _on_dom_ready(url):
         "object": self
     }
 
-func test_callable():
+func test_callable(temp ="" ):
     print("test_callable")
+    print("temp: ", temp)
 
 func test_nested_callable():
     print("test_nested_callable")

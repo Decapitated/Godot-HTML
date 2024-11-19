@@ -83,7 +83,6 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
             JSObjectRef js_array = JSObjectMakeArray(context, array_size, array_data.get(), NULL);
             return js_array;
         }
-        // Leave these here to be implemented later.
         case Variant::OBJECT: {
             Object* object = variant;
             JSObjectRef js_obj = JSObjectMake(context, NULL, NULL);
@@ -166,12 +165,6 @@ JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSO
     {
         UtilityFunctions::printerr("Invalid callable.");
         return JSThrowError(ctx, "Invalid callable.", exception);
-    }
-    // Ensure the number of arguments is correct.
-    if(argumentCount != callable.get_argument_count())
-    {
-        UtilityFunctions::printerr("Invalid number of arguments.");
-        return JSThrowError(ctx, "Invalid number of arguments.", exception);
     }
     // Convert the argument array to a Variant array.
     Array call_args = Array();
