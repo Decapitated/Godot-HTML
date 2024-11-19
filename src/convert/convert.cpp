@@ -21,7 +21,20 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
             return godot::String(string.utf8().data());
         }
         case kJSTypeObject: {
-            if(js_value.IsObject())
+            if(js_value.IsArray())
+            {
+                JSArray js_array = js_value.ToArray();
+                Array array = Array();
+                for(int i = 0; i < js_array.length(); i++)
+                {
+                    JSPropertyValue value = js_array[i];
+                    array.append(ToVariant(context, value));
+                }
+                return array;
+            }
+            else if(js_value.IsFunction())
+            { }
+            else if(js_value.IsObject())
             {
                 JSObjectRef js_object = js_value.ToObject();
                 JSPropertyNameArrayRef property_names = JSObjectCopyPropertyNames(context, js_object);
