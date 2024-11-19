@@ -97,6 +97,7 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
                 return dict;
             }
         }
+        case kJSTypeSymbol: {}
         default:
             return Variant();
     }
