@@ -25,7 +25,8 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
 
 JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
 {
-    switch(variant.get_type())
+    Variant::Type variant_type = variant.get_type();
+    switch(variant_type)
     {
         case Variant::NIL:
             return JSValueMakeNull(context);
@@ -86,7 +87,7 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
         default: {
             JSRetainPtr<JSStringRef> js_string = adopt(
                 JSStringCreateWithUTF8CString(
-                    variant.stringify().utf8().get_data()
+                    (Variant::get_type_name(variant_type) + variant.stringify()).utf8().get_data()
                 )
             );
             return JSValueMakeString(context, js_string.get());
