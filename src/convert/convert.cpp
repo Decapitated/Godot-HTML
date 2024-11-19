@@ -49,11 +49,8 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
             classFunctionDefinition.finalize = FinalizeCallable;
             // Create a class reference from the class function definition.
             JSRetainPtr<JSClassRef> classReference = adopt(JSClassCreate(&classFunctionDefinition));
-
-            Variant* private_data = new Variant(variant);
-
             // Create a function callback entry that references the class we created for the private data.
-            JSObjectRef nativeFunc = JSObjectMake(context, classReference.get(), private_data);
+            JSObjectRef nativeFunc = JSObjectMake(context, classReference.get(), memnew(Variant(variant)));
 
             return nativeFunc;
         }
@@ -93,7 +90,8 @@ JSValueRef JSThrowError(JSContextRef context, const char* message, JSValueRef* e
     return JSValueMakeUndefined(context);
 }
 
-JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
+JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject,
+                                     size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
     // Get Callable variant from private data.
     Variant* private_data = (Variant*)JSObjectGetPrivate(function);
@@ -130,10 +128,9 @@ JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSO
 
 void Convert::FinalizeCallable(JSObjectRef function)
 {
-    UtilityFunctions::print("Finalizing callable.");
     Variant* private_data = (Variant*)JSObjectGetPrivate(function);
     if(private_data != nullptr)
     {
-        delete private_data;
+        memdelete(private_data);
     }
 }
