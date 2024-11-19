@@ -66,7 +66,7 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
                 }
                 return array;
             }
-            // ALERT: This works. But I'm not sure if it's safe.
+            // ALERT: This works. But I'm not sure if it's safe. Or the lifetime of the Lambda fnptr is too short or leaked.
             else if(js_value.IsFunction()) {
                 function<Variant(Array)> func = [js_value, context](Array args) -> Variant {
                     JSFunction js_function = js_value.ToFunction();
