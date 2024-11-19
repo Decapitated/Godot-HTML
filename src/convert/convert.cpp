@@ -4,8 +4,6 @@
 
 #include <JavaScriptCore/JSRetainPtr.h>
 
-shared_ptr<VariantRefrences> Convert::variant_refrences = nullptr;
-
 Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
 {
     JSType value_type = JSValueGetType(context, value);
@@ -27,10 +25,6 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
 
 JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
 {
-    if(variant_refrences == nullptr)
-    {
-        variant_refrences = shared_ptr<VariantRefrences>(new VariantRefrences());
-    }
     switch(variant.get_type())
     {
         case Variant::NIL:
@@ -52,14 +46,14 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
             // Create class function definition for our callback.
             JSClassDefinition classFunctionDefinition = kJSClassDefinitionEmpty;
             classFunctionDefinition.callAsFunction = CallableCallback;
+            classFunctionDefinition.finalize = FinalizeCallable;
             // Create a class reference from the class function definition.
             JSRetainPtr<JSClassRef> classReference = adopt(JSClassCreate(&classFunctionDefinition));
 
-            shared_ptr<Variant> private_data = shared_ptr<Variant>(new Variant(variant));
-            variant_refrences->push_back(private_data);
+            Variant* private_data = new Variant(variant);
 
             // Create a function callback entry that references the class we created for the private data.
-            JSObjectRef nativeFunc = JSObjectMake(context, classReference.get(), private_data.get());
+            JSObjectRef nativeFunc = JSObjectMake(context, classReference.get(), private_data);
 
             return nativeFunc;
         }
@@ -132,4 +126,14 @@ JSValueRef Convert::CallableCallback(JSContextRef ctx, JSObjectRef function, JSO
     // Convert the return value and return.
     JSValueRef return_value_ref = Convert::ToJSValue(ctx, return_value);
     return Convert::ToJSValue(ctx, return_value);
+}
+
+void Convert::FinalizeCallable(JSObjectRef function)
+{
+    UtilityFunctions::print("Finalizing callable.");
+    Variant* private_data = (Variant*)JSObjectGetPrivate(function);
+    if(private_data != nullptr)
+    {
+        delete private_data;
+    }
 }

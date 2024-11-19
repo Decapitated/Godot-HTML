@@ -13,12 +13,11 @@ using namespace std;
 typedef vector<shared_ptr<Variant>> VariantRefrences;
 
 class Convert {
-private:
-    static shared_ptr<VariantRefrences> variant_refrences;
 public:
     static Variant ToVariant(JSContextRef context, JSValueRef value);
     static JSValueRef ToJSValue(JSContextRef context, Variant variant);
     static JSValueRef CallableCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
+    static void FinalizeCallable(JSObjectRef object);
 };
 
 #endif
