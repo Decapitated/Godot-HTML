@@ -32,8 +32,7 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
                 }
                 return array;
             }
-            else if(js_value.IsFunction())
-            { }
+            else if(js_value.IsFunction()) { }
             else if(js_value.IsObject())
             {
                 JSObjectRef js_object = js_value.ToObject();
