@@ -69,8 +69,19 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
             }
             return godot_obj;
         }
+        case Variant::ARRAY: {
+            Array array = variant;
+            auto array_size = array.size();
+            shared_ptr<JSValueRef[]> array_data(new JSValueRef[array_size]);
+            for(int i = 0; i < array_size; i++)
+            {
+                JSValueRef js_value = Convert::ToJSValue(context, array[i]);
+                array_data[i] = js_value;
+            }
+            JSObjectRef js_array = JSObjectMakeArray(context, array_size, array_data.get(), NULL);
+            return js_array;
+        }
         // Leave these here to be implemented later.
-        case Variant::ARRAY:
         case Variant::OBJECT:
         default: {
             JSRetainPtr<JSStringRef> js_string = adopt(

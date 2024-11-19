@@ -17,7 +17,8 @@ func _on_dom_ready(url):
         "dictionary": {
             "test": "Hello World!",
             "nested_callable": test_nested_callable
-        }
+        },
+        "array": [1, 2, 3, 4, 5]
     }
 
 func test_callable():
