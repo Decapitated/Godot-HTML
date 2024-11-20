@@ -91,11 +91,9 @@ scons platform=<platform>
 ```
 
 ## JS Interop
-Using JS Interop requires an understanding of Ultralight.
+JS interop is as simple as returning a `Dictionary` from the virtual function `_on_dom_ready`.
 
-Check out the [Ultralight Docs](https://docs.ultralig.ht/docs/about-javascript-interop) for more details.
-
-Checkout `AppExample` for a basic implementation of calling a C++ function from JS.
+Checkout the [example](demo/app_example.gd).
 
 ## Exporting Godot Project
 Once you're ready to export your game/project make sure to:
