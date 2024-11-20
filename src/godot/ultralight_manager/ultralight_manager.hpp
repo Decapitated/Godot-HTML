@@ -2,11 +2,9 @@
 #define UMANAGER_H
 
 #include <Ultralight/Ultralight.h>
-#include <AppCore/Platform.h>
-#include <JavaScriptCore/JavaScript.h>
 
-#include "godot_file_system.hpp"
-#include "godot_clipboard.hpp"
+#include "ultralight/godot_file_system.hpp"
+#include "ultralight/godot_clipboard.hpp"
 
 using namespace ultralight;
 

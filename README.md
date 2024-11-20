@@ -33,11 +33,9 @@ A GDExtension, using Ultralight, to render HTML.
 - HTML Inspector
 - Mouse & Keyboard Input
 - JS Interop
+- GDScript Support
 
 ## TO-DO
-- Add better support for GDScript.
-  - Allow better interaction between JS and C++.
-  - Users should be able to easily connect GDScript to JS, instead of having to extend the plugin.
 - Make sure remote websites can't access C++ code via JS interop.
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
@@ -93,11 +91,13 @@ scons platform=<platform>
 ```
 
 ## JS Interop
-Using JS Interop requires an understanding of Ultralight.
+JS interop is as simple as returning a `Dictionary` from the virtual function `_on_dom_ready`.
 
-Check out the [Ultralight Docs](https://docs.ultralig.ht/docs/about-javascript-interop) for more details.
+Checkout the [example](demo/app_example.gd) script.
 
-Checkout `AppExample` for a basic implementation of calling a C++ function from JS.
+Important:
+- JS functions are return as `Callable`. To call the function, use the `call` method, with the arguments as an `Array`. For example: `js_func.call(["Hello World!"])` or `js_func.call([])`.
+- JS Symbols are not currently supported. Convert them to a string before passing them to Godot.
 
 ## Exporting Godot Project
 Once you're ready to export your game/project make sure to:

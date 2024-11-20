@@ -1,14 +1,13 @@
 #ifndef INSPECTRECT_H
 #define INSPECTRECT_H
 
-#include "view_rect.hpp"
-
-#include "html_rect.hpp"
+#include "godot/view_rect/view_rect.hpp"
+#include "godot/html_rect/html_rect.hpp"
 
 namespace godot {
 
     class InspectorRect : public ViewRect {
-        GDCLASS(InspectorRect, ViewRect)
+        GDCLASS(InspectorRect, ViewRect);
 
         protected:
             static void _bind_methods();

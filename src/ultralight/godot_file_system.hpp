@@ -1,10 +1,6 @@
 #ifndef GFILESYSTEM_H
 #define GFILESYSTEM_H
 
-#include <Ultralight/Ultralight.h>
-#include <AppCore/Platform.h>
-#include <JavaScriptCore/JavaScript.h>
-
 #include <godot_cpp/classes/file_access.hpp>
 
 #include "MimeTypes.h"

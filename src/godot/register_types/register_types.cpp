@@ -1,15 +1,12 @@
 #include "register_types.hpp"
 
-#include "ultralight_singleton.hpp"
+#include "godot/ultralight_singleton/ultralight_singleton.hpp"
 
-#include "view_rect.hpp"
-#include "html_rect.hpp"
-#include "inspector_rect.hpp"
+#include "godot/view_rect/view_rect.hpp"
+#include "godot/html_rect/html_rect.hpp"
+#include "godot/inspector_rect/inspector_rect.hpp"
 #include "app_example.hpp"
 
-#include <gdextension_interface.h>
-#include <godot_cpp/godot.hpp>
-#include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/classes/engine.hpp>
 
 using namespace godot;

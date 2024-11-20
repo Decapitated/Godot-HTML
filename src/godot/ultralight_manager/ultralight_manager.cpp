@@ -1,8 +1,7 @@
 #include "ultralight_manager.hpp"
-
-#include <godot_cpp/classes/engine.hpp>
-
 using namespace godot;
+
+#include <AppCore/Platform.h>
 
 namespace GodotHTML
 {

@@ -4,13 +4,22 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 declare global {
-  interface Window { 
-    ExampleCallback: () => void
+  interface Window {
+    godot: {
+      callable: (args:any) => void
+      [key: string]: any
+    }
   }
 }
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+
+  const callback = (a: any, b: any, c: any, fn: any) => {
+    console.log("fn:", fn());
+    console.log(a, b, c);
+    return a + b + c;
+  }
 
   return (
     <>
@@ -34,7 +43,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <button onClick={() => window.ExampleCallback()}>Call C++</button>
+      <button onClick={() => window.godot.callable(callback)}>Call C++</button>
     </>
   )
 }

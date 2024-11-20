@@ -1,7 +1,7 @@
 #ifndef APPEXAMPLE_H
 #define APPEXAMPLE_H
 
-#include "html_rect.hpp"
+#include "godot/html_rect/html_rect.hpp"
 
 namespace godot {
 
@@ -13,8 +13,8 @@ namespace godot {
 
         protected:
             static void _bind_methods();
-
-            void SetupJS(JSContextRef context) override;
+            
+            Dictionary _on_dom_ready(const String &url) override;
     };
 
 }
