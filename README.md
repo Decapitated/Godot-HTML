@@ -96,7 +96,7 @@ JS interop is as simple as returning a `Dictionary` from the virtual function `_
 Checkout the [example](demo/app_example.gd) script.
 
 Important:
-- JS functions are return as `Callable`. To call the function, use the `call` method, with the arguments as an `Array`. For example: `js_func.call(["Hello World!"])` or `js_func.call([])`.
+- JS functions are returned as `Callable`. To call the function, use the `call` method, with the arguments as an `Array`. For example: `js_func.call(["Hello World!"])` or `js_func.call([])`.
 - JS Symbols are not currently supported. Convert them to a string before passing them to Godot.
 
 ## Exporting Godot Project
