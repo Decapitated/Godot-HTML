@@ -91,7 +91,7 @@ scons platform=<platform>
 ```
 
 ## JS Interop
-JS interop is as simple as returning a `Dictionary` from the virtual function `_on_dom_ready`.
+JS interop is as simple as returning a `Dictionary` from the virtual function `_on_dom_ready`. Then accessing it from JS using `window.godot`.
 
 Checkout the [example](demo/app_example.gd) script.
 
