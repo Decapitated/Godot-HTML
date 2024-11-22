@@ -15,10 +15,9 @@ declare global {
 function App() {
   const [count, setCount] = useState(0);
 
-  const callback = (a: any, b: any, c: any, fn: any) => {
-    console.log("fn:", fn());
-    console.log(a, b, c);
-    return a + b + c;
+  const callback = (...args: any) => {
+    console.log("Args", args);
+    return 420;
   }
 
   return (

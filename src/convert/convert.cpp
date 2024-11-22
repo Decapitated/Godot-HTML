@@ -1,7 +1,8 @@
 #include "convert.hpp"
 
+#include "godot/js_callable/js_callable.hpp"
+
 #include <godot_cpp/variant/utility_functions.hpp>
-#include <godot_cpp/variant/callable_method_pointer.hpp>
 #include <godot_cpp/classes/object.hpp>
 
 #include <JavaScriptCore/JSRetainPtr.h>
@@ -66,19 +67,8 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
                 }
                 return array;
             }
-            // ALERT: This works. But I'm not sure if it's safe. Or the lifetime of the Lambda fnptr is too short or leaked.
             else if(js_value.IsFunction()) {
-                function<Variant(Array)> func = [js_value, context](Array args) -> Variant {
-                    JSFunction js_function = js_value.ToFunction();
-                    JSArgs js_args = JSArgs();
-                    for(int i = 0; i < args.size(); i++)
-                    {
-                        js_args.push_back(ToJSValue(context, args[i]));
-                    }
-                    return ToVariant(context, js_function(js_args));
-                };
-                auto fn = fnptr<Variant(Array)>(func);
-                return callable_mp_static(fn);
+                return Callable(memnew(JSCallable(context, js_value)));
             }
             else if(js_value.IsObject())
             {
