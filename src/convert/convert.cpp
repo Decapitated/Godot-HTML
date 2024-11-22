@@ -78,12 +78,13 @@ Variant Convert::ToVariant(JSContextRef context, JSValueRef value)
                 Dictionary dict = Dictionary();
                 for(int i = 0; i < property_count; i++)
                 {
-                    JSStringRef property_name = JSPropertyNameArrayGetNameAtIndex(property_names, 0);
+                    JSStringRef property_name = JSPropertyNameArrayGetNameAtIndex(property_names, i);
                     JSValueRef property_value = JSObjectGetProperty(context, js_object, property_name, NULL);
                     ultralight::String ul_key = JSString(property_name);
                     godot::String key = godot::String(ul_key.utf8().data());
                     dict[key] = ToVariant(context, property_value);
                 }
+                JSPropertyNameArrayRelease(property_names);
                 return dict;
             }
         }
