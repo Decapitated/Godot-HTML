@@ -36,6 +36,8 @@ A GDExtension, using Ultralight, to render HTML.
 - GDScript Support
 
 ## TO-DO
+- Accelerated Views. IE. GPU based rendering.
+- ImageSource. IE. RenderTargets.
 - Make sure remote websites can't access C++ code via JS interop.
 - Live code updates (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
