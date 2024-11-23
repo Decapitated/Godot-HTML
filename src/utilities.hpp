@@ -15,7 +15,7 @@ static PackedByteArray BitmapToPackedByteArray(RefPtr<Bitmap> bitmap)
 {
     bitmap->SwapRedBlueChannels();
     auto pixels = bitmap->LockPixelsSafe();
-    PackedByteArray texture_data = PackedByteArray();
+    PackedByteArray texture_data;
     texture_data.resize(pixels.size());
     memcpy(texture_data.ptrw(), pixels.data(), pixels.size());
     return texture_data;
