@@ -222,7 +222,6 @@ void ViewRect::HandleKey(InputEventKey *event)
 
 void ViewRect::RenderFrame()
 {
-    queue_redraw();
     if(!view) return;
     ///
     /// Get the Surface as a BitmapSurface (the default implementation).
@@ -242,6 +241,7 @@ void ViewRect::RenderFrame()
         /// Clear the dirty bounds.
         ///
         surface->ClearDirtyBounds();
+        queue_redraw();
     }
 }
 
