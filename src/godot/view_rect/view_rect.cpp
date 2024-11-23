@@ -1,6 +1,7 @@
 #include "view_rect.hpp"
 
 #include "godot/ultralight_singleton/ultralight_singleton.hpp"
+#include "utilities.hpp"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
@@ -258,11 +259,7 @@ void ViewRect::SizeChanged()
 
 void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
 {
-    bitmap->SwapRedBlueChannels();
-    auto pixels = bitmap->LockPixelsSafe();
-    PackedByteArray arr = PackedByteArray();
-    arr.resize(pixels.size());
-    memcpy(arr.ptrw(), pixels.data(), pixels.size());
+    PackedByteArray arr = utilities::BitmapToPackedByteArray(bitmap);
     if(image.is_null())
     {
         image = Image::create_from_data(bitmap->width(), bitmap->height(), false, Image::FORMAT_RGBA8, arr);
