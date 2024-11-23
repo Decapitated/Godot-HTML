@@ -16,7 +16,6 @@ using namespace godot;
 ViewRect::ViewRect()
 {
     // #region Set default values.
-    set_expand_mode(TextureRect::ExpandMode::EXPAND_IGNORE_SIZE);
     set_mouse_filter(MouseFilter::MOUSE_FILTER_STOP);
     set_focus_mode(FocusMode::FOCUS_CLICK);
     set_force_pass_scroll_events(false);
@@ -113,15 +112,12 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
     }
 }
 
-void ViewRect::_notification(int what)
+void ViewRect::_draw()
 {
-    if(what == NOTIFICATION_EDITOR_PRE_SAVE)
+    if(image_texture.is_valid())
     {
-        set_texture(nullptr);
-    }
-    else if(what == NOTIFICATION_EDITOR_POST_SAVE)
-    {
-        set_texture(image_texture);
+        Vector2 size = get_size();
+        draw_texture_rect(image_texture, Rect2(0, 0, size.x, size.y), false);
     }
 }
 
@@ -226,6 +222,7 @@ void ViewRect::HandleKey(InputEventKey *event)
 
 void ViewRect::RenderFrame()
 {
+    queue_redraw();
     if(!view) return;
     ///
     /// Get the Surface as a BitmapSurface (the default implementation).
@@ -268,7 +265,6 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
         image = Image::create_from_data(bitmap->width(), bitmap->height(), false, Image::FORMAT_RGBA8, arr);
         if(!image.is_valid() || image->is_empty()) return;
         image_texture = ImageTexture::create_from_image(image);
-        set_texture(image_texture);
     }
     else
     {
