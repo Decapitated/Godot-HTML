@@ -241,8 +241,8 @@ void ViewRect::RenderFrame()
         /// Clear the dirty bounds.
         ///
         surface->ClearDirtyBounds();
-        queue_redraw();
     }
+    queue_redraw();
 }
 
 void ViewRect::SizeChanged()
