@@ -33,7 +33,15 @@ else:
 
     if env["platform"] == "windows":
         env.Append(CPPPATH=["ultralight/include/"])
-        env.Append(LIBPATH=["ultralight/lib/"])
+        env.Append(LIBPATH=["ultralight/bin/"]) #Changed due to ultralight changing where the libs are at in the sdk
+        env.Append(LIBS=["Ultralight"])
+        env.Append(LIBS=["UltralightCore"])
+        env.Append(LIBS=["WebCore"])
+        env.Append(LIBS=["AppCore"])
+
+    elif env["platform"] == "linux":
+        env.Append(CPPPATH=["ultralight/include/"])
+        env.Append(LIBPATH=["ultralight/bin/"]) #Changed due to ultralight changing where the libs are at in the sdk
         env.Append(LIBS=["Ultralight"])
         env.Append(LIBS=["UltralightCore"])
         env.Append(LIBS=["WebCore"])
