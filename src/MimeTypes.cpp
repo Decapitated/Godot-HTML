@@ -23,7 +23,7 @@
   SOFTWARE.
 */
 
-#include "MimeTypes.h"
+#include "MimeTypes.hpp"
 
 const char* MimeTypes::getType(const char * extension)  {
   const char *dot = strrchr(extension, '.');
