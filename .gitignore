@@ -1,8 +1,8 @@
-.vscode
-%localappdata%
-/ultralight/
-System Volume Information
-src/**/*.obj
+# Godot auto generated files
+*.gen.*
+.godot/
+
+# Ignore library files but not the gdextension file
 demo/ultralight.log
 demo/default
 demo/inspector/
@@ -14,5 +14,46 @@ demo/addons/gdhtml/bin/*.*.*.*.lib
 demo/example-site/**/**.*.import
 demo/build/
 demo/example-site/
-.sconsign.dblite
-~*
+.sconsign*.dblite
+
+# Ignore custom.py
+custom.py
+
+# Ignore generated compile_commands.json
+compile_commands.json
+
+# Ignore files generated for documentation
+/src/gen
+
+# Binaries
+*.o
+*.os
+*.so
+*.obj
+*.bc
+*.pyc
+*.dblite
+*.pdb
+*.lib
+*.config
+*.creator
+*.creator.user
+*.files
+*.includes
+*.idb
+*.exp
+*.TMP
+
+# Other stuff
+*.log
+
+# VSCode
+.vscode
+!.vscode/extensions.json
+.DS_Store
+
+# Jetbrains
+.idea/
+
+# Ultralight
+/ultralight/
