@@ -49,8 +49,8 @@ compile_commands.json
 *.log
 
 # VSCode
-.vscode
-!.vscode/extensions.json
+**/.vscode/*
+!**/.vscode/extensions.json
 .DS_Store
 
 # Jetbrains
