@@ -138,6 +138,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: gdhtml
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Upload Release
         id: upload_release
         uses: actions/upload-release-asset@v1
