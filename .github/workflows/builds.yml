@@ -123,6 +123,8 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-22.04
     needs: merge
+    env:
+      Download_Path: gdhtml-artifacts
     steps:
       - name: Create Release
         id: create_release
@@ -138,8 +140,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: gdhtml
-      - name: Display structure of downloaded files
-        run: ls -R
+          path: ${{ env.Download_Path }}
+      - name: Zip Artifacts
+        run: zip -r gdhtml.zip ${{ env.Download_Path }}
       - name: Upload Release
         id: upload_release
         uses: actions/upload-release-asset@v1
@@ -147,6 +150,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_merge.outputs.download-path }}/gdhtml.zip
+          asset_path: ./gdhtml.zip
           asset_name: gdhtml.zip
           asset_content_type: application/zip
