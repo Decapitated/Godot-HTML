@@ -73,3 +73,13 @@ copy = env.InstallAs("{}/addons/{}/bin/{}/{}lib{}".format(projectdir, libname, e
 
 default_args = [library, copy]
 Default(*default_args)
+
+Execute(Copy(
+    f"{projectdir}/addons/{libname}/bin/windows/",
+    [
+        "ultralight/bin/windows/AppCore.dll",
+        "ultralight/bin/windows/Ultralight.dll",
+        "ultralight/bin/windows/UltralightCore.dll",
+        "ultralight/bin/windows/WebCore.dll"
+    ]
+))
