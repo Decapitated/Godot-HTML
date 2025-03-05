@@ -7,7 +7,6 @@ demo/ultralight.log
 demo/default
 demo/inspector/
 demo/addons/gdhtml/resources/
-demo/addons/gdhtml/bin/*.dll
 demo/addons/gdhtml/bin/*.*.*.*.dll
 demo/addons/gdhtml/bin/*.*.*.*.exp
 demo/addons/gdhtml/bin/*.*.*.*.lib
@@ -59,6 +58,7 @@ bin
 .idea/
 
 # Ultralight
+!ultralight/bin/
 !ultralight/lib/*.lib
 
 __pycache__
