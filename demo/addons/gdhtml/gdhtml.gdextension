@@ -6,52 +6,52 @@ compatibility_minimum = "4.3"
 [dependencies]
 
 macos.debug = {
-    "bin/libUltralight.dylib" : "",
-    "bin/libUltralightCore.dylib" : "",
-    "bin/libWebCore.dylib" : "",
-    "bin/libAppCore.dylib" : "",
+    "bin/macos/libUltralight.dylib" : "",
+    "bin/macos/libUltralightCore.dylib" : "",
+    "bin/macos/libWebCore.dylib" : "",
+    "bin/macos/libAppCore.dylib" : "",
 }
 
 macos.release = {
-    "bin/libUltralight.dylib" : "",
-    "bin/libUltralightCore.dylib" : "",
-    "bin/libWebCore.dylib" : "",
-    "bin/libAppCore.dylib" : "",
+    "bin/macos/libUltralight.dylib" : "",
+    "bin/macos/libUltralightCore.dylib" : "",
+    "bin/macos/libWebCore.dylib" : "",
+    "bin/macos/libAppCore.dylib" : "",
 }
 
 windows.debug.x86_64 = {
-    "bin/Ultralight.dll" : "",
-    "bin/UltralightCore.dll" : "",
-    "bin/WebCore.dll" : "",
-    "bin/AppCore.dll" : "",
+    "bin/windows/Ultralight.dll" : "",
+    "bin/windows/UltralightCore.dll" : "",
+    "bin/windows/WebCore.dll" : "",
+    "bin/windows/AppCore.dll" : "",
 }
 
 windows.release.x86_64 = {
-    "bin/Ultralight.dll" : "",
-    "bin/UltralightCore.dll" : "",
-    "bin/WebCore.dll" : "",
-    "bin/AppCore.dll" : "",
+    "bin/windows/Ultralight.dll" : "",
+    "bin/windows/UltralightCore.dll" : "",
+    "bin/windows/WebCore.dll" : "",
+    "bin/windows/AppCore.dll" : "",
 }
 
 linux.debug.x86_64 = {
-    "bin/libUltralight.so" : "",
-    "bin/libUltralightCore.so" : "",
-    "bin/libWebCore.so" : "",
-    "bin/libAppCore.so" : "",
+    "bin/linux/libUltralight.so" : "",
+    "bin/linux/libUltralightCore.so" : "",
+    "bin/linux/libWebCore.so" : "",
+    "bin/linux/libAppCore.so" : "",
 }
 
 linux.release.x86_64 = {
-    "bin/libUltralight.so" : "",
-    "bin/libUltralightCore.so" : "",
-    "bin/libWebCore.so" : "",
-    "bin/libAppCore.so" : "",
+    "bin/linux/libUltralight.so" : "",
+    "bin/linux/libUltralightCore.so" : "",
+    "bin/linux/libWebCore.so" : "",
+    "bin/linux/libAppCore.so" : "",
 }
 
 [libraries]
 
-macos.debug = "bin/libgdhtml.macos.template_debug.framework"
-macos.release = "bin/libgdhtml.macos.template_release.framework"
-windows.debug.x86_64 = "bin/libgdhtml.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "bin/libgdhtml.windows.template_release.x86_64.dll"
-linux.debug.x86_64 = "bin/libgdhtml.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "bin/libgdhtml.linux.template_release.x86_64.so"
+macos.debug = "bin/macos/gdhtml.macos.template_debug.framework"
+macos.release = "bin/macos/gdhtml.macos.template_release.framework"
+windows.debug.x86_64 = "bin/windows/gdhtml.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "bin/windows/gdhtml.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "bin/linux/gdhtml.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "bin/linux/gdhtml.linux.template_release.x86_64.so"

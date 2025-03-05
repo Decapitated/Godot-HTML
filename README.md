@@ -54,22 +54,27 @@ Some of the notable limitations are:
 - Download [Ultralight](https://ultralig.ht/download/)
 
 ## Project Structure
-Your project should look like this before building the plugin.
+Your project structure should look like this before building and running.
 ```
 main_folder/
 +--demo/                    # game example/demo to test the extension
-  +--addons/                # addons
-    +--gdhtml/              # plugin folder
-      +--bin/               # plugin build folder / Other libraries
-        +--Ultralight.dll
-        +--UltralightCore.dll
-        +--WebCore.dll
-        +--AppCore.dll
-      +--resources/         # Ultralight resources folder (Copied from SDK folder)
-  +--inspector/             # Ultralight inspector folder (Copied from SDK folder)
+| +--addons/                # addons
+| | +--gdhtml/              # plugin folder
+| |   +--bin/               # plugin build folder / Other libraries
+| |   | +--windows/
+| |   |   +--Ultralight.dll
+| |   |   +--UltralightCore.dll
+| |   |   +--WebCore.dll
+| |   |   +--AppCore.dll
+| |   +--resources/         # Ultralight resources folder (Copied from SDK folder)
+| +--inspector/             # Ultralight inspector folder (Copied from SDK folder)
 +--godot-cpp/               # C++ bindings
 +--src/                     # Source code of the extension we are building
 +--ultralight/              # Ultralight SDK
+  +--bin                    # Ultralight libraries
+  +--include                # Ultralight Headers
+  +--lib                    # Ultralight .lib for windows build
+  +--license                # Ultralight Licenses
 ```
 
 ## Building
