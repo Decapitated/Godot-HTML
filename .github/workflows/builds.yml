@@ -2,8 +2,8 @@ name: Build GDExtension
 on:
   workflow_call:
   push:
-  pull_request:
-  merge_group:
+    tags:
+      - v0.**
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
             # { platform: web, arch: wasm32, os: ubuntu-22.04 }
           ]
         target-type: [template_debug]
-        float-precision: [single, double]
+        float-precision: [single] # [single, double]
         # include: # Also build a release version for these specific targets. Remove if you add template_release above.
         #   - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
         #     target-type: template_release
@@ -107,7 +107,6 @@ jobs:
             ${{ github.workspace }}/bin/**
 
   # Merges all the build artifacts together into a single gdhtml artifact.
-  # If you comment out this step, all the builds will be uploaded individually.
   merge:
     runs-on: ubuntu-22.04
     needs: build
