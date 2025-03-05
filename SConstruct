@@ -83,3 +83,13 @@ Execute(Copy(
         "ultralight/bin/windows/WebCore.dll"
     ]
 ))
+
+# Execute(Copy(
+#     f"{projectdir}/addons/{libname}/bin/linux/",
+#     [
+#         "ultralight/bin/linux/libAppCore.so",
+#         "ultralight/bin/linux/libUltralight.so",
+#         "ultralight/bin/linux/libUltralightCore.so",
+#         "ultralight/bin/linux/libWebCore.so"
+#     ]
+# ))
