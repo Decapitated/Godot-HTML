@@ -118,3 +118,26 @@ jobs:
           name: gdhtml
           pattern: gdhtml-*
           delete-merged: true
+
+  release:
+    runs-on: ubuntu-22.04
+    needs: merge
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+      - name: Download Merged Artifacts
+        id: download_merge
+        uses: actions/download-artifact@v4
+        with:
+          name: gdhtml
+      - name: Upload Release
+        id: upload_release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.download_merge.outputs.download-path }}
