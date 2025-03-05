@@ -120,6 +120,7 @@ jobs:
           delete-merged: true
 
   release:
+    permissions: write-all
     runs-on: ubuntu-22.04
     needs: merge
     steps:
