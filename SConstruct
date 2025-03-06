@@ -54,14 +54,16 @@ filepath = ""
 
 if env["platform"] == "windows":
     env.Append(LIBPATH=["ultralight/lib/"])
-    env.Append(LIBS=["Ultralight"])
-    env.Append(LIBS=["UltralightCore"])
-    env.Append(LIBS=["WebCore"])
-    env.Append(LIBS=["AppCore"])
-
-if env["platform"] == "macos" or env["platform"] == "ios":
+elif env["platform"] == "linux":
+    env.Append(LIBPATH=["ultralight/bin/linux/"])
+elif env["platform"] == "macos" or env["platform"] == "ios":
     filepath = "{}.framework/".format(env["platform"])
     file = "{}{}".format(libname, env["suffix"])
+
+env.Append(LIBS=["Ultralight"])
+env.Append(LIBS=["UltralightCore"])
+env.Append(LIBS=["WebCore"])
+env.Append(LIBS=["AppCore"])
 
 libraryfile = "bin/{}/{}{}".format(env["platform"], filepath, file)
 library = env.SharedLibrary(
@@ -74,22 +76,23 @@ copy = env.InstallAs("{}/addons/{}/bin/{}/{}{}".format(projectdir, libname, env[
 default_args = [library, copy]
 Default(*default_args)
 
-Execute(Copy(
-    f"{projectdir}/addons/{libname}/bin/windows/",
-    [
-        "ultralight/bin/windows/AppCore.dll",
-        "ultralight/bin/windows/Ultralight.dll",
-        "ultralight/bin/windows/UltralightCore.dll",
-        "ultralight/bin/windows/WebCore.dll"
-    ]
-))
-
-# Execute(Copy(
-#     f"{projectdir}/addons/{libname}/bin/linux/",
-#     [
-#         "ultralight/bin/linux/libAppCore.so",
-#         "ultralight/bin/linux/libUltralight.so",
-#         "ultralight/bin/linux/libUltralightCore.so",
-#         "ultralight/bin/linux/libWebCore.so"
-#     ]
-# ))
+if env["platform"] == "windows":
+    Execute(Copy(
+        f"{projectdir}/addons/{libname}/bin/windows/",
+        [
+            "ultralight/bin/windows/AppCore.dll",
+            "ultralight/bin/windows/Ultralight.dll",
+            "ultralight/bin/windows/UltralightCore.dll",
+            "ultralight/bin/windows/WebCore.dll"
+        ]
+    ))
+elif env["platform"] == "linux":
+    Execute(Copy(
+        f"{projectdir}/addons/{libname}/bin/linux/",
+        [
+            "ultralight/bin/linux/libAppCore.so",
+            "ultralight/bin/linux/libUltralight.so",
+            "ultralight/bin/linux/libUltralightCore.so",
+            "ultralight/bin/linux/libWebCore.so"
+        ]
+    ))
