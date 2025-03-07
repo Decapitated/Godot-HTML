@@ -1,7 +1,7 @@
 #include "ultralight_manager.hpp"
 using namespace godot;
 
-// #include <AppCore/Platform.h>
+#include <AppCore/Platform.h>
 
 namespace GodotHTML
 {
@@ -15,11 +15,6 @@ UltralightManager::UltralightManager() {
 };
 
 UltralightManager::~UltralightManager() {
-    if(font_loader != nullptr)
-    {
-        delete font_loader;
-        font_loader = nullptr;
-    }
     if(file_system != nullptr)
     {
         delete file_system;
@@ -44,8 +39,10 @@ void UltralightManager::InitPlatform()
     config.resource_path_prefix = "addons/gdhtml/resources/";
     Platform::instance().set_config(config);
 
-    font_loader = new GodotFontLoader();
-    Platform::instance().set_font_loader(font_loader);
+    ///
+    /// Use the OS's native font loader
+    ///
+    Platform::instance().set_font_loader(GetPlatformFontLoader());
 
     file_system = new GodotFileSystem();
     Platform::instance().set_file_system(file_system);
@@ -56,7 +53,7 @@ void UltralightManager::InitPlatform()
     ///
     /// Use the default logger (writes to a log file)
     ///
-    // Platform::instance().set_logger(GetDefaultLogger("ultralight.log"));
+    Platform::instance().set_logger(GetDefaultLogger("ultralight.log"));
 }
 
 void UltralightManager::CreateRenderer()

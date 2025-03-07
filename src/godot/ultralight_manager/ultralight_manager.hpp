@@ -3,7 +3,6 @@
 
 #include <Ultralight/Ultralight.h>
 
-#include "ultralight/godot_font_loader.hpp"
 #include "ultralight/godot_file_system.hpp"
 #include "ultralight/godot_clipboard.hpp"
 
@@ -15,7 +14,6 @@ namespace GodotHTML {
             static UltralightManager* singleton;
 
             RefPtr<Renderer> renderer; // Ultralight renderer
-            GodotFontLoader* font_loader = nullptr;
             GodotFileSystem* file_system = nullptr;
             GodotClipboard* clipboard = nullptr;
 
