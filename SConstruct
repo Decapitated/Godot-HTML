@@ -96,3 +96,11 @@ elif env["platform"] == "linux":
             "ultralight/bin/linux/libWebCore.so"
         ]
     ))
+
+Execute(Copy(
+    f"{projectdir}/addons/{libname}/resources/",
+    [ 
+        "ultralight/resources/cacert.pem",
+        "ultralight/resources/icudt67l.dat"
+    ]
+))
