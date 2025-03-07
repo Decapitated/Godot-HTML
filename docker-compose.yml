@@ -13,7 +13,7 @@ services:
       - TZ=America/Chicago
       - TITLE=GDExtension Builder
       - DOCKER_MODS=linuxserver/mods:universal-package-install
-      - INSTALL_PACKAGES=git|zip|unzip|p7zip|python3.12|clang|lld|build-essential|scons|pkg-config|libx11-dev|libxcursor-dev|libxinerama-dev|libgl1-mesa-dev|libglu1-mesa-dev|libasound2-dev|libpulse-dev|libudev-dev|libxi-dev|libxrandr-dev|libwayland-dev
+      - INSTALL_PACKAGES=git|gh|nodejs|npm|zip|unzip|p7zip|python3.12|clang|lld|build-essential|scons|pkg-config|libx11-dev|libxcursor-dev|libxinerama-dev|libgl1-mesa-dev|libglu1-mesa-dev|libasound2-dev|libpulse-dev|libudev-dev|libxi-dev|libxrandr-dev|libwayland-dev
     volumes:
       - home:/config
     ports:
