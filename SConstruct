@@ -56,9 +56,10 @@ if env["platform"] == "windows":
     env.Append(LIBPATH=["ultralight/lib/"])
 elif env["platform"] == "linux":
     env.Append(LIBPATH=["ultralight/bin/linux/"])
-elif env["platform"] == "macos" and env["arch"] == "arm64":
-    env.Append(LIBPATH=["ultralight/bin/macos/"])
-    env.Append(LINKFLAGS=['-arch', 'arm64', '-rpath', os.path.abspath("ultralight/bin/macos/arm64/")])
+elif env["platform"] == "macos":
+    env.Append(LIBPATH=[f"ultralight/bin/macos/{env["arch"]}/"])
+    if env["arch"] == "arm64":
+        env.Append(LINKFLAGS=['-arch', 'arm64', '-rpath', os.path.abspath("ultralight/bin/macos/arm64/")])
 elif env["platform"] == "ios":
     filepath = "{}.framework/".format(env["platform"])
     file = "{}{}".format(libname, env["suffix"])
