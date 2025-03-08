@@ -55,7 +55,7 @@ filepath = ""
 if env["platform"] == "windows":
     env.Append(LIBPATH=["ultralight/lib/"])
 elif env["platform"] == "linux":
-    env.Append(LIBPATH=["ultralight/bin/linux/"])
+    env.Append(LIBPATH=[f"ultralight/bin/linux/{env["arch"]}/"])
 elif env["platform"] == "macos":
     env.Append(LIBPATH=[f"ultralight/bin/macos/{env["arch"]}/"])
     if env["arch"] == "arm64":
@@ -92,12 +92,12 @@ if env["platform"] == "windows":
     ))
 elif env["platform"] == "linux":
     Execute(Copy(
-        f"{projectdir}/addons/{libname}/bin/linux/",
+        f"{projectdir}/addons/{libname}/bin/linux/{env["arch"]}/",
         [
-            "ultralight/bin/linux/libAppCore.so",
-            "ultralight/bin/linux/libUltralight.so",
-            "ultralight/bin/linux/libUltralightCore.so",
-            "ultralight/bin/linux/libWebCore.so"
+            f"ultralight/bin/linux/{env["arch"]}/libAppCore.so",
+            f"ultralight/bin/linux/{env["arch"]}/libUltralight.so",
+            f"ultralight/bin/linux/{env["arch"]}/libUltralightCore.so",
+            f"ultralight/bin/linux/{env["arch"]}/libWebCore.so"
         ]
     ))
 elif env["platform"] == "macos":
