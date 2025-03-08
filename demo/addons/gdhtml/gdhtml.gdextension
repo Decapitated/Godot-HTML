@@ -20,17 +20,17 @@ macos.release.arm64 = {
 }
 
 windows.debug.x86_64 = {
-    "bin/windows/Ultralight.dll" : "",
-    "bin/windows/UltralightCore.dll" : "",
-    "bin/windows/WebCore.dll" : "",
-    "bin/windows/AppCore.dll" : "",
+    "bin/windows/x86_64/Ultralight.dll" : "",
+    "bin/windows/x86_64/UltralightCore.dll" : "",
+    "bin/windows/x86_64/WebCore.dll" : "",
+    "bin/windows/x86_64/AppCore.dll" : "",
 }
 
 windows.release.x86_64 = {
-    "bin/windows/Ultralight.dll" : "",
-    "bin/windows/UltralightCore.dll" : "",
-    "bin/windows/WebCore.dll" : "",
-    "bin/windows/AppCore.dll" : "",
+    "bin/windows/x86_64/Ultralight.dll" : "",
+    "bin/windows/x86_64/UltralightCore.dll" : "",
+    "bin/windows/x86_64/WebCore.dll" : "",
+    "bin/windows/x86_64/AppCore.dll" : "",
 }
 
 linux.debug.x86_64 = {
@@ -52,8 +52,8 @@ linux.release.x86_64 = {
 macos.debug.arm64 = "bin/macos/arm64/gdhtml.macos.template_debug.arm64.dylib"
 macos.release.arm64 = "bin/macos/arm64/gdhtml.macos.template_release.arm64.dylib"
 
-windows.debug.x86_64 = "bin/windows/gdhtml.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "bin/windows/gdhtml.windows.template_release.x86_64.dll"
+windows.debug.x86_64 = "bin/windows/x86_64/gdhtml.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "bin/windows/x86_64/gdhtml.windows.template_release.x86_64.dll"
 
 linux.debug.x86_64 = "bin/linux/x86_64/gdhtml.linux.template_debug.x86_64.so"
 linux.release.x86_64 = "bin/linux/x86_64/gdhtml.linux.template_release.x86_64.so"
