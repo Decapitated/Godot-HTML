@@ -104,7 +104,7 @@ jobs:
         with:
           name: gdhtml-${{ matrix.target.platform }}-${{ matrix.target.arch }}-${{ matrix.float-precision }}-${{ matrix.target-type }}
           path: |
-            ${{ github.workspace }}/bin/**
+            ${{ github.workspace }}/demo/addons/gdhtml/bin/**
 
   # Merges all the build artifacts together into a single gdhtml artifact.
   merge:
@@ -122,9 +122,23 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-22.04
     needs: merge
-    env:
-      Download_Path: gdhtml-artifacts
     steps:
+      # Clone this repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Download Merged Artifacts
+        id: download_merge
+        uses: actions/download-artifact@v4
+        with:
+          name: gdhtml
+          path: gdhtml/
+      - name: Copy Resources
+        id: copy_dependencies
+        shell: bash
+        run: |
+          cp -r ultralight/resources/ demo/addons/gdhtml/
+      - name: Zip Artifacts
+        run: zip -r gdhtml.zip gdhtml
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -134,14 +148,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           release_name: Release ${{ github.ref_name }}
           draft: true
-      - name: Download Merged Artifacts
-        id: download_merge
-        uses: actions/download-artifact@v4
-        with:
-          name: gdhtml
-          path: ${{ env.Download_Path }}
-      - name: Zip Artifacts
-        run: zip -r gdhtml.zip ${{ env.Download_Path }}
       - name: Upload Release
         id: upload_release
         uses: actions/upload-release-asset@v1
