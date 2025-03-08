@@ -77,44 +77,46 @@ library = env.SharedLibrary(
 
 copy = env.InstallAs("{}/addons/{}/bin/{}/{}/{}{}".format(projectdir, libname, env["platform"], env["arch"], filepath, file), library)
 
-default_args = [library, copy]
-Default(*default_args)
+copy_libraries = None
 
 if env["platform"] == "windows":
-    Execute(Copy(
-        f"{projectdir}/addons/{libname}/bin/windows/",
-        [
-            "ultralight/bin/windows/AppCore.dll",
-            "ultralight/bin/windows/Ultralight.dll",
-            "ultralight/bin/windows/UltralightCore.dll",
-            "ultralight/bin/windows/WebCore.dll"
+    copy_libraries = env.Install(
+        f"{projectdir}/addons/{libname}/bin/windows/{env["arch"]}",
+        source = [
+            f"ultralight/bin/windows/AppCore.dll",
+            f"ultralight/bin/windows/Ultralight.dll",
+            f"ultralight/bin/windows/UltralightCore.dll",
+            f"ultralight/bin/windows/WebCore.dll"
         ]
-    ))
+    )
 elif env["platform"] == "linux":
-    Execute(Copy(
-        f"{projectdir}/addons/{libname}/bin/linux/{env["arch"]}/",
-        [
+    copy_libraries = env.Install(
+        f"{projectdir}/addons/{libname}/bin/linux/{env["arch"]}",
+        source = [
             f"ultralight/bin/linux/{env["arch"]}/libAppCore.so",
             f"ultralight/bin/linux/{env["arch"]}/libUltralight.so",
             f"ultralight/bin/linux/{env["arch"]}/libUltralightCore.so",
             f"ultralight/bin/linux/{env["arch"]}/libWebCore.so"
         ]
-    ))
+    )
 elif env["platform"] == "macos":
-    Execute(Copy(
-        f"{projectdir}/addons/{libname}/bin/macos/{env["arch"]}/",
-        [
+    copy_libraries = env.Install(
+        f"{projectdir}/addons/{libname}/bin/macos/{env["arch"]}",
+        source = [
             f"ultralight/bin/macos/{env["arch"]}/libAppCore.dylib",
             f"ultralight/bin/macos/{env["arch"]}/libUltralight.dylib",
             f"ultralight/bin/macos/{env["arch"]}/libUltralightCore.dylib",
             f"ultralight/bin/macos/{env["arch"]}/libWebCore.dylib"
         ]
-    ))
+    )
 
-Execute(Copy(
-    f"{projectdir}/addons/{libname}/resources/",
-    [ 
+copy_resources = env.Install(
+    f"{projectdir}/addons/{libname}/resources",
+    source = [ 
         "ultralight/resources/cacert.pem",
         "ultralight/resources/icudt67l.dat"
     ]
-))
+)
+
+default_args = [library, copy, copy_libraries, copy_resources]
+Default(*default_args)
