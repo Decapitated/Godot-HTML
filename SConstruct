@@ -58,7 +58,7 @@ elif env["platform"] == "linux":
     env.Append(LIBPATH=["ultralight/bin/linux/"])
 elif env["platform"] == "macos" and env["arch"] == "arm64":
     env.Append(LIBPATH=["ultralight/bin/macos/"])
-    env.Append(LINKFLAGS=['-arch', 'arm64', '-rpath', os.path.abspath("ultralight/bin/macos/")])
+    env.Append(LINKFLAGS=['-arch', 'arm64', '-rpath', os.path.abspath("ultralight/bin/macos/arm64/")])
 elif env["platform"] == "ios":
     filepath = "{}.framework/".format(env["platform"])
     file = "{}{}".format(libname, env["suffix"])
@@ -74,7 +74,7 @@ library = env.SharedLibrary(
     source=sources,
 )
 
-copy = env.InstallAs("{}/addons/{}/bin/{}/{}{}".format(projectdir, libname, env["platform"], filepath, file), library)
+copy = env.InstallAs("{}/addons/{}/bin/{}/{}/{}{}".format(projectdir, libname, env["platform"], env["arch"], filepath, file), library)
 
 default_args = [library, copy]
 Default(*default_args)
@@ -99,14 +99,14 @@ elif env["platform"] == "linux":
             "ultralight/bin/linux/libWebCore.so"
         ]
     ))
-elif env["platform"] == "macos" and env["arch"] == "arm64":
+elif env["platform"] == "macos":
     Execute(Copy(
-        f"{projectdir}/addons/{libname}/bin/macos/",
+        f"{projectdir}/addons/{libname}/bin/macos/{env["arch"]}/",
         [
-            "ultralight/bin/macos/libAppCore.dylib",
-            "ultralight/bin/macos/libUltralight.dylib",
-            "ultralight/bin/macos/libUltralightCore.dylib",
-            "ultralight/bin/macos/libWebCore.dylib"
+            f"ultralight/bin/macos/{env["arch"]}/libAppCore.dylib",
+            f"ultralight/bin/macos/{env["arch"]}/libUltralight.dylib",
+            f"ultralight/bin/macos/{env["arch"]}/libUltralightCore.dylib",
+            f"ultralight/bin/macos/{env["arch"]}/libWebCore.dylib"
         ]
     ))
 
