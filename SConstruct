@@ -56,7 +56,10 @@ if env["platform"] == "windows":
     env.Append(LIBPATH=["ultralight/lib/"])
 elif env["platform"] == "linux":
     env.Append(LIBPATH=["ultralight/bin/linux/"])
-elif env["platform"] == "macos" or env["platform"] == "ios":
+elif env["platform"] == "macos":
+    env.Append(LIBPATH=["ultralight/bin/macos/"])
+    env.Append(LINKFLAGS=['-arch', 'arm64', '-rpath', os.path.abspath("ultralight/bin/macos/")])
+elif env["platform"] == "ios":
     filepath = "{}.framework/".format(env["platform"])
     file = "{}{}".format(libname, env["suffix"])
 
@@ -94,6 +97,16 @@ elif env["platform"] == "linux":
             "ultralight/bin/linux/libUltralight.so",
             "ultralight/bin/linux/libUltralightCore.so",
             "ultralight/bin/linux/libWebCore.so"
+        ]
+    ))
+elif env["platform"] == "macos":
+    Execute(Copy(
+        f"{projectdir}/addons/{libname}/bin/macos/",
+        [
+            "ultralight/bin/macos/libAppCore.dylib",
+            "ultralight/bin/macos/libUltralight.dylib",
+            "ultralight/bin/macos/libUltralightCore.dylib",
+            "ultralight/bin/macos/libWebCore.dylib"
         ]
     ))
 

@@ -5,18 +5,18 @@ compatibility_minimum = "4.3"
 
 [dependencies]
 
-macos.debug = {
-    "bin/macos/libUltralight.dylib" : "",
-    "bin/macos/libUltralightCore.dylib" : "",
-    "bin/macos/libWebCore.dylib" : "",
-    "bin/macos/libAppCore.dylib" : "",
+macos.debug.arm64 = {
+    "bin/macos/libUltralight.dylib" : "Contents/Frameworks",
+    "bin/macos/libUltralightCore.dylib" : "Contents/Frameworks",
+    "bin/macos/libWebCore.dylib" : "Contents/Frameworks",
+    "bin/macos/libAppCore.dylib" : "Contents/Frameworks",
 }
 
-macos.release = {
-    "bin/macos/libUltralight.dylib" : "",
-    "bin/macos/libUltralightCore.dylib" : "",
-    "bin/macos/libWebCore.dylib" : "",
-    "bin/macos/libAppCore.dylib" : "",
+macos.release.arm64 = {
+    "bin/macos/libUltralight.dylib" : "Contents/Frameworks",
+    "bin/macos/libUltralightCore.dylib" : "Contents/Frameworks",
+    "bin/macos/libWebCore.dylib" : "Contents/Frameworks",
+    "bin/macos/libAppCore.dylib" : "Contents/Frameworks",
 }
 
 windows.debug.x86_64 = {
@@ -49,8 +49,8 @@ linux.release.x86_64 = {
 
 [libraries]
 
-macos.debug = "bin/macos/gdhtml.macos.template_debug.framework"
-macos.release = "bin/macos/gdhtml.macos.template_release.framework"
+macos.debug.arm64 = "bin/macos/gdhtml.macos.template_debug.arm64.dylib"
+macos.release.arm64 = "bin/macos/gdhtml.macos.template_release.arm64.dylib"
 windows.debug.x86_64 = "bin/windows/gdhtml.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "bin/windows/gdhtml.windows.template_release.x86_64.dll"
 linux.debug.x86_64 = "bin/linux/gdhtml.linux.template_debug.x86_64.so"
