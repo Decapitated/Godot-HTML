@@ -1,0 +1,25 @@
+volumes:
+  home:
+
+services:
+  webtop:
+    image: lscr.io/linuxserver/webtop:ubuntu-kde
+    container_name: gdextension-builder
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGIP=1000
+      - TZ=America/Chicago
+      - TITLE=GDExtension Builder
+      - DOCKER_MODS=linuxserver/mods:universal-package-install
+      - INSTALL_PACKAGES=git|gh|nodejs|npm|zip|unzip|p7zip|python3.12|clang|lld|build-essential|scons|pkg-config|libx11-dev|libxcursor-dev|libxinerama-dev|libgl1-mesa-dev|libglu1-mesa-dev|libasound2-dev|libpulse-dev|libudev-dev|libxi-dev|libxrandr-dev|libwayland-dev
+    volumes:
+      - home:/config
+    ports:
+      - 3000:3000
+      - 3001:3001
+    # devices:
+    #   - /dev/dri:/dev/dri #optional
+    shm_size: "1gb"
+    restart: unless-stopped

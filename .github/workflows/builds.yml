@@ -15,7 +15,7 @@ jobs:
         # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow
         target:
           [
-            # { platform: linux, arch: x86_64, os: ubuntu-22.04 },
+            { platform: linux, arch: x86_64, os: ubuntu-22.04 },
             { platform: windows, arch: x86_64, os: windows-latest },
             # { platform: windows, arch: x86_32, os: windows-latest }, # Ultralight does not support x32.
             # { platform: macos, arch: universal, os: macos-latest },
@@ -73,7 +73,7 @@ jobs:
         env:
           SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
         run: |
-          scons target=${{ matrix.target-type }} platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }}
+          scons use_llvm=yes target=${{ matrix.target-type }} platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }}
 
       # Sign the binary (macOS only)
       # - name: Mac Sign
