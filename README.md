@@ -1,9 +1,4 @@
-```
-⚠️ ONLY TESTED ON WINDOWS ⚠️
-This project doesn't include anything that is platform specific.
-So there should be no issues.
-If someone on x64 Linux/Mac could test, please let me know.
-```
+[![Build GDExtension](https://github.com/Decapitated/Godot-HTML/actions/workflows/builds.yml/badge.svg)](https://github.com/Decapitated/Godot-HTML/actions/workflows/builds.yml)
 
 # Godot HTML
 A GDExtension, using Ultralight, to render HTML.
