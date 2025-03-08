@@ -59,7 +59,7 @@ bin
 
 # Ultralight
 !ultralight/bin/
-!ultralight/bin/linux/*.so
+!ultralight/bin/**/*.so
 !ultralight/lib/*.lib
 
 __pycache__
