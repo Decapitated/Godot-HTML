@@ -131,12 +131,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: gdhtml
-          path: gdhtml/
+          path: gdhtml/bin/
       - name: Copy Resources
         id: copy_dependencies
         shell: bash
         run: |
-          cp -r ultralight/resources/ demo/addons/gdhtml/
+          cp demo/addons/gdhtml/gdhtml.gdextension gdhtml/
+          cp -r ultralight/resources/ gdhtml/
+          cp -r ultralight/inspector/ gdhtml/
+          cp -r ultralight/license/ gdhtml/
+
       - name: Zip Artifacts
         run: zip -r gdhtml.zip gdhtml
       - name: Create Release
