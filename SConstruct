@@ -56,7 +56,7 @@ if env["platform"] == "windows":
     env.Append(LIBPATH=["ultralight/lib/"])
 elif env["platform"] == "linux":
     env.Append(LIBPATH=["ultralight/bin/linux/"])
-elif env["platform"] == "macos":
+elif env["platform"] == "macos" and env["arch"] == "arm64":
     env.Append(LIBPATH=["ultralight/bin/macos/"])
     env.Append(LINKFLAGS=['-arch', 'arm64', '-rpath', os.path.abspath("ultralight/bin/macos/")])
 elif env["platform"] == "ios":
@@ -99,7 +99,7 @@ elif env["platform"] == "linux":
             "ultralight/bin/linux/libWebCore.so"
         ]
     ))
-elif env["platform"] == "macos":
+elif env["platform"] == "macos" and env["arch"] == "arm64":
     Execute(Copy(
         f"{projectdir}/addons/{libname}/bin/macos/",
         [
