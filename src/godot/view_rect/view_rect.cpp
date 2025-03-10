@@ -125,6 +125,8 @@ void ViewRect::_draw()
 
 #pragma region ViewRect Private methods.
 
+MouseEvent::Button latest_mouse_button = MouseEvent::Button::kButton_None;
+
 void ViewRect::HandleMouseButton(InputEventMouseButton *event)
 {
     MouseButton index = event->get_button_index();
@@ -158,6 +160,7 @@ void ViewRect::HandleMouseButton(InputEventMouseButton *event)
                 evt.button = MouseEvent::Button::kButton_Right;
                 break;
         };
+        latest_mouse_button = evt.button;
         mouse_events.push(evt);
         events.push(Event::mouse);
     }
@@ -170,7 +173,7 @@ void ViewRect::HandleMouseMotion(InputEventMouseMotion *event)
     evt.type = MouseEvent::kType_MouseMoved;
     evt.x = (int)pos.x;
     evt.y = (int)pos.y;
-    evt.button = MouseEvent::kButton_None;
+    evt.button = latest_mouse_button;
     mouse_events.push(evt);
     events.push(Event::mouse);
 }
