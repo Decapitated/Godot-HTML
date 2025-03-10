@@ -11,6 +11,19 @@ A GDExtension, using Ultralight, to render HTML.
 - Godot 4.3+
 - Ultralight 1.4.0 Beta
 
+## Platforms
+| Platform | x64 | arm64 | x32 |
+| - | :-: | :-: | :-: |
+| Windows | :white_check_mark: |  :warning: | :x: |
+| Linux | :white_check_mark: |  :warning: | :x: |
+| Mac | :white_check_mark: | :white_check_mark: | :x: |
+
+> :white_check_mark: = Successfully ran the demo project.
+
+> :warning: = Supported, but not tested.
+
+> :x: = Not supported.
+
 ## Table of contents
 - [What can this plugin do?](#can-do)
 - [What's left to do?](#to-do)
