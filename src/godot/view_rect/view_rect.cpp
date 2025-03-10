@@ -209,7 +209,7 @@ void ViewRect::HandleKey(InputEventKey *event)
     auto modifiers = event->get_modifiers_mask();
     uint8_t ultralightModifier = 0;
     for (const auto& [godotMask, ultralightMask] : ModifierMap) {
-        if (modifiers & godotMask) {
+        if ((modifiers & godotMask) == godotMask) {
             ultralightModifier |= ultralightMask;
         }
     }
