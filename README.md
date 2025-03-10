@@ -65,18 +65,18 @@ Some of the notable limitations are:
 Your project structure should look like this before running with this extension.
 ```
 demo/                             # Godot project (Root)
-| addons/                         # Addons
-| |  gdhtml/                      # Godot-HTML extension
-| |    bin/                       # Extension libraries
-| |    |  windows/                # Library platform
-| |    |    x86_64/               # Platform arch
-| |    |      gdhtml.*.dll        # Extension library
-| |    |      Ultralight.dll      # Ultralight libraries
-| |    |      UltralightCore.dll  # ...
-| |    |      WebCore.dll         # ...
-| |    |      AppCore.dll         # ...
-| |    resources/                 # Ultralight resources
-| inspector/                      # Ultralight inspector
+  addons/                         # Addons
+  |  gdhtml/                      # Godot-HTML extension
+  |    bin/                       # Extension libraries
+  |    |  windows/                # Library platform
+  |    |    x86_64/               # Platform arch
+  |    |      gdhtml.*.dll        # Extension library
+  |    |      Ultralight.dll      # Ultralight libraries
+  |    |      UltralightCore.dll  # ...
+  |    |      WebCore.dll         # ...
+  |    |      AppCore.dll         # ...
+  |    resources/                 # Ultralight resources
+  inspector/                      # Ultralight inspector
 ```
 
 ## Building
