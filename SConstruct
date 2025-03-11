@@ -111,12 +111,14 @@ elif env["platform"] == "macos":
     )
 
 copy_resources = env.Install(
-    f"{projectdir}/addons/{libname}/resources",
-    source = [ 
-        "ultralight/resources/cacert.pem",
-        "ultralight/resources/icudt67l.dat"
-    ]
+    f"{projectdir}/addons/{libname}/",
+    source = ["ultralight/resources/"]
 )
 
-default_args = [library, copy, copy_libraries, copy_resources]
+copy_inspector = env.Install(
+    f"{projectdir}/addons/{libname}/",
+    source = ["ultralight/inspector/"]
+)
+
+default_args = [library, copy, copy_libraries, copy_resources, copy_inspector]
 Default(*default_args)

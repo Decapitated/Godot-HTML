@@ -167,7 +167,7 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
                 Variant::Type type = static_cast<Variant::Type>((int)property_info["type"]);
                 PropertyUsageFlags usage = static_cast<PropertyUsageFlags>((uint64_t)property_info["usage"]);
             
-                if(type != Variant::NIL &&  !(usage & PROPERTY_USAGE_INTERNAL))
+                if(type != Variant::NIL && (usage & PROPERTY_USAGE_INTERNAL) != PROPERTY_USAGE_INTERNAL)
                 {
                     Variant property = object->get(name);
                     JSValueRef js_value;
