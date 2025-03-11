@@ -7,6 +7,7 @@ demo/ultralight.log
 demo/default
 demo/inspector/
 demo/addons/gdhtml/resources/
+demo/addons/gdhtml/inspector/
 demo/addons/gdhtml/bin/*.*.*.*.dll
 demo/addons/gdhtml/bin/*.*.*.*.exp
 demo/addons/gdhtml/bin/*.*.*.*.lib
