@@ -64,8 +64,8 @@ Some of the notable limitations are:
 ## Project Structure
 Your project structure should look like this before running with this extension.
 ```
-demo/                             # Godot project (Root)
-  addons/                         # Addons
+demo/                            # Godot project (Root)
+  addons/                        # Addons
     gdhtml/                      # Godot-HTML extension
       bin/                       # Extension libraries
       |  windows/                # Library platform
