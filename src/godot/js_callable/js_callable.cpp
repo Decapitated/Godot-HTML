@@ -4,6 +4,7 @@
 
 using namespace godot;
 
+// ALERT: Find a way to fix hash & compare to allow disconnecting callables from signals.
 uint32_t JSCallable::hash() const
 {
     return 420;
