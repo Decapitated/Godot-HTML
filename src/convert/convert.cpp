@@ -189,7 +189,9 @@ JSValueRef Convert::ToJSValue(JSContextRef context, Variant variant)
                 Dictionary method_info = methods[i];
                 godot::String name = method_info["name"];
                 MethodFlags flags = static_cast<MethodFlags>((uint64_t)method_info["flags"]);
-                bool is_invalid = flags & METHOD_FLAG_EDITOR || flags & METHOD_FLAG_VIRTUAL || flags & METHOD_FLAG_OBJECT_CORE;
+                bool is_invalid = (flags & METHOD_FLAG_EDITOR) == METHOD_FLAG_EDITOR ||
+                                  (flags & METHOD_FLAG_VIRTUAL) == METHOD_FLAG_VIRTUAL ||
+                                  (flags & METHOD_FLAG_OBJECT_CORE) == METHOD_FLAG_OBJECT_CORE;
                 if(!is_invalid)
                 {
                     Callable callable = object->get(name);
