@@ -47,7 +47,7 @@ A GDExtension, using Ultralight, to render HTML.
 - Accelerated Views. IE. GPU based rendering.
 - ImageSource. IE. RenderTargets.
 - Make sure remote websites can't access C++ code via JS interop.
-- Live code updates (Allow for html to update in the editor when file changed)
+- Live code updates. (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
 
 ## Ultralight Limitations
@@ -67,16 +67,16 @@ Your project structure should look like this before running with this extension.
 demo/                            # Godot project (Root)
   addons/                        # Addons
     gdhtml/                      # Godot-HTML extension
-      bin/                       # Extension libraries
-      |  windows/                # Library platform
-      |    x86_64/               # Platform arch
-      |      gdhtml.*.dll        # Extension library
-      |      Ultralight.dll      # Ultralight libraries
-      |      UltralightCore.dll  # ...
-      |      WebCore.dll         # ...
-      |      AppCore.dll         # ...
-      inspector/                 # Ultralight inspector
-      resources/                 # Ultralight resources
+    | bin/                       # Extension libraries
+    |   windows/                # Library platform
+    |     x86_64/               # Platform arch
+    |       gdhtml.*.dll        # Extension library
+    |       Ultralight.dll      # Ultralight libraries
+    |       UltralightCore.dll  # ...
+    |       WebCore.dll         # ...
+    |       AppCore.dll         # ...
+    | inspector/                 # Ultralight inspector
+    | resources/                 # Ultralight resources
 ```
 
 ## Building
