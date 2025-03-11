@@ -7,6 +7,7 @@
 #include <godot_cpp/variant/packed_byte_array.hpp>
 
 #include <godot_cpp/classes/os.hpp>
+#include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
@@ -29,8 +30,10 @@ ViewRect::ViewRect()
 
 ViewRect::~ViewRect()
 {
-    RenderingServer::get_singleton()->disconnect("frame_post_draw", Callable(this, "render_frame"));
+    auto rs = RenderingServer::get_singleton();
+    rs->disconnect("frame_post_draw", Callable(this, "render_frame"));
     disconnect("resized", Callable(this, "size_changed"));
+    if(current_item.is_valid()) rs->free_rid(current_item);
 }
 
 void ViewRect::SetView(RefPtr<View> p_view)
@@ -112,20 +115,9 @@ void ViewRect::_gui_input(const Ref<InputEvent> &event)
     }
 }
 
-void ViewRect::_draw()
-{
-    if(image_texture.is_valid())
-    {
-        Vector2 size = get_size();
-        draw_texture_rect(image_texture, Rect2(0, 0, size.x, size.y), false);
-    }
-}
-
 #pragma endregion
 
 #pragma region ViewRect Private methods.
-
-MouseEvent::Button latest_mouse_button = MouseEvent::Button::kButton_None;
 
 void ViewRect::HandleMouseButton(InputEventMouseButton *event)
 {
@@ -245,7 +237,6 @@ void ViewRect::RenderFrame()
         ///
         surface->ClearDirtyBounds();
     }
-    queue_redraw();
 }
 
 void ViewRect::SizeChanged()
@@ -266,8 +257,19 @@ void ViewRect::CopyBitmapToTexture(RefPtr<Bitmap> bitmap)
     if(image.is_null())
     {
         image = Image::create_from_data(bitmap->width(), bitmap->height(), false, Image::FORMAT_RGBA8, arr);
-        if(!image.is_valid() || image->is_empty()) return;
-        image_texture = ImageTexture::create_from_image(image);
+        if(image.is_null() || image->is_empty()) return;
+        if(image_texture.is_null()) {
+            image_texture = ImageTexture::create_from_image(image);
+        } else {
+            image_texture->set_image(image);
+        }
+        const auto rs = RenderingServer::get_singleton();
+        const auto canvas_item = get_canvas_item();
+        auto previous_item = current_item;
+        current_item = rs->canvas_item_create();
+        rs->canvas_item_set_parent(current_item, canvas_item);
+        rs->canvas_item_add_texture_rect(current_item, Rect2(Vector2(), get_size()), image_texture->get_rid());
+        if(previous_item.is_valid()) rs->free_rid(previous_item);
     }
     else
     {
