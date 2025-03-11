@@ -29,7 +29,7 @@ namespace ultralight
                     godot::String(file_path.utf8().data())
                 ).utf8().get_data()
             );
-            return ("res://"+adjusted_file_path);
+            return "res://" + adjusted_file_path;
         }
 
         bool FileExists(const String& file_path) override
@@ -52,7 +52,6 @@ namespace ultralight
             godot::PackedByteArray data = godot::FileAccess::get_file_as_bytes(SetupPath(file_path).utf8().data());
             return Buffer::CreateFromCopy(data.ptr(), data.size());
         }
-
     };
 };
 
