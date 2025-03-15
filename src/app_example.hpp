@@ -11,7 +11,7 @@ namespace godot {
         protected:
             static void _bind_methods();
             
-            Dictionary _on_dom_ready(const String &url) override;
+            Dictionary _on_window_ready(const String &url) override;
     };
 
 }

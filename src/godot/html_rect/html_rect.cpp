@@ -15,7 +15,7 @@ void HtmlRect::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_index", "p_index"), &HtmlRect::set_index);
 	ClassDB::add_property(get_class_static(), PropertyInfo(Variant::STRING, "index_path"), "set_index", "get_index");
 
-	GDVIRTUAL_BIND(_on_dom_ready, "url");
+	GDVIRTUAL_BIND(_on_window_ready, "url");
 }
 
 HtmlRect::HtmlRect()
@@ -86,18 +86,18 @@ godot::String HtmlRect::get_index() const
 	return index_path;
 }
 
-Dictionary HtmlRect::call_on_dom_ready(const String &url)
+Dictionary HtmlRect::call_on_window_ready(const String &url)
 {
     Dictionary obj;
-    if(GDVIRTUAL_CALL(_on_dom_ready, url, obj))
+    if(GDVIRTUAL_CALL(_on_window_ready, url, obj))
     {
         return obj;
     }
-    return _on_dom_ready(url);
+    return _on_window_ready(url);
 }
 
-void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame,
-                          const ultralight::String &url)
+void godot::HtmlRect::OnWindowObjectReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame,
+                                          const ultralight::String &url)
 {
     // Acquire the JS execution context for the current page.
     auto scoped_context = caller->LockJSContext();
@@ -106,7 +106,7 @@ void HtmlRect::OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_m
     JSContextRef context = (*scoped_context);
     
     String godot_url = godot::String(url.utf8().data());
-    Dictionary godot_obj_dict = call_on_dom_ready(godot_url);
+    Dictionary godot_obj_dict = call_on_window_ready(godot_url);
 
     StoreGlobalObject(context, godot_obj_dict);
 }
