@@ -6,7 +6,7 @@ signal test_signal
 func _ready():
 	test_signal.connect(func(): print("test_signal"))
 
-func _on_dom_ready(_url):
+func _on_window_ready(_url):
 	return {
 		"bool": true,
 		"int": 69,

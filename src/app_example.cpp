@@ -8,7 +8,7 @@ using namespace godot;
 
 void AppExample::_bind_methods() {}
 
-Dictionary AppExample::_on_dom_ready(const godot::String &url)
+Dictionary AppExample::_on_window_ready(const godot::String &url)
 {
     auto obj = Dictionary();
     obj["url"] = url;

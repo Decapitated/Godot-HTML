@@ -18,9 +18,9 @@ namespace godot {
         protected:
             static void _bind_methods();
             
-            Dictionary call_on_dom_ready(const String &url);
-            GDVIRTUAL1R(Dictionary, _on_dom_ready, String);
-            virtual Dictionary _on_dom_ready(const String &url) { return Dictionary(); };
+            Dictionary call_on_window_ready(const String &url);
+            GDVIRTUAL1R(Dictionary, _on_window_ready, String);
+            virtual Dictionary _on_window_ready(const String &url) { return Dictionary(); };
 
         public:
             String index_path = "";
@@ -35,8 +35,8 @@ namespace godot {
             void set_index(const String p_index);
             String get_index() const;
 
-            void OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url) override;
-    };
+            void OnWindowObjectReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const ultralight::String &url) override;
+        };
 }
 
 #endif
