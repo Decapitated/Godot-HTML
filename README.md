@@ -11,6 +11,19 @@ A GDExtension, using Ultralight, to render HTML.
 - Godot 4.3+
 - Ultralight 1.4.0 Beta
 
+## Platforms
+| Platform | x64 | arm64 | x32 |
+| - | :-: | :-: | :-: |
+| Windows | :white_check_mark: |  :warning: | :x: |
+| Linux | :white_check_mark: |  :warning: | :x: |
+| Mac | :white_check_mark: | :white_check_mark: | :x: |
+
+> :white_check_mark: = Successfully ran the demo project.
+
+> :warning: = Supported, but not tested.
+
+> :x: = Not supported.
+
 ## Table of contents
 - [What can this plugin do?](#can-do)
 - [What's left to do?](#to-do)
@@ -34,7 +47,7 @@ A GDExtension, using Ultralight, to render HTML.
 - Accelerated Views. IE. GPU based rendering.
 - ImageSource. IE. RenderTargets.
 - Make sure remote websites can't access C++ code via JS interop.
-- Live code updates (Allow for html to update in the editor when file changed)
+- Live code updates. (Allow for html to update in the editor when file changed)
 - ?? More will arrise I assume ??
 
 ## Ultralight Limitations
@@ -49,27 +62,21 @@ Some of the notable limitations are:
 - Download [Ultralight](https://ultralig.ht/download/)
 
 ## Project Structure
-Your project structure should look like this before building and running.
+Your project structure should look like this before running with this extension.
 ```
-main_folder/
-+--demo/                    # game example/demo to test the extension
-| +--addons/                # addons
-| | +--gdhtml/              # plugin folder
-| |   +--bin/               # plugin build folder / Other libraries
-| |   | +--windows/
-| |   |   +--Ultralight.dll
-| |   |   +--UltralightCore.dll
-| |   |   +--WebCore.dll
-| |   |   +--AppCore.dll
-| |   +--resources/         # Ultralight resources folder (Copied from SDK folder)
-| +--inspector/             # Ultralight inspector folder (Copied from SDK folder)
-+--godot-cpp/               # C++ bindings
-+--src/                     # Source code of the extension we are building
-+--ultralight/              # Ultralight SDK
-  +--bin                    # Ultralight libraries
-  +--include                # Ultralight Headers
-  +--lib                    # Ultralight .lib for windows build
-  +--license                # Ultralight Licenses
+demo/                            # Godot project (Root)
+  addons/                        # Addons
+    gdhtml/                      # Godot-HTML extension
+    | bin/                       # Extension libraries
+    |   windows/                # Library platform
+    |     x86_64/               # Platform arch
+    |       gdhtml.*.dll        # Extension library
+    |       Ultralight.dll      # Ultralight libraries
+    |       UltralightCore.dll  # ...
+    |       WebCore.dll         # ...
+    |       AppCore.dll         # ...
+    | inspector/                 # Ultralight inspector
+    | resources/                 # Ultralight resources
 ```
 
 ## Building
@@ -93,7 +100,7 @@ scons platform=<platform>
 ```
 
 ## JS Interop
-JS interop is as simple as returning a `Dictionary` from the virtual function `_on_dom_ready`. Then accessing it from JS using `window.godot`.
+JS interop is as simple as returning a `Dictionary` from the virtual function `_on_window_ready`. Then accessing it from JS using `window.godot`.
 
 Checkout the [example](demo/app_example.gd) script.
 

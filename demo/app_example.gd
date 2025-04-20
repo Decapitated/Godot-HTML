@@ -6,7 +6,7 @@ signal test_signal
 func _ready():
 	test_signal.connect(func(): print("test_signal"))
 
-func _on_dom_ready(_url):
+func _on_window_ready(_url):
 	return {
 		"bool": true,
 		"int": 69,
@@ -23,7 +23,7 @@ func _on_dom_ready(_url):
 		},
 		"array": [1, 2, 3, 4, 5],
 		"object": self,
-		"signal_test": signal_test
+		"signal": _signal_to_dictionary(test_signal)
 	}
 
 func test_callable(temp = ""):
@@ -37,5 +37,16 @@ func test_nested_callable():
 	print("test_nested_callable")
 	return 420
 
-func signal_test():
-	test_signal.emit()
+func _signal_to_dictionary(p_signal: Signal):
+	return {
+		"connect": p_signal.connect,
+		# "disconnect": p_signal.disconnect, # ALERT: Disconnect does not work yet.
+		"emit": p_signal.emit,
+		"get_connections": p_signal.get_connections,
+		"get_name": p_signal.get_name,
+		"get_object": p_signal.get_object,
+		"get_object_id": p_signal.get_object_id,
+		"has_connections": p_signal.has_connections,
+		# "is_connected": p_signal.is_connected, # ALERT: Is_connected probably doesn't work. Same reason as above.
+		"is_null": p_signal.is_null
+	}

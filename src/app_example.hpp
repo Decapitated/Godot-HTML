@@ -8,13 +8,10 @@ namespace godot {
     class AppExample : public HtmlRect {
         GDCLASS(AppExample, HtmlRect)
 
-        private:
-            static JSValueRef ExampleCallback(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
-
         protected:
             static void _bind_methods();
             
-            Dictionary _on_dom_ready(const String &url) override;
+            Dictionary _on_window_ready(const String &url) override;
     };
 
 }
