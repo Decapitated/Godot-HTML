@@ -13,28 +13,38 @@ namespace ultralight
         GodotFileSystem() {}
         ~GodotFileSystem() override {}
 
-        godot::String AdjustPath(godot::String file_path)
+        godot::String AdjustPath(const godot::String& file_path)
         {
             if(file_path.begins_with("inspector/"))
             {
-                file_path = "addons/gdhtml/" + file_path;
+                return "addons/gdhtml/" + file_path;
             }
             return file_path;
         }
 
-        String SetupPath(const String& file_path)
+        godot::String SetupPath(const godot::String& file_path)
         {
-            auto adjusted_file_path = String(
-                AdjustPath(
-                    godot::String(file_path.utf8().data())
-                ).utf8().get_data()
-            );
-            return "res://" + adjusted_file_path;
+            return "res://" + AdjustPath(file_path);
+        }
+
+        bool IsImageSource(const godot::String& file_path)
+        {
+            return file_path.ends_with(".imgsrc");
+        }
+
+        bool ImageSourceExists(const godot::String& file_path)
+        {
+            return false;
         }
 
         bool FileExists(const String& file_path) override
         {
-            return godot::FileAccess::file_exists(SetupPath(file_path).utf8().data());
+            auto gd_file_path = godot::String(file_path.utf8().data());
+            if(IsImageSource(gd_file_path))
+            {
+                return ImageSourceExists(gd_file_path);
+            }
+            return godot::FileAccess::file_exists(SetupPath(gd_file_path));
         }
 
         String GetFileCharset(const String& file_path) override
@@ -44,12 +54,13 @@ namespace ultralight
 
         String GetFileMimeType(const String& file_path) override
         {
-            return MimeTypes::getType(SetupPath(file_path).utf8().data());
+            return MimeTypes::getType(file_path.utf8().data());
         }
 
         RefPtr<Buffer> OpenFile(const String& file_path) override
         {
-            godot::PackedByteArray data = godot::FileAccess::get_file_as_bytes(SetupPath(file_path).utf8().data());
+            auto gd_file_path = godot::String(file_path.utf8().data());
+            godot::PackedByteArray data = godot::FileAccess::get_file_as_bytes(SetupPath(gd_file_path));
             return Buffer::CreateFromCopy(data.ptr(), data.size());
         }
     };
