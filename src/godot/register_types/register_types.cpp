@@ -1,6 +1,7 @@
 #include "register_types.hpp"
 
 #include "godot/ultralight_singleton/ultralight_singleton.hpp"
+#include "godot/image_source_manager/image_source_manager.hpp"
 
 #include "godot/view_rect/view_rect.hpp"
 #include "godot/html_rect/html_rect.hpp"
@@ -12,6 +13,7 @@
 using namespace godot;
 
 static UltralightSingleton* ultralight_singleton = nullptr;
+static ImageSourceManager* image_source_manager = nullptr;
 
 void initialize_html_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -21,6 +23,10 @@ void initialize_html_module(ModuleInitializationLevel p_level) {
     GDREGISTER_CLASS(UltralightSingleton);
     ultralight_singleton = memnew(UltralightSingleton); // memnew is super important.
     Engine::get_singleton()->register_singleton("UltralightSingleton", ultralight_singleton);
+    
+    GDREGISTER_CLASS(ImageSourceManager);
+    image_source_manager = memnew(ImageSourceManager); // memnew is super important.
+    Engine::get_singleton()->register_singleton("ImageSourceManager", image_source_manager);
 
     GDREGISTER_ABSTRACT_CLASS(ViewRect);
     GDREGISTER_CLASS(HtmlRect);

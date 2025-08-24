@@ -4,6 +4,7 @@
 #include <godot_cpp/classes/file_access.hpp>
 
 #include "MimeTypes.hpp"
+#include "godot/image_source_manager/image_source_manager.hpp"
 
 namespace ultralight
 {
@@ -27,22 +28,13 @@ namespace ultralight
             return "res://" + AdjustPath(file_path);
         }
 
-        bool IsImageSource(const godot::String& file_path)
-        {
-            return file_path.ends_with(".imgsrc");
-        }
-
-        bool ImageSourceExists(const godot::String& file_path)
-        {
-            return false;
-        }
-
         bool FileExists(const String& file_path) override
         {
             auto gd_file_path = godot::String(file_path.utf8().data());
-            if(IsImageSource(gd_file_path))
+            const auto img_src_manager = godot::ImageSourceManager::get_singleton();
+            if(img_src_manager->IsImageSource(gd_file_path))
             {
-                return ImageSourceExists(gd_file_path);
+                return img_src_manager->ImageSourceExists(gd_file_path);
             }
             return godot::FileAccess::file_exists(SetupPath(gd_file_path));
         }
@@ -54,13 +46,28 @@ namespace ultralight
 
         String GetFileMimeType(const String& file_path) override
         {
+            const auto img_src_manager = godot::ImageSourceManager::get_singleton();
+            if(img_src_manager->IsImageSource(file_path.utf8().data()))
+            {
+                return "text/plain";
+            }
             return MimeTypes::getType(file_path.utf8().data());
         }
 
         RefPtr<Buffer> OpenFile(const String& file_path) override
         {
             auto gd_file_path = godot::String(file_path.utf8().data());
-            godot::PackedByteArray data = godot::FileAccess::get_file_as_bytes(SetupPath(gd_file_path));
+            godot::PackedByteArray data;
+
+            const auto img_src_manager = godot::ImageSourceManager::get_singleton();
+            if(img_src_manager->IsImageSource(gd_file_path))
+            {
+                data = img_src_manager->GetImageSource(gd_file_path);
+            }
+            else
+            {
+                data = godot::FileAccess::get_file_as_bytes(SetupPath(gd_file_path));
+            }
             return Buffer::CreateFromCopy(data.ptr(), data.size());
         }
     };
