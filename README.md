@@ -81,11 +81,6 @@ demo/                            # Godot project (Root)
 
 ## Building
 
-### Clone godot-cpp
-```
-git submodule update --init --remote
-```
-
 ### Build Godot C++ bindings
 ```
 cd godot-cpp
