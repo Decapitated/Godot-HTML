@@ -58,7 +58,7 @@ Some of the notable limitations are:
 - HTML5 Video/Audio
 
 ## Prerequisites
-- Setup [compiling](https://docs.godotengine.org/en/stable/contributing/development/compiling/compiling_for_windows.html) for Godot
+- Setup [compiling](https://docs.godotengine.org/en/4.3/contributing/development/compiling/index.html) for Godot
 - Download [Ultralight](https://ultralig.ht/download/)
 
 ## Project Structure
